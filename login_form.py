@@ -24,7 +24,8 @@ class LoginForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('interface.ui', None)
 
-        self.ui.submit_button.clicked.connect(self.login)
+        # К кнопке "Войти" привязан редирект на регистрацию для теста
+        self.ui.submit_button.clicked.connect(self.goToRegistration)
         self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
         self.ui.show_password.stateChanged.connect(self.show_hide_password)
     def show(self):
@@ -45,3 +46,10 @@ class LoginForm(QtCore.QObject):
     def show_hide_password(self):
         if self.ui.show_password.isChecked(): self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Normal)
         else: self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
+
+    def goToRegistration(self):
+        # Скрываем интерфейс логина
+        self.ui.hide()
+        # Переопределяем интерфейс на регистрацию
+        self.ui = RegistrationForm()
+        self.ui.show()

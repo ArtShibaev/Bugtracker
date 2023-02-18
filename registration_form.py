@@ -33,4 +33,13 @@ class RegistrationForm(QtCore.QObject):
         if login.text() == '': login.setPlaceholderText("Введите логин!")
         if password.text() != password_sec.text(): password_sec.setText(''); password_sec.setPlaceholderText("Пароли не совпадают!")
         elif password.text() == '': password.setPlaceholderText("Введите пароль!")
-        else: print('Данные пользвателя: ' + login.text() + ':' + password.text()); self.ui.close()
+        else: print('Данные пользователя: ' + login.text() + ':' + password.text()); self.ui.close()
+
+    def goToLogin(self):
+        # Да, это импорт посередине кода. Если указать его сверху, то компилятор распознает его как зацикленный
+        # Поэтому файл ипортируется только тогда, когда нужно
+        from login_form import LoginForm
+
+        self.ui.hide()
+        self.ui = LoginForm()
+        self.ui.show()
