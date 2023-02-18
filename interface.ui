@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>570</width>
-    <height>390</height>
+    <height>323</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -40,30 +40,40 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">display: flex;
-flex-direction: column;
-background-color: #36393f;
+   <string notr="true">background-color: #36393f;
 color: white;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_2">
+   <item row="1" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>53</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">text-align: center;</string>
        </property>
        <property name="text">
-        <string>Еще не зарегистрированы? &lt;a href=&quot;register&quot; style=&quot;text-decoration: none;
-color: rgb(66, 119, 255)&quot;&gt;Создать аккаунт&lt;/a&gt;</string>
+        <string>Баг-трекер</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+       <property name="openExternalLinks">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <spacer name="horizontalSpacer">
+     <item>
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -75,7 +85,7 @@ color: rgb(66, 119, 255)&quot;&gt;Создать аккаунт&lt;/a&gt;</strin
        </property>
       </spacer>
      </item>
-     <item row="2" column="0">
+     <item>
       <widget class="QLineEdit" name="input_login">
        <property name="enabled">
         <bool>true</bool>
@@ -107,46 +117,7 @@ border-color: rgb(130, 118, 255);
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>53</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">text-align: center;</string>
-       </property>
-       <property name="text">
-        <string>Баг-трекер</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap">
-        <bool>false</bool>
-       </property>
-       <property name="openExternalLinks">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
+     <item>
       <widget class="QLineEdit" name="input_password">
        <property name="font">
         <font>
@@ -169,7 +140,51 @@ border-color: rgb(130, 118, 255);
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item>
+      <widget class="QCheckBox" name="show_password">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>10</width>
+         <height>10</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Показать пароль</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="submit_button">
        <property name="font">
         <font>
@@ -187,6 +202,20 @@ border-radius: 10px;</string>
        </property>
        <property name="text">
         <string>Войти</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Еще не зарегистрированы? &lt;a href=&quot;register&quot; style=&quot;text-decoration: none;
+color: rgb(66, 119, 255)&quot;&gt;Создать аккаунт&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
