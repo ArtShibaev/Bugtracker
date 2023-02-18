@@ -1,9 +1,14 @@
 import os
+
+import PySide6
+from PySide6.QtWidgets import QMainWindow, QStackedWidget, QWidget
 from dotenv import load_dotenv
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
+
+from registration_form import RegistrationForm
 
 load_dotenv('.env')
 
@@ -22,12 +27,13 @@ def find_user(login):
 class LoginForm(QtCore.QObject):
     def __init__(self):
         super().__init__()
-        self.ui = loader.load('interface.ui', None)
+        self.ui = loader.load('./interfaces/login_form.ui', None)
 
         # К кнопке "Войти" привязан редирект на регистрацию для теста
         self.ui.submit_button.clicked.connect(self.goToRegistration)
         self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
-        self.ui.show_password.stateChanged.connect(self.show_hide_password)
+        self.ui.show_password.stateChanged.connect(self.showHidePassword)
+
     def show(self):
         self.ui.show()
     # Тестовые данные login:pass - 123:321
@@ -36,14 +42,14 @@ class LoginForm(QtCore.QObject):
         current_user = find_user(self.ui.input_login.text())
 
         # Проверка на нахождения логина в базе данных
-        if current_user == None:
+        if current_user is None:
             print('Пользователь не найден')
         elif current_user['password'] == self.ui.input_password.text():
             print('Выполнен вход')
         else:
             print('Пароль неверный')
 
-    def show_hide_password(self):
+    def showHidePassword(self):
         if self.ui.show_password.isChecked(): self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Normal)
         else: self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
 
