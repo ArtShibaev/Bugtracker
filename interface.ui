@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>461</height>
+    <width>570</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -50,8 +50,14 @@ color: white;</string>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="6" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">a {
+text-decoration: none;
+color: rgb(66, 119, 255)
+}</string>
+       </property>
        <property name="text">
-        <string>Еще не зарегистрированы? Создать аккаунт</string>
+        <string>Еще не зарегистрированы? &lt;a href=&quot;register&quot;&gt;Создать аккаунт&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -71,26 +77,11 @@ color: white;</string>
        </property>
       </spacer>
      </item>
-     <item row="5" column="0">
-      <widget class="QPushButton" name="pushButton">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: 2px solid white;
-padding: 5px;
-border-radius: 10px;</string>
-       </property>
-       <property name="text">
-        <string>Войти</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
-      <widget class="QLineEdit" name="input_login_2">
+      <widget class="QLineEdit" name="input_login">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="font">
         <font>
          <pointsize>14</pointsize>
@@ -106,6 +97,12 @@ outline: none;
 focus {
 border-color: rgb(130, 118, 255);
 }</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <property name="cursorPosition">
+        <number>0</number>
        </property>
        <property name="placeholderText">
         <string>Логин</string>
@@ -124,29 +121,6 @@ border-color: rgb(130, 118, 255);
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="input_password_2">
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: 2px solid gray;
-color: white;
-border-radius: 15px;
-padding: 5px 10px;
-outline: none;
-
-focus {
-border-color: rgb(130, 118, 255);
-}</string>
-       </property>
-       <property name="placeholderText">
-        <string>Пароль</string>
-       </property>
-      </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
@@ -174,14 +148,54 @@ border-color: rgb(130, 118, 255);
        </property>
       </widget>
      </item>
+     <item row="3" column="0">
+      <widget class="QLineEdit" name="input_password">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 2px solid gray;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+
+focus {
+border-color: rgb(130, 118, 255);
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string>Пароль</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QPushButton" name="submit_button">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 2px solid white;
+padding: 5px;
+border-radius: 10px;</string>
+       </property>
+       <property name="text">
+        <string>Войти</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>input_login</tabstop>
-  <tabstop>input_password</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
