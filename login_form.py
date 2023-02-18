@@ -24,8 +24,11 @@ class LoginForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('interface.ui', None)
         self.ui.submit_button.clicked.connect(self.login)
+        self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
+        self.ui.show_password.stateChanged.connect(self.show_hide_password)
     def show(self):
         self.ui.show()
+    # Тестовые данные login:pass - 123:321
     def login(self):
         print(self.ui.input_login.text() + ':' + self.ui.input_password.text())
         current_user = find_user(self.ui.input_login.text())
@@ -37,13 +40,8 @@ class LoginForm(QtCore.QObject):
             print('Выполнен вход')
         else:
             print('Пароль неверный')
-        self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
-        self.ui.submit_button.clicked.connect(self.do_smth)
-        self.ui.show_password.stateChanged.connect(self.show_hide_password)
     def show(self):
         self.ui.show()
-    def do_smth(self):
-        print(self.ui.input_login.text() + ':' + self.ui.input_password.text())
     def show_hide_password(self):
         if self.ui.show_password.isChecked(): self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Normal)
         else: self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
