@@ -40,9 +40,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">display: flex;
-flex-direction: column;
-background-color: #36393f;
+   <string notr="true">background-color: #36393f;
 color: white;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
@@ -147,8 +145,17 @@ border-color: rgb(130, 118, 255);
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="baseSize">
+        <size>
+         <width>10</width>
+         <height>10</height>
+        </size>
+       </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
