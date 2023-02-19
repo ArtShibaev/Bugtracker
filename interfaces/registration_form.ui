@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>337</height>
+    <width>492</width>
+    <height>408</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -114,6 +114,24 @@ border-color: rgb(130, 118, 255);
        </property>
        <property name="placeholderText">
         <string>Логин</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="input_email">
+       <property name="styleSheet">
+        <string notr="true">border: 2px solid gray;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+
+focus {
+border-color: rgb(130, 118, 255);
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string>Электронная почта</string>
        </property>
       </widget>
      </item>
