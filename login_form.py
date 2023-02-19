@@ -1,3 +1,4 @@
+import hashlib
 import os
 
 from dotenv import load_dotenv
@@ -45,7 +46,7 @@ class LoginForm(QtCore.QObject):
         # Проверка на нахождения логина в базе данных
         if current_user is None:
             self.setBorderColor(self.ui.input_login, 'red')
-        elif current_user['password'] == self.ui.input_password.text():
+        elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
             print('Выполнен вход')
         else:
             self.setBorderColor(self.ui.input_password, 'red')
