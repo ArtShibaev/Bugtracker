@@ -10,6 +10,7 @@ class RegistrationForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/registration_form.ui', None)
         self.ui.submit_button.clicked.connect(self.register)
+        self.ui.login_button.clicked.connect(self.goToLogin)
     def show(self):
         self.ui.show()
     def register(self):
@@ -52,6 +53,7 @@ class RegistrationForm(QtCore.QObject):
     def goToLogin(self):
         # Да, это импорт посередине кода. Если указать его сверху, то компилятор распознает его как зацикленный
         # Поэтому файл ипортируется только тогда, когда нужно
+        # Только это создает полусекундную задержку :(
         from login_form import LoginForm
 
         self.ui.hide()

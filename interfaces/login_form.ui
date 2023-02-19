@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>580</width>
-    <height>325</height>
+    <height>346</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -172,20 +172,7 @@ border-color: rgb(130, 118, 255);
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="submit_button">
+      <widget class="QPushButton" name="login_button">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -206,18 +193,52 @@ border-radius: 10px;</string>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_register">
-       <property name="styleSheet">
-        <string notr="true"/>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="text">
-        <string>Еще не зарегистрированы? &lt;a href=&quot;registration_page.ui&quot; style=&quot;text-decoration: none;
-color: rgb(66, 119, 255)&quot;&gt;Создать аккаунт&lt;/a&gt;</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Еще не зарегистрированы?</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="register_button">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 2px solid rgb(107, 89, 255);
+padding: 5px;
+border-radius: 10px;</string>
+         </property>
+         <property name="text">
+          <string>Создать аккаунт</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

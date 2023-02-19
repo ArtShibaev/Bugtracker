@@ -1,10 +1,8 @@
 import os
 
-import PySide6
-from PySide6.QtWidgets import QMainWindow, QStackedWidget, QWidget
 from dotenv import load_dotenv
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
 
@@ -29,10 +27,10 @@ class LoginForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/login_form.ui', None)
 
-        # К кнопке "Войти" привязан редирект на регистрацию для теста
-        self.ui.submit_button.clicked.connect(self.goToRegistration)
         self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
         self.ui.show_password.stateChanged.connect(self.showHidePassword)
+        self.ui.login_button.clicked.connect(self.login())
+        self.ui.register_button.clicked.connect(self.goToRegistration)
 
     def show(self):
         self.ui.show()
