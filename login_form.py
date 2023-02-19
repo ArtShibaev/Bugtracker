@@ -13,6 +13,9 @@ load_dotenv('.env')
 
 loader = QUiLoader()
 mongo_url = os.environ.get('MONGO_URL')
+client = MongoClient(mongo_url)
+db = client['bugtracker']
+users = db['users']
 
 def find_user(login):
     user = users.find_one({'login': login})
