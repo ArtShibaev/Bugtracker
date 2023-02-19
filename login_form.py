@@ -1,11 +1,10 @@
-import hashlib
-import os
-
-from dotenv import load_dotenv
-
 from PySide6 import QtCore
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
+
+import hashlib
+import os
+from dotenv import load_dotenv
 
 from registration_form import RegistrationForm
 
