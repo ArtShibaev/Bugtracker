@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
-    <height>323</height>
+    <width>492</width>
+    <height>408</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -31,7 +31,7 @@
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>Багтрекер - Вход</string>
+   <string>Багтрекер - Регистрация</string>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -47,7 +47,7 @@ color: white;</string>
    <item row="1" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_main_page">
        <property name="font">
         <font>
          <pointsize>53</pointsize>
@@ -59,7 +59,7 @@ color: white;</string>
         <string notr="true">text-align: center;</string>
        </property>
        <property name="text">
-        <string>Баг-трекер</string>
+        <string>Регистрация</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -118,6 +118,24 @@ border-color: rgb(130, 118, 255);
       </widget>
      </item>
      <item>
+      <widget class="QLineEdit" name="input_email">
+       <property name="styleSheet">
+        <string notr="true">border: 2px solid gray;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+
+focus {
+border-color: rgb(130, 118, 255);
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string>Электронная почта</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="input_password">
        <property name="font">
         <font>
@@ -141,38 +159,28 @@ border-color: rgb(130, 118, 255);
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="show_password">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>10</width>
-         <height>10</height>
-        </size>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
+      <widget class="QLineEdit" name="input_password_repeat">
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">border: 2px solid gray;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+
+focus {
+border-color: rgb(130, 118, 255);
+}</string>
        </property>
        <property name="text">
-        <string>Показать пароль</string>
+        <string/>
        </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
+       <property name="placeholderText">
+        <string>Повтор пароля</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -201,23 +209,57 @@ padding: 5px;
 border-radius: 10px;</string>
        </property>
        <property name="text">
-        <string>Войти</string>
+        <string>Зарегистрироваться</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
-       <property name="styleSheet">
-        <string notr="true"/>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="text">
-        <string>Еще не зарегистрированы? &lt;a href=&quot;register&quot; style=&quot;text-decoration: none;
-color: rgb(66, 119, 255)&quot;&gt;Создать аккаунт&lt;/a&gt;</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Есть аккаунт?</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="login_button">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 2px solid rgb(107, 89, 255);
+padding: 5px;
+border-radius: 10px;</string>
+         </property>
+         <property name="text">
+          <string>Войти</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
