@@ -66,7 +66,7 @@ class RegistrationForm(QtCore.QObject):
                 # Время в Unix
                 "registrationDate": round(time.time()*1000)
             })
-        self.ui.close()
+            self.ui.close()
 
     # Функция изменяет цвет границы на color для элемента input
     def setBorderColor(self, input, color):
