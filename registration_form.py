@@ -30,10 +30,10 @@ class RegistrationForm(QtCore.QObject):
 
     def validator(self):
         # При каждом нажатии кнопки нормализуем все цвета бордера
-        self.setBorderColor(self.ui.input_login, 'gray')
-        self.setBorderColor(self.ui.input_email, 'gray')
-        self.setBorderColor(self.ui.input_password, 'gray')
-        self.setBorderColor(self.ui.input_password_repeat, 'gray')
+        self.setBorderColor(self.ui.input_login, '#373C66')
+        self.setBorderColor(self.ui.input_email, '#373C66')
+        self.setBorderColor(self.ui.input_password, '#373C66')
+        self.setBorderColor(self.ui.input_password_repeat, '#373C66')
 
         flag = True
 

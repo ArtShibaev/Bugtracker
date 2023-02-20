@@ -36,8 +36,8 @@ class LoginForm(QtCore.QObject):
     # Тестовые данные login:pass - 123:321
     def login(self):
 
-        self.setBorderColor(self.ui.input_login, 'gray')
-        self.setBorderColor(self.ui.input_password, 'gray')
+        self.setBorderColor(self.ui.input_login, '#373C66')
+        self.setBorderColor(self.ui.input_password, '#373C66')
 
         current_user = find_user(self.ui.input_login.text())
 
