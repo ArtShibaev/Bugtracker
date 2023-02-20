@@ -27,11 +27,10 @@ class LoginForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/login_form.ui', None)
 
-        self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
         self.ui.show_password.stateChanged.connect(self.showHidePassword)
         self.ui.login_button.clicked.connect(self.login)
         self.ui.register_button.clicked.connect(self.goToRegistration)
-
+        self.ui.show_password.setStyleSheet("QCheckBox::indicator{ width :30px; height :30px; image: url(./images/eye-close.png); }")
     def show(self):
         self.ui.show()
     # Тестовые данные login:pass - 123:321
@@ -52,8 +51,12 @@ class LoginForm(QtCore.QObject):
 
 
     def showHidePassword(self):
-        if self.ui.show_password.isChecked(): self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Normal)
-        else: self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password)
+        if self.ui.show_password.isChecked():
+            self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Normal);
+            self.ui.show_password.setStyleSheet("QCheckBox::indicator:checked{ width :30px; height :30px; image: url(./images/eye-open.png); }")
+        else:
+            self.ui.input_password.setEchoMode(self.ui.input_password.EchoMode.Password);
+            self.ui.show_password.setStyleSheet("QCheckBox::indicator:unchecked{ width :30px; height :30px; image: url(./images/eye-close.png); }")
 
     def setBorderColor(self, input, color):
         input.setStyleSheet('QLineEdit {border: 2px solid ' + color + ';color: white;border-radius: 15px;padding: 5px 10px;outline: none;focus {border-color: rgb(130, 118, 255);}}')
