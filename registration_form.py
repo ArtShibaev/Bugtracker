@@ -23,6 +23,7 @@ def find_user(login):
     return user
 
 class RegistrationForm(QtCore.QObject):
+    Style = "QLineEdit{ border: 2px solid #373C66; color: white; border-radius: 15px; padding: 5px 10px;outline: none; } QLineEdit:focus{ border-color: #947E45; }"
     def __init__(self):
         super().__init__()
         self.ui = loader.load('./interfaces/registration_form.ui', None)
@@ -34,10 +35,10 @@ class RegistrationForm(QtCore.QObject):
 
     def validator(self):
         # При каждом нажатии кнопки нормализуем все цвета бордера
-        self.setBorderColor(self.ui.input_login, '#373C66')
-        self.setBorderColor(self.ui.input_email, '#373C66')
-        self.setBorderColor(self.ui.input_password, '#373C66')
-        self.setBorderColor(self.ui.input_password_repeat, '#373C66')
+        self.ui.input_login.setStyleSheet(RegistrationForm.Style)
+        self.ui.input_email.setStyleSheet(RegistrationForm.Style)
+        self.ui.input_password.setStyleSheet(RegistrationForm.Style)
+        self.ui.input_password_repeat.setStyleSheet(RegistrationForm.Style)
 
         flag = True
 
