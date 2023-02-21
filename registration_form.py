@@ -18,6 +18,10 @@ client = MongoClient(mongo_url)
 db = client['bugtracker']
 users = db['users']
 
+def find_user(login):
+    user = users.find_one({'login': login})
+    return user
+
 class RegistrationForm(QtCore.QObject):
     def __init__(self):
         super().__init__()
@@ -30,12 +34,18 @@ class RegistrationForm(QtCore.QObject):
 
     def validator(self):
         # При каждом нажатии кнопки нормализуем все цвета бордера
-        self.setBorderColor(self.ui.input_login, 'gray')
-        self.setBorderColor(self.ui.input_email, 'gray')
-        self.setBorderColor(self.ui.input_password, 'gray')
-        self.setBorderColor(self.ui.input_password_repeat, 'gray')
+        self.setBorderColor(self.ui.input_login, '#373C66')
+        self.setBorderColor(self.ui.input_email, '#373C66')
+        self.setBorderColor(self.ui.input_password, '#373C66')
+        self.setBorderColor(self.ui.input_password_repeat, '#373C66')
 
         flag = True
+
+        # Проверка, если такой логин уже существует
+        if find_user(self.ui.input_login.text()) is not None:
+            self.setBorderColor(self.ui.input_login, 'red')
+            self.ui.input_login.setText('Логин занят')
+            flag = False
 
         # Валидация логина
         if re.match(r'^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{0,19}$', self.ui.input_login.text()) is None:
@@ -66,7 +76,7 @@ class RegistrationForm(QtCore.QObject):
                 # Время в Unix
                 "registrationDate": round(time.time()*1000)
             })
-        self.ui.close()
+            self.ui.close()
 
     # Функция изменяет цвет границы на color для элемента input
     def setBorderColor(self, input, color):
