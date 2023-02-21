@@ -96,14 +96,16 @@ color: white;</string>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">border: 2px solid #373C66;
+        <string notr="true">QLineEdit{
+border: 2px solid #373C66;
 color: white;
 border-radius: 15px;
 padding: 5px 10px;
 outline: none;
+}
 
-focus {
-border-color: rgb(130, 118, 255);
+QLineEdit:focus{ 
+	border-color: #947E45; 
 }</string>
        </property>
        <property name="frame">
@@ -120,14 +122,16 @@ border-color: rgb(130, 118, 255);
      <item>
       <widget class="QLineEdit" name="input_email">
        <property name="styleSheet">
-        <string notr="true">border: 2px solid #373C66;
+        <string notr="true">QLineEdit{
+border: 2px solid #373C66;
 color: white;
 border-radius: 15px;
 padding: 5px 10px;
 outline: none;
+}
 
-focus {
-border-color: rgb(130, 118, 255);
+QLineEdit:focus{ 
+	border-color: #947E45; 
 }</string>
        </property>
        <property name="placeholderText">
@@ -143,14 +147,16 @@ border-color: rgb(130, 118, 255);
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">border: 2px solid #373C66;
+        <string notr="true">QLineEdit{
+border: 2px solid #373C66;
 color: white;
 border-radius: 15px;
 padding: 5px 10px;
 outline: none;
+}
 
-focus {
-border-color: rgb(130, 118, 255);
+QLineEdit:focus{ 
+	border-color: #947E45; 
 }</string>
        </property>
        <property name="placeholderText">
@@ -161,14 +167,16 @@ border-color: rgb(130, 118, 255);
      <item>
       <widget class="QLineEdit" name="input_password_repeat">
        <property name="styleSheet">
-        <string notr="true">border: 2px solid #373C66;
+        <string notr="true">QLineEdit{
+border: 2px solid #373C66;
 color: white;
 border-radius: 15px;
 padding: 5px 10px;
 outline: none;
+}
 
-focus {
-border-color: rgb(130, 118, 255);
+QLineEdit:focus{ 
+	border-color: #947E45; 
 }</string>
        </property>
        <property name="text">
@@ -204,9 +212,15 @@ border-color: rgb(130, 118, 255);
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">border: 2px solid white;
+        <string notr="true">QPushButton{
+border: 2px solid white;
 padding: 5px;
-border-radius: 10px;</string>
+border-radius: 10px;
+}
+
+QPushButton:hover{
+	background-color : gray;
+}</string>
        </property>
        <property name="text">
         <string>Зарегистрироваться</string>
@@ -253,9 +267,15 @@ border-radius: 10px;</string>
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: 2px solid rgb(107, 89, 255);
+          <string notr="true">QPushButton{
+border: 2px solid rgb(107, 89, 255);
 padding: 5px;
-border-radius: 10px;</string>
+border-radius: 10px;
+}
+
+QPushButton:hover{
+background: #340C7D;
+}</string>
          </property>
          <property name="text">
           <string>Войти</string>
