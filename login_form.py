@@ -45,6 +45,8 @@ class LoginForm(QtCore.QObject):
         # Проверка на нахождения логина в базе данных
         if current_user is None:
             self.ui.input_login.setStyleSheet(Config.RedBorder)
+        if not self.ui.input_password.text():
+            self.ui.input_password.setStyleSheet(Config.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
             print('Выполнен вход')
         else:
