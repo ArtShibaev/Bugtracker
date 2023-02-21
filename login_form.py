@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 
 from registration_form import RegistrationForm
-from config import Config
+from config import Config as styles
 
 load_dotenv('.env')
 
@@ -37,20 +37,20 @@ class LoginForm(QtCore.QObject):
 
     def login(self):
 
-        self.ui.input_login.setStyleSheet(Config.DefaultBorder)
-        self.ui.input_password.setStyleSheet(Config.DefaultBorder)
+        self.ui.input_login.setStyleSheet(styles.DefaultBorder)
+        self.ui.input_password.setStyleSheet(styles.DefaultBorder)
 
         current_user = find_user(self.ui.input_login.text())
 
         # Проверка на нахождения логина в базе данных
         if current_user is None:
-            self.ui.input_login.setStyleSheet(Config.RedBorder)
+            self.ui.input_login.setStyleSheet(styles.RedBorder)
         if not self.ui.input_password.text():
-            self.ui.input_password.setStyleSheet(Config.RedBorder)
+            self.ui.input_password.setStyleSheet(styles.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
             print('Выполнен вход')
         else:
-            self.ui.input_password.setStyleSheet(Config.RedBorder)
+            self.ui.input_password.setStyleSheet(styles.RedBorder)
 
 
     def showHidePassword(self):
