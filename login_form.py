@@ -81,5 +81,5 @@ class LoginForm(QtCore.QObject):
     def goToWelcomePage(self):
         from welcome_page_form import WelcomePageForm
         self.ui.hide()
-        self.ui = WelcomePageForm()
+        self.ui = WelcomePageForm(self.ui.input_login.text())
         self.ui.show()
