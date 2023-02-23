@@ -18,11 +18,16 @@ mongo_url = os.environ.get('MONGO_URL')
 client = MongoClient(mongo_url)
 db = client['bugtracker']
 users = db['users']
+projects = db['projects']
 
-def find_user(login):
+def findUser(login):
     user = users.find_one({'login': login})
-
     return user
+
+# Функция возвращает все проекты, которые есть у пользователя
+def findOwnedProjects(uid):
+    result = projects.find_one({'owner': uid})
+    return result
 
 class LoginForm(QtCore.QObject):
     def __init__(self):
@@ -41,7 +46,7 @@ class LoginForm(QtCore.QObject):
         self.ui.input_login.setStyleSheet(styles.DefaultBorder)
         self.ui.input_password.setStyleSheet(styles.DefaultBorder)
 
-        current_user = find_user(self.ui.input_login.text())
+        current_user = findUser(self.ui.input_login.text())
 
         # Проверка на нахождения логина в базе данных
         if current_user is None:
@@ -49,10 +54,11 @@ class LoginForm(QtCore.QObject):
         if not self.ui.input_password.text():
             self.ui.input_password.setStyleSheet(styles.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
-            print('Выполнен вход')
-            self.ui.hide()
-            self.ui = WelcomePageForm()
-            self.ui.show()
+             if findOwnedProjects(current_user['uid']) is not None:
+                 print('У юзера есть проекты')
+                 # и тут открывается главная страница проекта...
+             else:
+                 self.goToWelcomePage()
         else:
             self.ui.input_password.setStyleSheet(styles.RedBorder)
 
@@ -70,4 +76,10 @@ class LoginForm(QtCore.QObject):
         self.ui.hide()
         # Переопределяем интерфейс на регистрацию
         self.ui = RegistrationForm()
+        self.ui.show()
+
+    def goToWelcomePage(self):
+        from welcome_page_form import WelcomePageForm
+        self.ui.hide()
+        self.ui = WelcomePageForm()
         self.ui.show()

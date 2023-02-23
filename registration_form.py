@@ -1,3 +1,4 @@
+
 from PySide6 import QtCore
 from PySide6.QtUiTools import QUiLoader
 
@@ -8,6 +9,7 @@ import re
 import time
 import hashlib
 import os
+import random
 from config import Config as styles
 
 load_dotenv('.env')
@@ -75,16 +77,19 @@ class RegistrationForm(QtCore.QObject):
                 "password": hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest(),
                 "email": self.ui.input_email.text(),
                 # Время в Unix
-                "registrationDate": round(time.time()*1000)
+                "registrationDate": round(time.time()*1000),
+                "uid": random.randrange(111111, 999999, 6),
             })
-            self.goToLogin()
+            self.goToWelcomePage()
 
     def goToLogin(self):
-        # Да, это импорт посередине кода. Если указать его сверху, то компилятор распознает его как зацикленный
-        # Поэтому файл ипортируется только тогда, когда нужно
-        # Только это создает полусекундную задержку :(
         from login_form import LoginForm
-
         self.ui.hide()
         self.ui = LoginForm()
+        self.ui.show()
+
+    def goToWelcomePage(self):
+        from welcome_page_form import WelcomePageForm
+        self.ui.hide()
+        self.ui = WelcomePageForm()
         self.ui.show()
