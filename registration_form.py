@@ -77,7 +77,7 @@ class RegistrationForm(QtCore.QObject):
                 # Время в Unix
                 "registrationDate": round(time.time()*1000)
             })
-            self.ui.close()
+            self.goToLogin()
 
     def goToLogin(self):
         # Да, это импорт посередине кода. Если указать его сверху, то компилятор распознает его как зацикленный

@@ -1,4 +1,4 @@
-from PySide6 import QtCore
+from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
 
@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 
 from registration_form import RegistrationForm
+from welcome_page_form import WelcomePageForm
 from config import Config as styles
 
 load_dotenv('.env')
@@ -49,6 +50,9 @@ class LoginForm(QtCore.QObject):
             self.ui.input_password.setStyleSheet(styles.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
             print('Выполнен вход')
+            self.ui.hide()
+            self.ui = WelcomePageForm()
+            self.ui.show()
         else:
             self.ui.input_password.setStyleSheet(styles.RedBorder)
 
