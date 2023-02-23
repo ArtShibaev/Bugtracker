@@ -73,13 +73,12 @@ class RegistrationForm(QtCore.QObject):
         if self.validator():
             users.insert_one({
                 "login": self.ui.input_login.text(),
-                # Хэширование пароля
                 "password": hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest(),
                 "email": self.ui.input_email.text(),
-                # Время в Unix
                 "registrationDate": round(time.time()*1000),
                 "uid": random.randrange(111111, 999999, 6),
             })
+            # После регистрации у юзера точно не будет никаких проектов, поэтому он всегда будет переходить на пустую страницу
             self.goToWelcomePage()
 
     def goToLogin(self):
