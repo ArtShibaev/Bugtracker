@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1307</width>
-    <height>760</height>
+    <width>1315</width>
+    <height>772</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -287,18 +287,23 @@ margin: 0;</string>
              </property>
              <property name="font">
               <font>
-               <pointsize>16</pointsize>
+               <pointsize>-1</pointsize>
+               <weight>99</weight>
+               <bold>true</bold>
               </font>
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #501AEC;
-border-radius: 10px;</string>
+              <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(5, 100, 210, 255), stop:1 rgba(42, 32, 155, 255));
+border-radius: 10px;
+color: white;
+font-weight: 800;
+font-size: 21px;</string>
              </property>
              <property name="text">
-              <string>Создать крточку</string>
+              <string>Добавить отчет</string>
              </property>
             </widget>
            </item>
