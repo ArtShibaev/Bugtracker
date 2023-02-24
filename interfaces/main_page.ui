@@ -423,6 +423,9 @@ border-radius: 10px;</string>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: white;</string>
+                    </property>
                     <property name="text">
                      <string/>
                     </property>

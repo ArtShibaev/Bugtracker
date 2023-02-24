@@ -1,4 +1,4 @@
-from PySide6 import QtCore
+from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
 
@@ -25,11 +25,17 @@ class MainPage(QtCore.QObject):
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.fillingProjectList(uid)
 
+        # TODO: Все-таки лоадер картинок нужно оптимизировать, чтобы он был универсальным для всех файлов
+        self.ui.new_project.setIcon(QtGui.QIcon('./images/plus.png'))
+        self.ui.home.setIcon(QtGui.QIcon('./images/main_page.png'))
+        self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
+        self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
+
     def show(self):
         self.ui.show()
 
     def fillingProjectList(self, uid):
-        pj = list(projects.find({'owner': uid}))
-        for i in range(len(pj)):
-            print(pj[i]["title"])
-            self.ui.projects_list.addItem(pj[i]["title"])
+        res = list(projects.find({'owner': uid}))
+        for project in res:
+            print(project["title"])
+            self.ui.projects_list.addItem(project["title"])
