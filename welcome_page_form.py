@@ -70,9 +70,3 @@ class WelcomePageForm(QtCore.QObject):
             self.closeCreateNewProjectPage()
         else:
             self.ui_create.newproject_name.setPlaceholderText ("Введите название проекта!")
-
-
-
-
-
-

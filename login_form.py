@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 
 from registration_form import RegistrationForm
+from main_page import MainPage
 from config import Config as styles
 
 load_dotenv('.env')
@@ -55,7 +56,9 @@ class LoginForm(QtCore.QObject):
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
              if findOwnedProjects(current_user['uid']) is not None:
                  print('У юзера есть проекты')
-                 # и тут открывается главная страница проекта...
+                 self.ui.hide()
+                 self.ui = MainPage(current_user['uid'])
+                 self.ui.show()
              else:
                  self.goToWelcomePage()
         else:
