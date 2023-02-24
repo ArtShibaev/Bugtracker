@@ -64,7 +64,13 @@ class WelcomePageForm(QtCore.QObject):
                 "owner": getUserInfo(self.user_login)['uid'],
                 "bugs": [],
                 "deadlines": [],
-                "tags": [],
+                "tags": [
+                    {"name": "Баг", "color": "#D73A4A"},
+                    {"name": "Дубликат", "color": "#CFD3D7"},
+                    {"name": "Улучшение", "color": "#A2EEEF"},
+                    {"name": "Нужна помощь", "color": "#008672"},
+                    {"name": "Не будет исправлено", "color": "#FFFFFF"},
+                ],
             })
             print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
             self.closeCreateNewProjectPage()
