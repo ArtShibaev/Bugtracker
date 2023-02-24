@@ -17,9 +17,9 @@ db = client['bugtracker']
 users = db['users']
 projects = db['projects']
 
-def findUid(login):
+def getUserInfo(login):
     user = users.find_one({'login': login})
-    return user['uid']
+    return user
 
 class WelcomePageForm(QtCore.QObject):
     def __init__(self, login):
@@ -33,7 +33,7 @@ class WelcomePageForm(QtCore.QObject):
 
         Images.load_image(self)
 
-        self.ui.welcome_user.setText(f'Приветcтвуем, {self.user_login}!')
+        self.ui.welcome_user.setText(f'Привет, {self.user_login}!')
 
     def show(self):
         self.ui.show()
@@ -61,12 +61,12 @@ class WelcomePageForm(QtCore.QObject):
             self.ui.projects_list.addItem(self.ui_create.newproject_name.text())
             projects.insert_one({
                 "title": self.ui_create.newproject_name.text(),
-                "owner": findUid(self.user_login),
-                "bugs": 0,
-                "deadlines": 0,
-                "tags": 0,
+                "owner": getUserInfo(self.user_login)['uid'],
+                "bugs": [],
+                "deadlines": [],
+                "tags": [],
             })
             print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
             self.closeCreateNewProjectPage()
         else:
-            self.ui_create.newproject_name.setPlaceholderText ("Введите название проекта!")
+            self.ui_create.newproject_name.setPlaceholderText ("Введите название проекта")
