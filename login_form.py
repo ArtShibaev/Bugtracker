@@ -7,7 +7,6 @@ import os
 from dotenv import load_dotenv
 
 from registration_form import RegistrationForm
-from welcome_page_form import WelcomePageForm
 from config import Config as styles
 
 load_dotenv('.env')

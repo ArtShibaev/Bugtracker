@@ -1,12 +1,27 @@
 from PySide6 import QtCore
 from PySide6.QtUiTools import QUiLoader
+from pymongo import MongoClient
+
+import os
+from dotenv import load_dotenv
 
 from image_loader import Images
 
+load_dotenv('.env')
+
+
 loader = QUiLoader()
+mongo_url = os.environ.get('MONGO_URL')
+client = MongoClient(mongo_url)
+db = client['bugtracker']
+users = db['users']
+projects = db['projects']
+
+def findUid(login):
+    user = users.find_one({'login': login})
+    return user['uid']
 
 class WelcomePageForm(QtCore.QObject):
-
     def __init__(self, login):
         super().__init__()
         self.ui = loader.load('./interfaces/welcome_page.ui', None)
@@ -44,6 +59,13 @@ class WelcomePageForm(QtCore.QObject):
             self.ui.label_12.setVisible(False)
             self.ui.sp_new_project.setVisible(False)
             self.ui.projects_list.addItem(self.ui_create.newproject_name.text())
+            projects.insert_one({
+                "title": self.ui_create.newproject_name.text(),
+                "owner": findUid(self.user_login),
+                "bugs": 0,
+                "deadlines": 0,
+                "tags": 0,
+            })
             print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
             self.closeCreateNewProjectPage()
         else:
