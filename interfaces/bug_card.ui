@@ -40,6 +40,7 @@
   <property name="styleSheet">
    <string notr="true">QFrame {
 background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(108, 87, 193, 255), stop:1 rgba(72, 38, 138, 255)) ;
+border-radius: 14px;
 }
 </string>
   </property>
@@ -115,9 +116,8 @@ font-weight: 500;</string>
       <item row="0" column="1">
        <widget class="QLabel" name="criticality">
         <property name="styleSheet">
-         <string notr="true">
-background: red;
-border-radius: 50px;</string>
+         <string notr="true">background: red;
+border-radius: 14px;</string>
         </property>
         <property name="lineWidth">
          <number>1</number>
