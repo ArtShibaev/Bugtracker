@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>222</width>
-    <height>108</height>
+    <width>226</width>
+    <height>116</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,12 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
+      <property name="horizontalSpacing">
+       <number>0</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>10</number>
+      </property>
       <item row="0" column="0">
        <widget class="QLineEdit" name="newproject_name">
         <property name="enabled">
@@ -57,7 +63,7 @@ background: #373C66;
       <item row="1" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>30</number>
+         <number>10</number>
         </property>
         <item>
          <widget class="QPushButton" name="create_pj">
@@ -72,7 +78,8 @@ background: #373C66;
           </property>
           <property name="styleSheet">
            <string notr="true">background: #322F6E;
-border-radius: 10px;</string>
+border-radius: 10px;
+color: white;</string>
           </property>
           <property name="text">
            <string>Создать</string>
@@ -92,7 +99,8 @@ border-radius: 10px;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">background: #322F6E;
-border-radius: 10px;</string>
+border-radius: 10px;
+color: white;</string>
           </property>
           <property name="text">
            <string>Отмена</string>
