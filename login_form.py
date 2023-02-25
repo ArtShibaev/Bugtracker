@@ -57,7 +57,7 @@ class LoginForm(QtCore.QObject):
              if findOwnedProjects(current_user['uid']) is not None:
                  print('У юзера есть проекты')
                  self.ui.hide()
-                 self.ui = MainPage(current_user['uid'])
+                 self.ui = MainPage(current_user['uid'], current_user['login'])
                  self.ui.show()
              else:
                  self.goToWelcomePage()

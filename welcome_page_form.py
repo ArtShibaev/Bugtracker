@@ -26,6 +26,7 @@ class WelcomePageForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/welcome_page.ui', None)
         self.ui_create = loader.load('./interfaces/create_new_project_form.ui', None)
+        self.ui_create_card = loader.load('./interfaces/create_new_card_form.ui', None)
         self.ui.create_card.setVisible(False)
         self.ui.sp_new_project.clicked.connect(self.createNewProject)
         self.ui.new_project.clicked.connect(self.createNewProject)
@@ -75,4 +76,5 @@ class WelcomePageForm(QtCore.QObject):
             print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
             self.closeCreateNewProjectPage()
         else:
-            self.ui_create.newproject_name.setPlaceholderText ("Введите название проекта")
+            self.ui_create.newproject_name.setPlaceholderText("Введите название проекта")
+
