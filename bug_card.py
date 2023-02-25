@@ -21,7 +21,7 @@ backgrounds = [
     'background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(169, 235, 216, 255), stop:1 rgba(102, 197, 157, 255));border-radius: 14px;}',
 
 ]
-class BugCard(QWidget):˚
+class BugCard(QWidget):
     def __init__(self, title, date, author_id, assignee_id, tags, criticality):
         super().__init__()
 
