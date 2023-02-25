@@ -544,7 +544,7 @@ background: #373C66;
        <number>15</number>
       </property>
       <property name="horizontalSpacing">
-       <number>-1</number>
+       <number>6</number>
       </property>
       <property name="verticalSpacing">
        <number>0</number>
@@ -649,8 +649,8 @@ border-radius: 10px;</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>243</width>
-          <height>658</height>
+          <width>280</width>
+          <height>666</height>
          </size>
         </property>
         <property name="layoutDirection">
