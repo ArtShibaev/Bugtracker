@@ -25,7 +25,11 @@ class MainPage(QtCore.QObject):
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.fillingProjectList(uid)
 
-        Images.load_image_for_main_page(self)
+        # TODO: Все-таки лоадер картинок нужно оптимизировать, чтобы он был универсальным для всех файлов
+        self.ui.new_project.setIcon(QtGui.QIcon('./images/plus.png'))
+        self.ui.home.setIcon(QtGui.QIcon('./images/main_page.png'))
+        self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
+        self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
 
     def show(self):
         self.ui.show()

@@ -31,7 +31,7 @@ class WelcomePageForm(QtCore.QObject):
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.user_login = login
 
-        Images.load_image_for_welcome_page(self)
+        Images.load_image(self)
 
         self.ui.welcome_user.setText(f'Привет, {self.user_login}!')
 
