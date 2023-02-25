@@ -589,7 +589,7 @@ border-radius: 10px;</string>
          <item row="0" column="0">
           <layout class="QHBoxLayout" name="bug_cards">
            <property name="spacing">
-            <number>0</number>
+            <number>20</number>
            </property>
           </layout>
          </item>
