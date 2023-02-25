@@ -1,5 +1,4 @@
 from PySide6 import QtCore, QtGui
-import os
 
 class Images(QtCore.QObject):
 
