@@ -557,7 +557,11 @@ border-radius: 10px;</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_8">
          <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout"/>
+          <layout class="QHBoxLayout" name="bug_cards">
+           <property name="spacing">
+            <number>15</number>
+           </property>
+          </layout>
          </item>
         </layout>
        </widget>
