@@ -87,8 +87,11 @@ border-radius: 10px;</string>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="bottomMargin">
+          <number>13</number>
+         </property>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="cancel">
            <property name="minimumSize">
             <size>
              <width>121</width>
@@ -102,7 +105,7 @@ border-radius: 10px;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(5, 100, 210, 255), stop:1 rgba(42, 32, 155, 255));
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(221, 48, 48, 255), stop:1 rgba(237, 122, 17, 255));
 border-radius: 10px;
 color: white;
 font-weight: 800;
@@ -114,7 +117,7 @@ font-size: 21px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="submit">
            <property name="minimumSize">
             <size>
              <width>121</width>
@@ -128,7 +131,7 @@ font-size: 21px;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(5, 100, 210, 255), stop:1 rgba(42, 32, 155, 255));
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(44, 197, 111, 255), stop:1 rgba(190, 220, 124, 255));
 border-radius: 10px;
 color: white;
 font-weight: 800;
@@ -144,7 +147,7 @@ font-size: 21px;</string>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
          <property name="leftMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <property name="rightMargin">
           <number>10</number>
@@ -176,7 +179,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="title">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -224,6 +227,9 @@ background: #1B1E3D;
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>-1</number>
+             </property>
              <item>
               <widget class="QLabel" name="label_3">
                <property name="styleSheet">
@@ -236,7 +242,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QTextEdit" name="textEdit">
+              <widget class="QTextEdit" name="description">
                <property name="maximumSize">
                 <size>
                  <width>253</width>
@@ -276,7 +282,7 @@ color: white;</string>
               </layout>
              </item>
              <item>
-              <widget class="QTextEdit" name="textEdit_2">
+              <widget class="QTextEdit" name="reproduction">
                <property name="maximumSize">
                 <size>
                  <width>253</width>
@@ -309,7 +315,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="tags">
                <property name="styleSheet">
                 <string notr="true">border: 2px solid #373C66;
 color: white;
@@ -336,7 +342,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_2">
+              <widget class="QComboBox" name="criticality">
                <property name="styleSheet">
                 <string notr="true">border: 2px solid #373C66;
 color: white;
@@ -363,7 +369,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_3">
+              <widget class="QComboBox" name="assignee">
                <property name="styleSheet">
                 <string notr="true">border: 2px solid #373C66;
 color: white;
@@ -390,7 +396,7 @@ color: white;</string>
               </widget>
              </item>
              <item>
-              <widget class="QDateEdit" name="dateEdit">
+              <widget class="QDateEdit" name="deadline">
                <property name="styleSheet">
                 <string notr="true">border: 2px solid #373C66;
 color: white;
@@ -398,6 +404,22 @@ border-radius: 10px;
 padding: 5px 10px;
 outline: none;
 background: #1B1E3D;</string>
+               </property>
+               <property name="dateTime">
+                <datetime>
+                 <hour>0</hour>
+                 <minute>0</minute>
+                 <second>0</second>
+                 <year>2023</year>
+                 <month>2</month>
+                 <day>26</day>
+                </datetime>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="timeSpec">
+                <enum>Qt::LocalTime</enum>
                </property>
               </widget>
              </item>
@@ -426,6 +448,17 @@ background: #1B1E3D;</string>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>title</tabstop>
+  <tabstop>description</tabstop>
+  <tabstop>reproduction</tabstop>
+  <tabstop>tags</tabstop>
+  <tabstop>criticality</tabstop>
+  <tabstop>assignee</tabstop>
+  <tabstop>deadline</tabstop>
+  <tabstop>submit</tabstop>
+  <tabstop>cancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
