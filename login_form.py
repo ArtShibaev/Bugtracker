@@ -55,7 +55,6 @@ class LoginForm(QtCore.QObject):
             self.ui.input_password.setStyleSheet(styles.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
              if findOwnedProjects(current_user['uid']) is not None:
-                 print('У юзера есть проекты')
                  self.ui.hide()
                  self.ui = MainPage(current_user['uid'], current_user['login'])
                  self.ui.show()

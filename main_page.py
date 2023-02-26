@@ -29,10 +29,15 @@ class MainPage(QtCore.QObject):
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.ui_create = loader.load('./interfaces/create_new_project_form.ui', None)
         self.ui.new_project.clicked.connect(self.createNewProject)
+
         self.fillingProjectList(uid)
         certainProject = projects.find_one({'owner': uid})
+        self.loadBugCards(certainProject)
+
+        self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
+
+
         self.user_login = login
-        self.fillBugCards(certainProject)
 
         Images.load_image(self, 'main_page')
 
@@ -44,10 +49,20 @@ class MainPage(QtCore.QObject):
         for project in res:
             self.ui.projects_list.addItem(project["title"])
 
-    def fillBugCards(self, project):
-        for bug in project['bugs']:
+    def loadBugCards(self, project):
+        self.clearLayout(self.ui.bug_cards.layout())
+        for bug in project['bugs'][:3]:
             bug = BugCard(bug['title'], datetime.utcfromtimestamp(bug['createdDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'])
             self.ui.bug_cards.addWidget(bug)
+
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget() is not None:
+                    child.widget().deleteLater()
+                elif child.layout() is not None:
+                    self.clearLayout(child.layout())
 
     def createNewProject(self):
         self.ui.new_project.setEnabled(False)
@@ -61,6 +76,11 @@ class MainPage(QtCore.QObject):
         self.ui.create_card.setEnabled(True)
         self.ui_create.newproject_name.setText('')
         self.ui_create.close()
+
+    def reloadProjectInfo(self):
+        project = projects.find_one({'title': self.ui.projects_list.currentText()})
+        self.loadBugCards(project)
+
 
     def newProject(self):
         if self.ui_create.newproject_name.text() != '':
@@ -78,7 +98,6 @@ class MainPage(QtCore.QObject):
                     {"name": "Не будет исправлено", "color": "#FFFFFF"},
                 ],
             })
-            print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
             self.closeCreateNewProjectPage()
         else:
             self.ui_create.newproject_name.setPlaceholderText("Введите название проекта")
