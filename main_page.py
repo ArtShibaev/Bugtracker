@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from bug_card import BugCard
 from image_loader import Images
+from config import Config as styles
 
 load_dotenv('.env')
 
@@ -28,14 +29,15 @@ class MainPage(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.ui_create = loader.load('./interfaces/create_new_project_form.ui', None)
+        self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
         self.ui.new_project.clicked.connect(self.createNewProject)
+        self.ui.create_card.clicked.connect(self.createNewBugCard)
 
         self.fillingProjectList(uid)
-        certainProject = projects.find_one({'owner': uid})
-        self.loadBugCards(certainProject)
+        self.certainProject = projects.find_one({'owner': uid})
+        self.loadBugCards(self.certainProject)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
-
 
         self.user_login = login
 
@@ -48,6 +50,34 @@ class MainPage(QtCore.QObject):
         res = list(projects.find({'owner': uid}))
         for project in res:
             self.ui.projects_list.addItem(project["title"])
+
+    def createNewBugCard(self):
+        self.ui.new_project.setEnabled(False)
+        self.ui.create_card.setEnabled(False)
+        self.ui_create_card.show()
+        self.ui_create_card.cancel_bug_card.clicked.connect(self.closecreateNewBugCardForm)
+
+        for tag in range(len(self.certainProject['tags'])):
+            self.ui_create_card.tags.addItem(self.certainProject['tags'][tag]['name'])
+        self.ui_create_card.criticality.addItem("Низкая")
+        self.ui_create_card.criticality.addItem("Средняя")
+        self.ui_create_card.criticality.addItem("Высокая")
+        self.ui_create_card.assignee.addItem("Нет")
+        self.ui_create_card.assignee.addItem(self.user_login)
+        #self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
+
+
+    def closecreateNewBugCardForm(self):
+        self.ui.new_project.setEnabled(True)
+        self.ui.create_card.setEnabled(True)
+        self.ui_create_card.close()
+        self.ui_create_card.title.setText('')
+        self.ui_create_card.description.setText('')
+        self.ui_create_card.reproduction.setText('')
+        self.ui_create_card.tags.clear()
+        self.ui_create_card.criticality.clear()
+        self.ui_create_card.assignee.clear()
+
 
     def loadBugCards(self, project):
         self.clearLayout(self.ui.bug_cards.layout())

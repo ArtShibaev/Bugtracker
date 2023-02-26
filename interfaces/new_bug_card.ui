@@ -91,7 +91,7 @@ border-radius: 10px;</string>
           <number>13</number>
          </property>
          <item>
-          <widget class="QPushButton" name="cancel">
+          <widget class="QPushButton" name="cancel_bug_card">
            <property name="minimumSize">
             <size>
              <width>121</width>
@@ -103,6 +103,9 @@ border-radius: 10px;</string>
              <width>121</width>
              <height>51</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(221, 48, 48, 255), stop:1 rgba(237, 122, 17, 255));
@@ -117,7 +120,7 @@ font-size: 21px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="submit">
+          <widget class="QPushButton" name="create_bug_card">
            <property name="minimumSize">
             <size>
              <width>121</width>
@@ -129,6 +132,9 @@ font-size: 21px;</string>
              <width>121</width>
              <height>51</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(44, 197, 111, 255), stop:1 rgba(190, 220, 124, 255));
@@ -228,7 +234,7 @@ background: #1B1E3D;
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="spacing">
-              <number>-1</number>
+              <number>6</number>
              </property>
              <item>
               <widget class="QLabel" name="label_3">
@@ -405,16 +411,6 @@ padding: 5px 10px;
 outline: none;
 background: #1B1E3D;</string>
                </property>
-               <property name="dateTime">
-                <datetime>
-                 <hour>0</hour>
-                 <minute>0</minute>
-                 <second>0</second>
-                 <year>2023</year>
-                 <month>2</month>
-                 <day>26</day>
-                </datetime>
-               </property>
                <property name="calendarPopup">
                 <bool>true</bool>
                </property>
@@ -456,8 +452,8 @@ background: #1B1E3D;</string>
   <tabstop>criticality</tabstop>
   <tabstop>assignee</tabstop>
   <tabstop>deadline</tabstop>
-  <tabstop>submit</tabstop>
-  <tabstop>cancel</tabstop>
+  <tabstop>create_bug_card</tabstop>
+  <tabstop>cancel_bug_card</tabstop>
  </tabstops>
  <resources/>
  <connections/>
