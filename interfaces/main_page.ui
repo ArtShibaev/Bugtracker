@@ -563,6 +563,9 @@ background: #373C66;
           <height>180</height>
          </size>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::NoContextMenu</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">background: #322F6E;
 border-radius: 10px;</string>
@@ -590,6 +593,15 @@ border-radius: 10px;</string>
           <layout class="QHBoxLayout" name="bug_cards">
            <property name="spacing">
             <number>20</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
            </property>
           </layout>
          </item>
