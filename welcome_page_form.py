@@ -73,8 +73,11 @@ class WelcomePageForm(QtCore.QObject):
                     {"name": "Не будет исправлено", "color": "#FFFFFF"},
                 ],
             })
-            print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
-            self.closeCreateNewProjectPage()
+            self.ui.hide()
+
+            self.ui = loader.load('./interfaces/main_page.ui', None)
+            self.ui.show()
+
         else:
             self.ui_create.newproject_name.setPlaceholderText("Введите название проекта")
 
