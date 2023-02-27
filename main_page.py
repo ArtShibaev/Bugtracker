@@ -1,5 +1,6 @@
 from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QPushButton, QComboBox
 from pymongo import MongoClient
 from datetime import datetime
 
@@ -28,7 +29,7 @@ class MainPage(QtCore.QObject):
     def __init__(self, uid, login):
         super().__init__()
         self.ui = loader.load('./interfaces/main_page.ui', None)
-        self.ui_create = loader.load('./interfaces/create_new_project_form.ui', None)
+        self.ui_create_project = loader.load('./interfaces/create_new_project_form.ui', None)
         self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
 
         self.ui.new_project.clicked.connect(self.createNewProject)
@@ -53,8 +54,10 @@ class MainPage(QtCore.QObject):
             self.ui.projects_list.addItem(project["title"])
 
     def createNewBugCard(self):
+        for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
+            x.setEnabled(False)
         self.ui_create_card.show()
-        self.ui_create_card.cancel_bug_card.clicked.connect(self.closecreateNewBugCardForm)
+        self.ui_create_card.cancel_bug_card.clicked.connect(self.closeCreateNewBugCard)
 
         for tag in range(len(self.certainProject['tags'])):
             self.ui_create_card.tags.addItem(self.certainProject['tags'][tag]['name'])
@@ -64,13 +67,15 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.criticality.addItem("Средняя")
         self.ui_create_card.criticality.addItem("Высокая")
         self.ui_create_card.assignee.addItem("Нет")
+        # еще нужно добавлять в дропдаун всех участников команды
         self.ui_create_card.assignee.addItem(self.user_login)
         # self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
 
-    def closecreateNewBugCardForm(self):
-        self.ui.new_project.setEnabled(True)
-        self.ui.create_card.setEnabled(True)
+    def closeCreateNewBugCard(self):
+        for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
+            x.setEnabled(True)
+        self.ui_create_card.show()
         self.ui_create_card.close()
         self.ui_create_card.title.setText('')
         self.ui_create_card.description.setText('')
@@ -96,17 +101,19 @@ class MainPage(QtCore.QObject):
                     self.clearLayout(child.layout())
 
     def createNewProject(self):
-        self.ui.new_project.setEnabled(False)
-        self.ui.create_card.setEnabled(False)
-        self.ui_create.show()
-        self.ui_create.back.clicked.connect(self.closeCreateNewProjectPage)
-        self.ui_create.create_pj.clicked.connect(self.newProject)
+        for x in self.ui.findChildren(QPushButton):
+            x.setEnabled(False)
+        self.ui_create_project.show()
+        self.ui_create_project.back.clicked.connect(self.closeCreateNewProject)
+        self.ui_create_project.create_pj.clicked.connect(self.newProject)
 
-    def closeCreateNewProjectPage(self):
+    def closeCreateNewProject(self):
+        for x in self.ui.findChildren(QPushButton):
+            x.setEnabled(True)
         self.ui.new_project.setEnabled(True)
         self.ui.create_card.setEnabled(True)
-        self.ui_create.newproject_name.setText('')
-        self.ui_create.close()
+        self.ui_create_project.newproject_name.setText('')
+        self.ui_create_project.close()
 
     def reloadProjectInfo(self):
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
@@ -114,10 +121,10 @@ class MainPage(QtCore.QObject):
 
 
     def newProject(self):
-        if self.ui_create.newproject_name.text() != '':
-            self.ui.projects_list.addItem(self.ui_create.newproject_name.text())
+        if self.ui_create_project.newproject_name.text() != '':
+            self.ui.projects_list.addItem(self.ui_create_project.newproject_name.text())
             projects.insert_one({
-                "title": self.ui_create.newproject_name.text(),
+                "title": self.ui_create_project.newproject_name.text(),
                 "owner": getUserInfo(self.user_login)['uid'],
                 "bugs": [],
                 "deadlines": [],
@@ -131,6 +138,6 @@ class MainPage(QtCore.QObject):
             })
             self.closeCreateNewProjectPage()
         else:
-            self.ui_create.newproject_name.setPlaceholderText("Введите название проекта")
+            self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
 
 
