@@ -59,6 +59,8 @@ class MainPage(QtCore.QObject):
 
         for tag in range(len(self.certainProject['tags'])):
             self.ui_create_card.tags.addItem(self.certainProject['tags'][tag]['name'])
+        self.ui_create_card.tags.addItem('+ Создать новый')
+
         self.ui_create_card.criticality.addItem("Низкая")
         self.ui_create_card.criticality.addItem("Средняя")
         self.ui_create_card.criticality.addItem("Высокая")
