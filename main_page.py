@@ -53,7 +53,7 @@ class MainPage(QtCore.QObject):
         for project in res:
             self.ui.projects_list.addItem(project["title"])
 
-    def createNewBugCard(self):
+    def createNewBugCard(self, project):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(False)
         self.ui_create_card.show()
@@ -71,11 +71,12 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.addItem(self.user_login)
         # self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
+        # project['bugs'].append({...})
+        # projects.updateOne({...}, project)
 
     def closeCreateNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(True)
-        self.ui_create_card.show()
         self.ui_create_card.close()
         self.ui_create_card.title.setText('')
         self.ui_create_card.description.setText('')
