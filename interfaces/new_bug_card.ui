@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>new_bag_card</class>
- <widget class="QMainWindow" name="new_bag_card">
+ <class>new_bug_card</class>
+ <widget class="QMainWindow" name="new_bug_card">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>569</width>
+    <width>570</width>
     <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>551</width>
+    <width>570</width>
     <height>720</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>98999</width>
-    <height>99999</height>
+    <width>570</width>
+    <height>720</height>
    </size>
   </property>
   <property name="windowTitle">
