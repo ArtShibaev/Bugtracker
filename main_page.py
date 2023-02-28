@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 
 from bug_card import BugCard
 from image_loader import Images
-from config import Config as styles
 
 load_dotenv('.env')
 
@@ -63,12 +62,14 @@ class MainPage(QtCore.QObject):
             self.ui_create_card.tags.addItem(self.certainProject['tags'][tag]['name'])
         self.ui_create_card.tags.addItem('+ Создать новый')
 
-        self.ui_create_card.criticality.addItem("Низкая")
-        self.ui_create_card.criticality.addItem("Средняя")
-        self.ui_create_card.criticality.addItem("Высокая")
+        criticalityLevel = ["Низкая", "Средняя", "Высокая"]
+        for crit in criticalityLevel:
+            self.ui_create_card.criticality.addItem(crit)
+
         self.ui_create_card.assignee.addItem("Нет")
         # еще нужно добавлять в дропдаун всех участников команды
         self.ui_create_card.assignee.addItem(self.user_login)
+
         # self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
         # project['bugs'].append({...})
@@ -137,7 +138,7 @@ class MainPage(QtCore.QObject):
                     {"name": "Не будет исправлено", "color": "#FFFFFF"},
                 ],
             })
-            self.closeCreateNewProjectPage()
+            self.closeCreateNewProject()
         else:
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
 
