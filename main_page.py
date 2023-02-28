@@ -70,10 +70,16 @@ class MainPage(QtCore.QObject):
         # еще нужно добавлять в дропдаун всех участников команды
         self.ui_create_card.assignee.addItem(self.user_login)
 
-        # self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
+        self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
         # project['bugs'].append({...})
         # projects.updateOne({...}, project)
+
+    def recordBugData(self):
+        data = [self.ui_create_card.title.text(), self.ui_create_card.description.toPlainText(), self.ui_create_card.reproduction.toPlainText(),'creationDate', self.user_login, self.ui_create_card.assignee.currentText(), 'deadline', self.ui_create_card.criticality.currentText(), self.ui_create_card.tags.currentText()]
+        print(data)
+        self.closeCreateNewBugCard()
+
 
     def closeCreateNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
