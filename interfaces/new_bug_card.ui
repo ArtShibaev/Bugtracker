@@ -311,24 +311,29 @@ background: #1B1E3D;</string>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <property name="spacing">
+              <number>6</number>
+             </property>
              <item>
-              <widget class="QTextEdit" name="actual_result">
+              <widget class="QLabel" name="label_11">
                <property name="styleSheet">
-                <string notr="true">border: 2px solid #373C66;
-color: white;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;
-background: #1B1E3D;</string>
+                <string notr="true">font-size: 18pt;
+color: white;</string>
                </property>
-               <property name="placeholderText">
-                <string>Фактический результат</string>
+               <property name="text">
+                <string>Предполагаемый результат</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QTextEdit" name="supposed_result">
+               <property name="maximumSize">
+                <size>
+                 <width>253</width>
+                 <height>156</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">border: 2px solid #373C66;
 color: white;
@@ -337,8 +342,41 @@ padding: 5px 10px;
 outline: none;
 background: #1B1E3D;</string>
                </property>
-               <property name="placeholderText">
-                <string>Предполагаемый результат</string>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="styleSheet">
+                <string notr="true">font-size: 18pt;
+color: white;</string>
+               </property>
+               <property name="text">
+                <string>Фактический результат</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="actual_result">
+               <property name="maximumSize">
+                <size>
+                 <width>253</width>
+                 <height>156</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: 2px solid #373C66;
+color: white;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;
+background: #1B1E3D;</string>
                </property>
               </widget>
              </item>
