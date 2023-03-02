@@ -311,6 +311,40 @@ background: #1B1E3D;</string>
             </layout>
            </item>
            <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QTextEdit" name="actual_result">
+               <property name="styleSheet">
+                <string notr="true">border: 2px solid #373C66;
+color: white;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;
+background: #1B1E3D;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Фактический результат</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="supposed_result">
+               <property name="styleSheet">
+                <string notr="true">border: 2px solid #373C66;
+color: white;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;
+background: #1B1E3D;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Предполагаемый результат</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_6">
