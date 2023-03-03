@@ -22,6 +22,12 @@ client = MongoClient(mongo_url)
 db = client['bugtracker']
 users = db['users']
 projects = db['projects']
+teams = db['teams']
+
+def getUserTeam(uid):
+    user_team = teams.find_one({'admin': uid})
+    team_members_id = user_team['members']
+    return team_members_id
 
 def getUserInfo(login):
     user = users.find_one({'login': login})
@@ -61,7 +67,7 @@ class MainPage(QtCore.QObject):
         for project in res:
             self.ui.projects_list.addItem(project["title"])
 
-    def createNewBugCard(self, project):
+    def createNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(False)
         self.ui_create_card.show()
@@ -76,8 +82,11 @@ class MainPage(QtCore.QObject):
             self.ui_create_card.criticality.addItem(crit)
 
         self.ui_create_card.assignee.addItem("Нет")
-        # еще нужно добавлять в дропдаун всех участников команды
+
         self.ui_create_card.assignee.addItem(self.user_login)
+        certainTeam = getUserTeam(self.certainProject['owner'])
+        for user_id in certainTeam:
+            self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
@@ -95,7 +104,6 @@ class MainPage(QtCore.QObject):
         if self.ui_create_card.assignee.currentText() == 'Нет':
             assignee = 'Нет'
         else:
-            print(self.ui_create_card.assignee.currentText())
             assignee = getUserInfo(self.ui_create_card.assignee.currentText())['uid']
 
         deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple()))*1000
