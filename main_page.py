@@ -1,8 +1,11 @@
+import random
+import time
+
 from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QPushButton, QComboBox
 from pymongo import MongoClient
-from datetime import datetime
+import datetime
 
 import os
 from dotenv import load_dotenv
@@ -23,6 +26,12 @@ projects = db['projects']
 def getUserInfo(login):
     user = users.find_one({'login': login})
     return user
+
+backgrounds = [
+    ('background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(108, 87, 193, 255), stop:1 rgba(72, 38, 138, 255));border-radius: 14px;}', 'color:white;background:transparent;font-size:14px;'),
+    ('background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(253, 225, 159, 255), stop:1 rgba(218, 189, 88, 255));border-radius: 14px;}', 'color:black;background:transparent;font-size:14px;'),
+    ('background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(169, 235, 216, 255), stop:1 rgba(102, 197, 157, 255));border-radius: 14px;}', 'color:black;background:transparent;font-size:14px;'),
+]
 
 class MainPage(QtCore.QObject):
     def __init__(self, uid, login):
@@ -72,13 +81,53 @@ class MainPage(QtCore.QObject):
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
-        # project['bugs'].append({...})
-        # projects.updateOne({...}, project)
-
     def recordBugData(self):
-        data = [self.ui_create_card.title.text(), self.ui_create_card.description.toPlainText(), self.ui_create_card.reproduction.toPlainText(),'creationDate', self.user_login, self.ui_create_card.assignee.currentText(), 'deadline', self.ui_create_card.criticality.currentText(), self.ui_create_card.tags.currentText()]
-        print(data)
+
+        if self.ui_create_card.criticality.currentText() == 'Высокая':
+            criticality = 'high'
+        elif self.ui_create_card.criticality.currentText() == 'Средняя':
+            criticality = 'medium'
+        elif self.ui_create_card.criticality.currentText() == 'Низкая':
+            criticality = 'low'
+
+        styles = random.choice(backgrounds)
+
+        if self.ui_create_card.assignee.currentText() == 'Нет':
+            assignee = 'Нет'
+        else:
+            print(self.ui_create_card.assignee.currentText())
+            assignee = getUserInfo(self.ui_create_card.assignee.currentText())['uid']
+
+        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple()))*1000
+
+        # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
+        tags = [self.ui_create_card.tags.currentText()]
+
+        project = self.certainProject
+        project['bugs'].append({
+            "bid": "b_"+str(random.randrange(111111, 999999, 5)),
+            "title": self.ui_create_card.title.text(),
+            "description": self.ui_create_card.description.toPlainText(),
+            "actual_result": self.ui_create_card.actual_result.toPlainText(),
+            "supposed_result": self.ui_create_card.supposed_result.toPlainText(),
+            "creationDate": round(time.time()*1000),
+            "author": getUserInfo(self.user_login)['uid'],
+            "assignee": assignee,
+            "deadline": deadline,
+            "criticality": criticality,
+            "tags": tags,
+            "closed": False,
+            # Фон и цвет текста карточки
+            "styles": styles
+
+        })
+
+        projects.update_one({'title': project['title']}, {'$set': {"bugs": project['bugs']}})
+
+        print(project['bugs'])
+
         self.closeCreateNewBugCard()
+        self.reloadProjectInfo()
 
 
     def closeCreateNewBugCard(self):
@@ -96,7 +145,7 @@ class MainPage(QtCore.QObject):
     def loadBugCards(self, project):
         self.clearLayout(self.ui.bug_cards.layout())
         for bug in project['bugs'][:3]:
-            bug = BugCard(bug['title'], datetime.utcfromtimestamp(bug['createdDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'])
+            bug = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
             self.ui.bug_cards.addWidget(bug)
 
     def clearLayout(self, layout):
@@ -125,6 +174,7 @@ class MainPage(QtCore.QObject):
 
     def reloadProjectInfo(self):
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
+        self.certainProject = project
         self.loadBugCards(project)
 
 
