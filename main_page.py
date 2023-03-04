@@ -1,9 +1,11 @@
 import random
 import time
 
-from PySide6 import QtCore, QtGui
+from PySide6 import QtCore
+from PySide6.QtCore import Qt
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QPushButton, QComboBox
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 from pymongo import MongoClient
 import datetime
 
@@ -155,6 +157,7 @@ class MainPage(QtCore.QObject):
         for bug in project['bugs'][:3]:
             bug = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
             self.ui.bug_cards.addWidget(bug)
+        self.ui.bug_cards.setAlignment(Qt.AlignLeft)
 
     def clearLayout(self, layout):
         if layout is not None:
@@ -205,5 +208,4 @@ class MainPage(QtCore.QObject):
             self.closeCreateNewProject()
         else:
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
-
 
