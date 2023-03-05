@@ -189,6 +189,7 @@ class MainPage(QtCore.QObject):
 
 
         layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignTop)
         widgets = []
 
         for bug in project['bugs']:
@@ -209,6 +210,7 @@ class MainPage(QtCore.QObject):
         widget = QWidget()
         widget.setLayout(layout)
         self.ui.scrollArea.setWidget(widget)
+
 
 
     def clearLayout(self, layout):
