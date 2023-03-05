@@ -69,6 +69,16 @@ class MainPage(QtCore.QObject):
         for project in res:
             self.ui.projects_list.addItem(project["title"])
 
+        # Даполнение проектов, которые есть у команд, в которых есть юзер
+        for team in teams.find({}):
+            if uid in team['members']:
+                print('Юзер есть в команде', team['tid'])
+                for project in projects.find({}):
+                    if team['tid'] == project['owner']:
+                        print('Команда владеет проектом', project['title'])
+                        self.ui.projects_list.addItem(project["title"])
+
+
     def createNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(False)
