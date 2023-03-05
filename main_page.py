@@ -159,10 +159,14 @@ class MainPage(QtCore.QObject):
 
     def loadBugs(self, project):
         self.clearLayout(self.ui.bug_cards.layout())
+        self.clearLayout(self.ui.bugs_list.layout())
+
         for bug in project['bugs'][:3]:
             bugCard = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
             self.ui.bug_cards.addWidget(bugCard)
+        self.ui.bug_cards.setAlignment(Qt.AlignLeft)
 
+        for bug in project['bugs']:
             icon = QPixmap('./images/bugInList.png')
             # Исходное изображение черное. Создается маска для всего черного цвета на картинке
             mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
@@ -175,10 +179,10 @@ class MainPage(QtCore.QObject):
             bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding: 10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
             # ...bugInList.clicked.connect(self.goToBug(bid))
 
-            layout = self.ui.verticalLayout_4.layout()
-            layout.insertWidget(layout.count() - 2, bugInList)
+            layout = self.ui.bugs_list.layout()
+            layout.addWidget(bugInList)
+        self.ui.bugs_list.setAlignment(Qt.AlignTop)
 
-        self.ui.bug_cards.setAlignment(Qt.AlignLeft)
 
     def clearLayout(self, layout):
         if layout is not None:

@@ -80,6 +80,12 @@ margin: 0;</string>
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
+       <property name="leftMargin">
+        <number>12</number>
+       </property>
+       <property name="spacing">
+        <number>-1</number>
+       </property>
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
@@ -115,19 +121,6 @@ font-size: 21px;</string>
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QScrollArea" name="scrollArea">
              <property name="minimumSize">
               <size>
@@ -156,6 +149,17 @@ font-size: 21px;</string>
                 <height>580</height>
                </rect>
               </property>
+              <widget class="QWidget" name="gridLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>-1</x>
+                 <y>9</y>
+                 <width>201</width>
+                 <height>571</height>
+                </rect>
+               </property>
+               <layout class="QGridLayout" name="bugs_list"/>
+              </widget>
              </widget>
             </widget>
            </item>
