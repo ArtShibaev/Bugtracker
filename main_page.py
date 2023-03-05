@@ -1,8 +1,9 @@
 import random
+import textwrap
 import time
 
-from PySide6 import QtCore
-from PySide6.QtCore import Qt
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
@@ -50,13 +51,13 @@ class MainPage(QtCore.QObject):
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
 
+        self.user_login = login
+
         self.fillingProjectList(uid)
         self.certainProject = projects.find_one({'owner': uid})
-        self.loadBugCards(self.certainProject)
+        self.loadBugs(self.certainProject)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
-
-        self.user_login = login
 
         Images.load_image(self, 'main_page')
 
@@ -156,11 +157,27 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.clear()
 
 
-    def loadBugCards(self, project):
+    def loadBugs(self, project):
         self.clearLayout(self.ui.bug_cards.layout())
         for bug in project['bugs'][:3]:
-            bug = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
-            self.ui.bug_cards.addWidget(bug)
+            bugCard = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
+            self.ui.bug_cards.addWidget(bugCard)
+
+            icon = QPixmap('./images/bugInList.png')
+            # Исходное изображение черное. Создается маска для всего черного цвета на картинке
+            mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
+            # Маска закрашивается нужным цветом
+            icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo(self.user_login)['uid'] else '#7D79A5')))
+            icon.setMask(mask)
+
+            bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
+            bugInList.setIconSize(QSize(20, 20))
+            bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding: 10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            # ...bugInList.clicked.connect(self.goToBug(bid))
+
+            layout = self.ui.verticalLayout_4.layout()
+            layout.insertWidget(layout.count() - 2, bugInList)
+
         self.ui.bug_cards.setAlignment(Qt.AlignLeft)
 
     def clearLayout(self, layout):
@@ -190,7 +207,7 @@ class MainPage(QtCore.QObject):
     def reloadProjectInfo(self):
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
         self.certainProject = project
-        self.loadBugCards(project)
+        self.loadBugs(project)
 
 
     def newProject(self):
