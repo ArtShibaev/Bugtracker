@@ -125,17 +125,23 @@ font-size: 21px;</string>
              <property name="minimumSize">
               <size>
                <width>210</width>
-               <height>580</height>
+               <height>550</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>210</width>
-               <height>16777215</height>
+               <height>550</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;</string>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
              </property>
              <property name="widgetResizable">
               <bool>true</bool>
@@ -146,20 +152,9 @@ font-size: 21px;</string>
                 <x>0</x>
                 <y>0</y>
                 <width>210</width>
-                <height>580</height>
+                <height>550</height>
                </rect>
               </property>
-              <widget class="QWidget" name="gridLayoutWidget">
-               <property name="geometry">
-                <rect>
-                 <x>-1</x>
-                 <y>9</y>
-                 <width>201</width>
-                 <height>571</height>
-                </rect>
-               </property>
-               <layout class="QGridLayout" name="bugs_list"/>
-              </widget>
              </widget>
             </widget>
            </item>

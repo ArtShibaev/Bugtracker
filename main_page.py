@@ -55,6 +55,12 @@ class MainPage(QtCore.QObject):
 
         self.fillingProjectList(uid)
         self.certainProject = projects.find_one({'owner': uid})
+        if self.certainProject == None:
+            for team in list(teams.find({})):
+                if uid == team['admin']:
+                    self.certainProject = projects.find_one({'owner': team['tid']})
+
+
         self.loadBugs(self.certainProject)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
@@ -65,18 +71,16 @@ class MainPage(QtCore.QObject):
         self.ui.show()
 
     def fillingProjectList(self, uid):
-        res = list(projects.find({'owner': uid}))
-        for project in res:
-            self.ui.projects_list.addItem(project["title"])
 
-        # Даполнение проектов, которые есть у команд, в которых есть юзер
-        for team in teams.find({}):
-            if uid in team['members']:
-                print('Юзер есть в команде', team['tid'])
-                for project in projects.find({}):
-                    if team['tid'] == project['owner']:
-                        print('Команда владеет проектом', project['title'])
-                        self.ui.projects_list.addItem(project["title"])
+        if projects.find_one({'owner': uid}):
+            for project in projects.find({'owner': uid}):
+                self.ui.projects_list.addItem(project["title"])
+
+
+        for team in list(teams.find({})):
+            if uid == team['admin'] or uid in team['members']:
+                for project in list(projects.find({'owner': team['tid']})):
+                    self.ui.projects_list.addItem(project["title"])
 
 
     def createNewBugCard(self):
@@ -96,13 +100,19 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.addItem("Нет")
 
         self.ui_create_card.assignee.addItem(self.user_login)
-        certainTeam = getUserTeam(self.certainProject['owner'])
-        members = certainTeam['members']
-        for user_id in members:
-            self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
+        print(self.certainProject)
+        if self.certainProject['owner'].startswith('t_'):
+            certainTeam = teams.find_one({'tid': self.certainProject['owner']})
+            members = certainTeam['members']
 
-        if certainTeam['admin'] != getUserInfo(self.user_login)['uid']:
-            self.ui_create_card.assignee.setEnabled(False)
+            for user_id in members:
+                self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
+
+            if certainTeam['admin'] != getUserInfo(self.user_login)['uid']:
+                self.ui_create_card.assignee.setEnabled(False)
+
+        else:
+            certainTeam = getUserTeam(self.certainProject['owner'])
 
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
@@ -168,13 +178,18 @@ class MainPage(QtCore.QObject):
 
 
     def loadBugs(self, project):
+        print(project)
         self.clearLayout(self.ui.bug_cards.layout())
-        self.clearLayout(self.ui.bugs_list.layout())
+        self.clearLayout(self.ui.scrollArea.layout())
 
-        for bug in project['bugs'][:3]:
+        for bug in project['bugs'][-1:-4:-1]:
             bugCard = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
             self.ui.bug_cards.addWidget(bugCard)
         self.ui.bug_cards.setAlignment(Qt.AlignLeft)
+
+
+        layout = QVBoxLayout()
+        widgets = []
 
         for bug in project['bugs']:
             icon = QPixmap('./images/bugInList.png')
@@ -184,14 +199,16 @@ class MainPage(QtCore.QObject):
             icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo(self.user_login)['uid'] else '#7D79A5')))
             icon.setMask(mask)
 
+
             bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
             bugInList.setIconSize(QSize(20, 20))
-            bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding: 10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
             # ...bugInList.clicked.connect(self.goToBug(bid))
-
-            layout = self.ui.bugs_list.layout()
             layout.addWidget(bugInList)
-        self.ui.bugs_list.setAlignment(Qt.AlignTop)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.ui.scrollArea.setWidget(widget)
 
 
     def clearLayout(self, layout):
