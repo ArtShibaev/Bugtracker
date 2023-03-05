@@ -27,9 +27,8 @@ projects = db['projects']
 teams = db['teams']
 
 def getUserTeam(uid):
-    user_team = teams.find_one({'admin': uid})
-    team_members_id = user_team['members']
-    return team_members_id
+    team = teams.find_one({'admin': uid})
+    return team
 
 def getUserInfo(login):
     user = users.find_one({'login': login})
@@ -87,8 +86,13 @@ class MainPage(QtCore.QObject):
 
         self.ui_create_card.assignee.addItem(self.user_login)
         certainTeam = getUserTeam(self.certainProject['owner'])
-        for user_id in certainTeam:
+        members = certainTeam['members']
+        for user_id in members:
             self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
+
+        if certainTeam['admin'] != getUserInfo(self.user_login)['uid']:
+            self.ui_create_card.assignee.setEnabled(False)
+
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
