@@ -14,6 +14,7 @@ import os
 from dotenv import load_dotenv
 
 from bug_card import BugCard
+from bug_page import BugPage
 from image_loader import Images
 
 load_dotenv('.env')
@@ -100,7 +101,6 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.addItem("Нет")
 
         self.ui_create_card.assignee.addItem(self.user_login)
-        print(self.certainProject)
         if self.certainProject['owner'].startswith('t_'):
             certainTeam = teams.find_one({'tid': self.certainProject['owner']})
             members = certainTeam['members']
@@ -159,8 +159,6 @@ class MainPage(QtCore.QObject):
 
         projects.update_one({'title': project['title']}, {'$set': {"bugs": project['bugs']}})
 
-        print(project['bugs'])
-
         self.closeCreateNewBugCard()
         self.reloadProjectInfo()
 
@@ -178,7 +176,6 @@ class MainPage(QtCore.QObject):
 
 
     def loadBugs(self, project):
-        print(project)
         self.clearLayout(self.ui.bug_cards.layout())
         self.clearLayout(self.ui.scrollArea.layout())
 
@@ -187,12 +184,13 @@ class MainPage(QtCore.QObject):
             self.ui.bug_cards.addWidget(bugCard)
         self.ui.bug_cards.setAlignment(Qt.AlignLeft)
 
-
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
+
         widgets = []
 
         for bug in project['bugs']:
+            print(bug['bid'], bug['title'])
             icon = QPixmap('./images/bugInList.png')
             # Исходное изображение черное. Создается маска для всего черного цвета на картинке
             mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
@@ -200,18 +198,21 @@ class MainPage(QtCore.QObject):
             icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo(self.user_login)['uid'] else '#7D79A5')))
             icon.setMask(mask)
 
-
             bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
             bugInList.setIconSize(QSize(20, 20))
             bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
-            # ...bugInList.clicked.connect(self.goToBug(bid))
+            bugInList.clicked.connect(lambda x: self.goToBug(getUserInfo(self.user_login)['uid'], self.user_login, project, bug['bid']))
             layout.addWidget(bugInList)
+
 
         widget = QWidget()
         widget.setLayout(layout)
         self.ui.scrollArea.setWidget(widget)
 
-
+    def goToBug(self, uid, login, project, bid):
+        self.ui.hide()
+        self.ui = BugPage(uid, login, project, bid)
+        self.ui.show()
 
     def clearLayout(self, layout):
         if layout is not None:
