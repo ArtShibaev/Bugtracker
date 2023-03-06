@@ -19,6 +19,7 @@ client = MongoClient(mongo_url)
 db = client['bugtracker']
 users = db['users']
 projects = db['projects']
+teams = db['teams']
 
 def findUser(login):
     user = users.find_one({'login': login})
@@ -28,6 +29,12 @@ def findUser(login):
 def findOwnedProjects(uid):
     result = projects.find_one({'owner': uid})
     return result
+
+def findTeams(uid):
+    for team in list(teams.find()):
+        if uid in team['members'] or uid == team['admin']:
+            return team
+
 
 class LoginForm(QtCore.QObject):
     def __init__(self):
@@ -54,12 +61,11 @@ class LoginForm(QtCore.QObject):
         if not self.ui.input_password.text():
             self.ui.input_password.setStyleSheet(styles.RedBorder)
         elif current_user['password'] == hashlib.sha256(self.ui.input_password.text().encode('utf-8')).hexdigest():
-             if findOwnedProjects(current_user['uid']) is not None:
-                 print('У юзера есть проекты')
+            if findOwnedProjects(current_user['uid']) is not None or findTeams(current_user['uid']) is not None:
                  self.ui.hide()
-                 self.ui = MainPage(current_user['uid'])
+                 self.ui = MainPage(current_user['uid'], current_user['login'])
                  self.ui.show()
-             else:
+            else:
                  self.goToWelcomePage()
         else:
             self.ui.input_password.setStyleSheet(styles.RedBorder)

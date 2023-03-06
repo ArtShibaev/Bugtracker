@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1306</width>
-    <height>758</height>
+    <width>1326</width>
+    <height>750</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1326</width>
+    <height>750</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1326</width>
+    <height>750</height>
+   </size>
   </property>
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
@@ -89,15 +101,20 @@ margin: 0;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>16</pointsize>
+                   <pointsize>-1</pointsize>
+                   <weight>99</weight>
+                   <bold>true</bold>
                   </font>
                  </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background: #501AEC;
-border-radius: 10px;</string>
+                  <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(5, 100, 210, 255), stop:1 rgba(42, 32, 155, 255));
+border-radius: 10px;
+color: white;
+font-weight: 800;
+font-size: 21px;</string>
                  </property>
                  <property name="text">
                   <string>Создать крточку</string>

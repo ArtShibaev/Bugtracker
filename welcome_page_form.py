@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from image_loader import Images
+from main_page import MainPage
 
 load_dotenv('.env')
 
@@ -26,6 +27,7 @@ class WelcomePageForm(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/welcome_page.ui', None)
         self.ui_create = loader.load('./interfaces/create_new_project_form.ui', None)
+        self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
         self.ui.create_card.setVisible(False)
         self.ui.sp_new_project.clicked.connect(self.createNewProject)
         self.ui.new_project.clicked.connect(self.createNewProject)
@@ -53,12 +55,6 @@ class WelcomePageForm(QtCore.QObject):
 
     def newProject(self):
         if self.ui_create.newproject_name.text() != '':
-            self.ui.create_card.setVisible(True)
-            self.ui.welcome_user.setVisible(False)
-            self.ui.label_6.setVisible(False)
-            self.ui.label_12.setVisible(False)
-            self.ui.sp_new_project.setVisible(False)
-            self.ui.projects_list.addItem(self.ui_create.newproject_name.text())
             projects.insert_one({
                 "title": self.ui_create.newproject_name.text(),
                 "owner": getUserInfo(self.user_login)['uid'],
@@ -72,7 +68,10 @@ class WelcomePageForm(QtCore.QObject):
                     {"name": "Не будет исправлено", "color": "#FFFFFF"},
                 ],
             })
-            print(f'Title: {self.ui_create.newproject_name.text()}, owner: {self.user_login}, bugs: 0, deadlines: 0, tags: 0')
-            self.closeCreateNewProjectPage()
+            self.ui.hide()
+            self.ui_create.close()
+            self.ui = MainPage(getUserInfo(self.user_login)['uid'], self.user_login)
+            self.ui.show()
         else:
-            self.ui_create.newproject_name.setPlaceholderText ("Введите название проекта")
+            self.ui_create.newproject_name.setPlaceholderText("Введите название проекта")
+
