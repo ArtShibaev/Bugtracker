@@ -13,7 +13,6 @@ from pymongo import MongoClient
 
 from bug_card import BugCard
 from image_loader import Images
-from main_page import backgrounds
 
 loader = QUiLoader()
 mongo_url = os.environ.get('MONGO_URL')
@@ -264,7 +263,7 @@ class BugPage(QtCore.QObject):
             criticality = 'medium'
         elif self.ui_create_card.criticality.currentText() == 'Низкая':
             criticality = 'low'
-
+        from main_page import backgrounds
         styles = random.choice(backgrounds)
 
         if self.ui_create_card.assignee.currentText() == 'Нет':
