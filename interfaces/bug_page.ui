@@ -573,6 +573,7 @@ border-radius: 10px;</string>
              <string notr="true">width: 100px;
 color: white;
 border-radius: 15px;
+height: 50px;
 font-size: 14px;
 background-color: qlineargradient(spread:pad, x1:0.413793, y1:0, x2:0.817734, y2:1, stop:0 rgba(221, 48, 48, 255), stop:1 rgba(237, 122, 17, 255));
 font-weight: bold;</string>
@@ -583,7 +584,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QPushButton" name="close">
+           <widget class="QPushButton" name="close_bug">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -597,6 +598,7 @@ font-weight: bold;</string>
              <string notr="true">width: 100px;
 color: white;
 border-radius: 15px;
+height: 50px;
 font-size: 14px;
 background-color: qlineargradient(spread:pad, x1:0.413793, y1:0, x2:0.817734, y2:1, stop:0 rgba(44, 197, 111, 255), stop:1 rgba(190, 220, 124, 255));
 font-weight: bold;</string>
@@ -1074,7 +1076,7 @@ font-weight: bold;</string>
                   <x>0</x>
                   <y>0</y>
                   <width>605</width>
-                  <height>270</height>
+                  <height>269</height>
                  </rect>
                 </property>
                </widget>

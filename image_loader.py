@@ -25,6 +25,7 @@ class Images(QtCore.QObject):
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
             self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
         elif file == 'bug_page':
+            self.ui.new_project.setIcon(QtGui.QIcon('./images/plus.png'))
             self.ui.send.setIcon(QtGui.QIcon('./images/send_message.png'))
             self.ui.send.setIconSize(QSize(120, 120))
             self.ui.home.setIcon(QtGui.QIcon('./images/main_page.png'))
