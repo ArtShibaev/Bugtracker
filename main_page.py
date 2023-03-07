@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 from bug_card import BugCard
 from bug_page import BugPage
 from image_loader import Images
+from config import Config
 
 load_dotenv('.env')
 
@@ -55,16 +56,13 @@ class MainPage(QtCore.QObject):
 
         self.user_login = login
 
-        self.fillingProjectList(uid)
+        self.reloadProjectInfo()
 
         self.certainProject = projects.find_one({'owner': uid})
         if self.certainProject == None:
             for team in list(teams.find({})):
                 if uid == team['admin']:
                     self.certainProject = projects.find_one({'owner': team['tid']})
-
-
-        self.fillingTeamList(self.certainProject)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
 
@@ -86,11 +84,10 @@ class MainPage(QtCore.QObject):
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
             member.setIconSize(QSize(30, 30))
-            member.setStyleSheet(
-                'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            member.setStyleSheet(Config.membersStyleSheet)
             # member.clicked.connect()
             layout.addWidget(member)
-        elif self.certainProject['owner'].startswith('t_'):
+        else:
             current_team = teams.find_one({'tid': self.certainProject['owner']})
 
             url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
@@ -101,8 +98,7 @@ class MainPage(QtCore.QObject):
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
             member.setIconSize(QSize(30, 30))
-            member.setStyleSheet(
-                'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            member.setStyleSheet(Config.membersStyleSheet)
             # member.clicked.connect()
             layout.addWidget(member)
             for members in current_team['members']:
@@ -114,8 +110,7 @@ class MainPage(QtCore.QObject):
 
                 member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
                 member.setIconSize(QSize(30, 30))
-                member.setStyleSheet(
-                    'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+                member.setStyleSheet(Config.membersStyleSheet)
                 # member.clicked.connect()
                 layout.addWidget(member)
 
@@ -134,8 +129,6 @@ class MainPage(QtCore.QObject):
             if uid == team['admin'] or uid in team['members']:
                 for project in list(projects.find({'owner': team['tid']})):
                     self.ui.projects_list.addItem(project["title"])
-
-        self.reloadProjectInfo()
 
     def createNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
@@ -292,6 +285,7 @@ class MainPage(QtCore.QObject):
         self.ui_create_project.close()
 
     def reloadProjectInfo(self):
+        self.fillingProjectList(getUserInfo(self.user_login)['uid'])
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
         self.certainProject = project
         self.loadBugs(project)
