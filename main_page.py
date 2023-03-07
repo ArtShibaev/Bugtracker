@@ -1,9 +1,10 @@
 import random
 import textwrap
 import time
+import requests
 
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import Qt, QSize
+from PySide6.QtCore import *
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
@@ -55,6 +56,7 @@ class MainPage(QtCore.QObject):
         self.user_login = login
 
         self.fillingProjectList(uid)
+
         self.certainProject = projects.find_one({'owner': uid})
         if self.certainProject == None:
             for team in list(teams.find({})):
@@ -62,7 +64,7 @@ class MainPage(QtCore.QObject):
                     self.certainProject = projects.find_one({'owner': team['tid']})
 
 
-        self.loadBugs(self.certainProject)
+        self.fillingTeamList(self.certainProject)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
 
@@ -71,8 +73,58 @@ class MainPage(QtCore.QObject):
     def show(self):
         self.ui.show()
 
-    def fillingProjectList(self, uid):
+    def fillingTeamList(self, project):
+        self.clearLayout(self.ui.team.layout())
 
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignTop)
+
+        if project['owner'] == getUserInfo(self.user_login)['uid']:
+            url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+            pixmap = QPixmap()
+            pixmap.loadFromData(requests.get(url_image).content)
+
+            member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
+            member.setIconSize(QSize(30, 30))
+            member.setStyleSheet(
+                'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            # member.clicked.connect()
+            layout.addWidget(member)
+        elif self.certainProject['owner'].startswith('t_'):
+            current_team = teams.find_one({'tid': self.certainProject['owner']})
+
+            url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+            pixmap = QPixmap()
+            pixmap.loadFromData(requests.get(url_image).content)
+
+            admin = users.find_one({'uid': current_team['admin']})
+
+            member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
+            member.setIconSize(QSize(30, 30))
+            member.setStyleSheet(
+                'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+            # member.clicked.connect()
+            layout.addWidget(member)
+            for members in current_team['members']:
+                url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+                pixmap = QPixmap()
+                pixmap.loadFromData(requests.get(url_image).content)
+
+                user = users.find_one({'uid': members})
+
+                member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
+                member.setIconSize(QSize(30, 30))
+                member.setStyleSheet(
+                    'QPushButton{color:#C3C4D1;font-size:15px;padding:10px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+                # member.clicked.connect()
+                layout.addWidget(member)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.ui.team.setWidget(widget)
+
+
+    def fillingProjectList(self, uid):
         if projects.find_one({'owner': uid}):
             for project in projects.find({'owner': uid}):
                 self.ui.projects_list.addItem(project["title"])
@@ -83,6 +135,7 @@ class MainPage(QtCore.QObject):
                 for project in list(projects.find({'owner': team['tid']})):
                     self.ui.projects_list.addItem(project["title"])
 
+        self.reloadProjectInfo()
 
     def createNewBugCard(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
@@ -242,6 +295,7 @@ class MainPage(QtCore.QObject):
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
         self.certainProject = project
         self.loadBugs(project)
+        self.fillingTeamList(self.certainProject)
 
 
     def newProject(self):
