@@ -1,5 +1,6 @@
 import datetime
 import os
+import random
 import textwrap
 import time
 
@@ -12,6 +13,7 @@ from pymongo import MongoClient
 
 from bug_card import BugCard
 from image_loader import Images
+from main_page import backgrounds
 
 loader = QUiLoader()
 mongo_url = os.environ.get('MONGO_URL')
@@ -27,6 +29,10 @@ def getUserInfo(type, value):
     if type == 'uid':
         user = users.find_one({'uid': value})
     return user
+
+def getUserTeam(uid):
+    team = teams.find_one({'admin': uid})
+    return team
 
 class BugPage(QtCore.QObject):
     def __init__(self, uid, login, project, bid):
