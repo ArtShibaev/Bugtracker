@@ -30,13 +30,19 @@ users = db['users']
 projects = db['projects']
 teams = db['teams']
 
-def getUserTeam(uid):
-    team = teams.find_one({'admin': uid})
-    return team
-
-def getUserInfo(login):
-    user = users.find_one({'login': login})
+def getFullUserInfo(type, value):
+    if type == "login":
+        user = users.find_one({"login": value})
+    elif type == "uid": user = users.find_one({"uid": value})
+    else: user = None
     return user
+
+def getFullUserTeamInfo(type, value):
+    if type == "tid":
+        team = teams.find_one({"tid": value})
+    elif type == "admin": team = teams.find_one({"admin": value})
+    else: team = None
+    return team
 
 backgrounds = [
     ('background: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(108, 87, 193, 255), stop:1 rgba(72, 38, 138, 255));border-radius: 14px;}', 'color:white;background:transparent;font-size:14px;'),
@@ -66,7 +72,7 @@ class MainPage(QtCore.QObject):
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
-        self.ui.new_member.clicked.connect(self.sendJoinRequrst)
+        self.ui.new_member.clicked.connect(self.sendJoinRequest)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
 
@@ -82,8 +88,8 @@ class MainPage(QtCore.QObject):
         layout.setAlignment(Qt.AlignTop)
         pixmap = QPixmap()
 
-        if project['owner'] == getUserInfo(self.user_login)['uid']:
-            url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+        if project['owner'] == getFullUserInfo('login', self.user_login)['uid']:
+            url_image = getFullUserInfo('login', self.user_login)['image']
             pixmap.loadFromData(requests.get(url_image).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
@@ -92,11 +98,10 @@ class MainPage(QtCore.QObject):
             layout.addWidget(member)
         else:
             current_team = teams.find_one({'tid': self.certainProject['owner']})
-
-            url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
-            pixmap.loadFromData(requests.get(url_image).content)
-
             admin = users.find_one({'uid': current_team['admin']})
+
+            url_image = admin['image']
+            pixmap.loadFromData(requests.get(url_image).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
             member.setIconSize(QSize(30, 30))
@@ -104,10 +109,10 @@ class MainPage(QtCore.QObject):
             #member.clicked.connect(self.showMenu)
             layout.addWidget(member)
             for members in current_team['members']:
-                url_image = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
-                pixmap.loadFromData(requests.get(url_image).content)
-
                 user = users.find_one({'uid': members})
+
+                url_image = user['image']
+                pixmap.loadFromData(requests.get(url_image).content)
 
                 member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
                 member.setIconSize(QSize(30, 30))
@@ -122,27 +127,28 @@ class MainPage(QtCore.QObject):
     #def showMenu(self):
 
 
-    def sendJoinRequrst(self):
+    def sendJoinRequest(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(False)
         self.ui_new_member.show()
-        self.ui_new_member.back.clicked.connect(self.closeSendJoinRequrst)
+        self.ui_new_member.back.clicked.connect(self.closeSendJoinRequest)
         self.ui_new_member.add.clicked.connect(self.addNewUser)
 
-    def closeSendJoinRequrst(self):
+    def closeSendJoinRequest(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(True)
         self.ui_new_member.close()
 
     def addNewUser(self):
-        user = getUserInfo(self.ui_new_member.user_login.text())
+        user = getFullUserInfo('login', self.ui_new_member.user_login.text())
 
         if self.ui_new_member.user_login.text() != '':
             if user is not None:
-                owner = str(self.certainProject['owner'])
+                project = projects.find_one({'title': self.ui.projects_list.currentText()})
+                owner = str(project['owner'])
                 if owner.startswith('t_'):
-                    team = getUserTeam(getUserInfo(self.user_login)['uid'])
-                    if team is not None:
+                    team = teams.find_one({'tid': owner})
+                    if team is not None and team['admin'] == getFullUserInfo('login', self.user_login)['uid']:
                         if user['uid'] not in team['members']:
                             team['members'].append(user['uid'])
                             teams.update_one({'tid': team['tid']}, {'$set': {"members": team['members']}})
@@ -153,16 +159,16 @@ class MainPage(QtCore.QObject):
                         else: print('Участник уже в команде')
                     else: print('Вы не обладаете правами администратора')
                 else:
-                    if user['uid'] != getUserInfo(self.user_login)['uid']:
+                    if user['uid'] != getFullUserInfo('login', self.user_login)['uid']:
                         teams.insert_one({
                             "tid": 't_' + str(random.randrange(111111, 999999, 5)),
-                            "admin": getUserInfo(self.user_login)['uid'],
+                            "admin": getFullUserInfo('login', self.user_login)['uid'],
                             "members": [],
                         })
-                        team = getUserTeam(self.certainProject['owner'])
+                        team = getFullUserTeamInfo('admin', self.certainProject['owner'])
                         team["members"].append(user['uid'])
                         teams.update_one({"tid": team['tid']}, {'$set': {"members": team['members']}})
-                        projects.update_one({"title": self.certainProject['title']}, {'$set': {"owner": getUserTeam(getUserInfo(self.user_login)['uid'])['tid']}})
+                        projects.update_one({"title": self.certainProject['title']}, {'$set': {"owner": getFullUserTeamInfo('admin', getFullUserInfo('login', self.user_login)['uid'])['tid']}})
                         self.fillingTeamList(self.certainProject)
                         self.closeSendJoinRequrst()
                         self.ui_new_member.user_login.clear()
@@ -172,7 +178,6 @@ class MainPage(QtCore.QObject):
         else: print('Введите логин пользователя')
 
     def fillingProjectList(self, uid):
-        print(project_l)
         if projects.find_one({'owner': uid}):
             for project in projects.find({'owner': uid}):
                 if project["title"] not in project_l:
@@ -211,12 +216,8 @@ class MainPage(QtCore.QObject):
             for user_id in members:
                 self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
 
-            if certainTeam['admin'] != getUserInfo(self.user_login)['uid']:
+            if certainTeam['admin'] != getFullUserInfo('login', self.user_login)['uid']:
                 self.ui_create_card.assignee.setEnabled(False)
-
-        else:
-            certainTeam = getUserTeam(self.certainProject['owner'])
-
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
@@ -234,7 +235,7 @@ class MainPage(QtCore.QObject):
         if self.ui_create_card.assignee.currentText() == 'Нет':
             assignee = 'Нет'
         else:
-            assignee = getUserInfo(self.ui_create_card.assignee.currentText())['uid']
+            assignee = getFullUserInfo('login', self.ui_create_card.assignee.currentText())['uid']
 
         deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple()))*1000
 
@@ -249,7 +250,7 @@ class MainPage(QtCore.QObject):
             "actual_result": self.ui_create_card.actual_result.toPlainText(),
             "supposed_result": self.ui_create_card.supposed_result.toPlainText(),
             "creationDate": round(time.time()*1000),
-            "author": getUserInfo(self.user_login)['uid'],
+            "author": getFullUserInfo('login', self.user_login)['uid'],
             "assignee": assignee,
             "deadline": deadline,
             "criticality": criticality,
@@ -298,13 +299,13 @@ class MainPage(QtCore.QObject):
             # Исходное изображение черное. Создается маска для всего черного цвета на картинке
             mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
             # Маска закрашивается нужным цветом
-            icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo(self.user_login)['uid'] else '#7D79A5')))
+            icon.fill((QColor('#501AEC' if bug['assignee'] == getFullUserInfo('login', self.user_login)['uid'] else '#7D79A5')))
             icon.setMask(mask)
 
             bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
             bugInList.setIconSize(QSize(20, 20))
             bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
-            bugInList.clicked.connect(lambda x: self.goToBug(getUserInfo(self.user_login)['uid'], self.user_login, project, bug['bid']))
+            bugInList.clicked.connect(lambda x: self.goToBug(getFullUserInfo('login', self.user_login)['uid'], self.user_login, project, bug['bid']))
             layout.addWidget(bugInList)
 
 
@@ -342,7 +343,7 @@ class MainPage(QtCore.QObject):
         self.ui_create_project.close()
 
     def reloadProjectInfo(self):
-        self.fillingProjectList(getUserInfo(self.user_login)['uid'])
+        self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
         self.certainProject = project
         self.loadBugs(project)
@@ -353,7 +354,7 @@ class MainPage(QtCore.QObject):
             self.ui.projects_list.addItem(self.ui_create_project.newproject_name.text())
             projects.insert_one({
                 "title": self.ui_create_project.newproject_name.text(),
-                "owner": getUserInfo(self.user_login)['uid'],
+                "owner": getFullUserInfo('login', self.user_login)['uid'],
                 "bugs": [],
                 "deadlines": [],
                 "tags": [
