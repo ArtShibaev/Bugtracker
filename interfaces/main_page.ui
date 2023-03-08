@@ -749,6 +749,9 @@ border-radius: 10px;</string>
                <layout class="QGridLayout" name="gridLayout_10">
                 <item row="0" column="0">
                  <widget class="QScrollArea" name="team">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="widgetResizable">
                    <bool>true</bool>
                   </property>
@@ -765,7 +768,7 @@ border-radius: 10px;</string>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="new_member">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -778,6 +781,9 @@ border-radius: 10px;</string>
                     <weight>99</weight>
                     <bold>true</bold>
                    </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(5, 100, 210, 255), stop:1 rgba(42, 32, 155, 255));
