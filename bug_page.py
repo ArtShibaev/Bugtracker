@@ -8,7 +8,7 @@ from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QPixmap, QColor
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox
+from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel
 from pymongo import MongoClient
 
 from bug_card import BugCard
@@ -66,6 +66,8 @@ class BugPage(QtCore.QObject):
         self.ui.close_bug.clicked.connect(lambda x: self.closeBug(project))
         self.ui.assign.clicked.connect(lambda x: self.selfAssign(project))
         self.ui.deny.clicked.connect(lambda x: self.denyBug(project))
+
+        self.loadMessageHistory()
 
 
 
@@ -145,6 +147,20 @@ class BugPage(QtCore.QObject):
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
+
+    def loadMessageHistory(self):
+        bug = self.bug
+        if bug['messages']:
+            layout = QVBoxLayout()
+            layout.setAlignment(Qt.AlignTop)
+            for message in bug['messages']:
+                item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {getUserInfo('uid', message['author'])['login']}: {message['text']}")
+                layout.addWidget(item)
+
+            widget = QWidget()
+            widget.setLayout(layout)
+            self.ui.messages.setWidget(widget)
+
 
     def show(self):
         self.ui.show()
