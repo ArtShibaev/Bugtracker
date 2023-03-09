@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Багтрекер - главная старница</string>
+   <string>Багтрекер - Баг</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #171632;
@@ -1073,6 +1073,9 @@ font-weight: bold;</string>
              </item>
              <item row="1" column="0">
               <widget class="QScrollArea" name="messages">
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
@@ -1081,8 +1084,8 @@ font-weight: bold;</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>617</width>
-                  <height>269</height>
+                  <width>606</width>
+                  <height>270</height>
                  </rect>
                 </property>
                </widget>
@@ -1105,7 +1108,8 @@ font-weight: bold;</string>
                   <string notr="true">background-color: rgba(27, 30, 61, 50);
 padding: 7px;
 color: rgba(255, 255, 255, 43);
-border-radius: 4px;</string>
+border-radius: 4px;
+color: #fff;</string>
                  </property>
                  <property name="placeholderText">
                   <string>Сообщение</string>

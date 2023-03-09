@@ -68,8 +68,7 @@ class BugPage(QtCore.QObject):
         self.ui.deny.clicked.connect(lambda x: self.denyBug(project))
 
         self.loadMessageHistory()
-
-
+        self.ui.send.clicked.connect(lambda x: self.sendMessage(project))
 
     def loadBugInfo(self, bugs, bid):
         for x in bugs:
@@ -149,17 +148,35 @@ class BugPage(QtCore.QObject):
         self.loadBugs(project)
 
     def loadMessageHistory(self):
+        self.clearLayout(self.ui.messages.layout())
+
         bug = self.bug
         if bug['messages']:
             layout = QVBoxLayout()
             layout.setAlignment(Qt.AlignTop)
             for message in bug['messages']:
-                item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {getUserInfo('uid', message['author'])['login']}: {message['text']}")
+                author = f"<b>{getUserInfo('uid', message['author'])['login']}</b>" if message['author'] == self.uid else f"{getUserInfo('uid', message['author'])['login']}"
+                item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {author}: {' '.join(message['text'].split())}")
                 layout.addWidget(item)
 
             widget = QWidget()
             widget.setLayout(layout)
             self.ui.messages.setWidget(widget)
+
+    def sendMessage(self, project):
+        bugs = project['bugs']
+        for bug in bugs:
+            if bug['bid'] == self.bid:
+                bug['messages'].append({
+                    "author": self.uid,
+                    "date": round((time.time()+10800)*1000),
+                    "text": self.ui.message.toPlainText()
+                })
+
+        projects.update_one({"title": project['title']}, {'$set': {'bugs': bugs}})
+        self.ui.message.setPlainText('')
+        self.loadMessageHistory()
+
 
 
     def show(self):
