@@ -127,25 +127,45 @@ class BugPage(QtCore.QObject):
                 bug['closed'] = True
                 # 10800 - 3 часа в секундах, чтобы от UTC перейти к московскому времени
                 bug['closedDate'] = round(time.time()*1000)+10800
+                bug['messages'].append({
+                    "author": self.uid,
+                    "date": round((time.time()+10800)*1000),
+                    "text": "<i>Закрыл баг</i>"
+                })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
+        self.loadMessageHistory()
 
     def selfAssign(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
                 bug['assignee'] = self.uid
+                bug['messages'].append({
+                    "author": self.uid,
+                    "date": round((time.time()+10800)*1000),
+                    "text": "<i>Закрепил баг за собой</i>"
+                })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
+        self.loadMessageHistory()
+
 
 
     def denyBug(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
                 bug['assignee'] = 'Нет'
+                bug['messages'].append({
+                    "author": self.uid,
+                    "date": round((time.time()+10800)*1000),
+                    "text": "<i>Отказался от бага</i>"
+                })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
+        self.loadMessageHistory()
+
 
     def loadMessageHistory(self):
         self.clearLayout(self.ui.messages.layout())
