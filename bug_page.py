@@ -75,6 +75,9 @@ class BugPage(QtCore.QObject):
             if x['bid'] == bid:
                 self.bug = x
                 break
+
+        self.ui.setWindowTitle(f"Багтрекер - {self.bug['title']}")
+
         self.ui.title.setText(self.bug['title'])
         self.ui.description.setText(self.bug['description'])
         self.ui.actual_result.setText(self.bug['actual_result'])
