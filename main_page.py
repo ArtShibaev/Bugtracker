@@ -84,44 +84,49 @@ class MainPage(QtCore.QObject):
     def fillingTeamList(self, project):
         self.clearLayout(self.ui.team.layout())
 
-        layout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignTop)
+        crown = QPixmap('./images/crown.png')
+
+        main_layout = QVBoxLayout()
+        main_layout.setAlignment(Qt.AlignTop)
+        layout = QHBoxLayout()
+        layout.setAlignment(Qt.AlignLeft)
         pixmap = QPixmap()
 
         if project['owner'] == getFullUserInfo('login', self.user_login)['uid']:
-            url_image = getFullUserInfo('login', self.user_login)['image']
-            pixmap.loadFromData(requests.get(url_image).content)
+            pixmap.loadFromData(requests.get(getFullUserInfo('login', self.user_login)['image']).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
+            crown = QPushButton(QtGui.QIcon(crown), textwrap.shorten('', 10))
             member.setIconSize(QSize(30, 30))
             member.setStyleSheet(Config.membersStyleSheet)
             layout.addWidget(member)
+            layout.addWidget(crown)
+            main_layout.addLayout(layout)
         else:
             current_team = teams.find_one({'tid': self.certainProject['owner']})
             admin = users.find_one({'uid': current_team['admin']})
 
-            url_image = admin['image']
-            pixmap.loadFromData(requests.get(url_image).content)
+            pixmap.loadFromData(requests.get(admin['image']).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
+            crown = QPushButton(QtGui.QIcon(crown), textwrap.shorten('', 10))
             member.setIconSize(QSize(30, 30))
             member.setStyleSheet(Config.membersStyleSheet)
-            #member.clicked.connect(self.showMenu)
             layout.addWidget(member)
+            layout.addWidget(crown)
+            main_layout.addLayout(layout)
             for members in current_team['members']:
                 user = users.find_one({'uid': members})
 
-                url_image = user['image']
-                pixmap.loadFromData(requests.get(url_image).content)
+                pixmap.loadFromData(requests.get(user['image']).content)
 
                 member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
                 member.setIconSize(QSize(30, 30))
                 member.setStyleSheet(Config.membersStyleSheet)
-                #member.clicked.connect(self.showMenu)
-                layout.addWidget(member)
+                main_layout.addWidget(member)
 
         widget = QWidget()
-        widget.setLayout(layout)
+        widget.setLayout(main_layout)
         self.ui.team.setWidget(widget)
 
     #def showMenu(self):
