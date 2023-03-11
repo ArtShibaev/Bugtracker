@@ -180,6 +180,7 @@ class BugPage(QtCore.QObject):
             for message in bug['messages']:
                 author = f"<b>{getUserInfo('uid', message['author'])['login']}</b>" if message['author'] == self.uid else f"{getUserInfo('uid', message['author'])['login']}"
                 item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {author}: {' '.join(message['text'].split())}")
+                item.setStyleSheet('color: #fff;')
                 layout.addWidget(item)
 
             widget = QWidget()
