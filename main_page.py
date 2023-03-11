@@ -202,46 +202,52 @@ class MainPage(QtCore.QObject):
         for bug in project['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
-        deadlines = [el for el, _ in groupby(deadlines)]
-        deadlines.sort()
-        min_deadline = deadlines[0]
-        developers = []
-        statistic = 0
-        for min_dl_bug in project['bugs']:
-            if min_dl_bug['deadline'] == min_deadline:
-                self.ui.bug_list_1.addItem(min_dl_bug['title'])
-                self.ui.deadline1.setText(datetime.datetime.utcfromtimestamp(min_dl_bug['deadline']/1000).strftime('%d.%m.%Y'))
-                if min_dl_bug['closed']: statistic += 1
-                if min_dl_bug['assignee'] != 'Нет':
-                    developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
-        final_list = [el for el, _ in groupby(developers)]
-        self.ui.complete1.setText(f'{statistic}/{self.ui.bug_list_1.count()}')
-        self.ui.developers1.setText(', '.join(map(str, final_list)))
-        self.ui.progress1.setMaximum(self.ui.bug_list_1.count())
-        self.ui.progress1.setValue(statistic)
+        if len(deadlines) == 0: self.ui.deadline_frame1.hide()
+        else:
+            deadlines = [el for el, _ in groupby(deadlines)]
+            deadlines.sort()
+            min_deadline = deadlines[0]
+            self.ui.deadline_frame2.show()
+            developers = []
+            statistic = 0
+            for min_dl_bug in project['bugs']:
+                if min_dl_bug['deadline'] == min_deadline:
+                    self.ui.bug_list_1.addItem(min_dl_bug['title'])
+                    self.ui.deadline1.setText(datetime.datetime.utcfromtimestamp(min_dl_bug['deadline']/1000).strftime('%d.%m.%Y'))
+                    if min_dl_bug['closed']: statistic += 1
+                    if min_dl_bug['assignee'] != 'Нет':
+                        developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
+            final_list = [el for el, _ in groupby(developers)]
+            self.ui.complete1.setText(f'{statistic}/{self.ui.bug_list_1.count()}')
+            self.ui.developers1.setText(', '.join(map(str, final_list)))
+            self.ui.progress1.setMaximum(self.ui.bug_list_1.count())
+            self.ui.progress1.setValue(statistic)
 
         deadlines = []
         for bug in project['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
-        deadlines = [el for el, _ in groupby(deadlines)]
-        deadlines.sort()
-        min_deadline = deadlines[1]
-        developers = []
-        statistic = 0
-        for min_dl_bug in project['bugs']:
-            if min_dl_bug['deadline'] == min_deadline:
-                self.ui.bug_list_2.addItem(min_dl_bug['title'])
-                self.ui.deadline2.setText(
-                    datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
-                if min_dl_bug['closed']: statistic += 1
-                if min_dl_bug['assignee'] != 'Нет':
-                    developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
-        final_list = [el for el, _ in groupby(developers)]
-        self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
-        self.ui.developers2.setText(', '.join(map(str, final_list)))
-        self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
-        self.ui.progress2.setValue(statistic)
+        if len(deadlines) < 1: self.ui.deadline_frame2.hide()
+        else:
+            deadlines = [el for el, _ in groupby(deadlines)]
+            deadlines.sort()
+            min_deadline = deadlines[1]
+            self.ui.deadline_frame1.show()
+            developers = []
+            statistic = 0
+            for min_dl_bug in project['bugs']:
+                if min_dl_bug['deadline'] == min_deadline:
+                    self.ui.bug_list_2.addItem(min_dl_bug['title'])
+                    self.ui.deadline2.setText(
+                        datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
+                    if min_dl_bug['closed']: statistic += 1
+                    if min_dl_bug['assignee'] != 'Нет':
+                        developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
+            final_list = [el for el, _ in groupby(developers)]
+            self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
+            self.ui.developers2.setText(', '.join(map(str, final_list)))
+            self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
+            self.ui.progress2.setValue(statistic)
 
 
     def fillingProjectList(self, uid):
