@@ -995,7 +995,7 @@ font-size: 14px;</string>
              <item row="10" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_32">
                <item>
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="closed_label">
                  <property name="styleSheet">
                   <string notr="true">color: white;
 font-size: 14px;</string>

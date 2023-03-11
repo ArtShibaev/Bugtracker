@@ -11,7 +11,6 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel
 from pymongo import MongoClient
 
-from bug_card import BugCard
 from image_loader import Images
 
 loader = QUiLoader()
@@ -35,7 +34,8 @@ def getUserTeam(uid):
 
 class BugPage(QtCore.QObject):
     def __init__(self, uid, login, project, bid):
-        self.bug = None
+        self.project = project
+        self.bug = list(filter(lambda x: x['bid'] == bid, project['bugs']))[0]
         self.uid = uid
         self.login = login
         self.bid = bid
@@ -55,11 +55,13 @@ class BugPage(QtCore.QObject):
         if project_index >= 0:
             self.ui.projects_list.setCurrentIndex(project_index)
 
-        from main_page import MainPage
+        self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
+
+
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
 
-        self.loadBugInfo(project['bugs'], bid)
+        self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
 
         # Здесь нужна лямбда-функция, чтобы предотвратить выполнение closeBug, когда компилятор прогоняет весь код при первом рендеринге
@@ -71,10 +73,19 @@ class BugPage(QtCore.QObject):
         self.ui.send.clicked.connect(lambda x: self.sendMessage(project))
 
     def loadBugInfo(self, bugs, bid):
-        for x in bugs:
-            if x['bid'] == bid:
-                self.bug = x
-                break
+        bug = list(filter(lambda x: x['bid'] == bid, bugs))[0]
+        self.bug = bug
+        self.bid = bug['bid']
+        self.loadMessageHistory()
+
+
+        # Чтобы не перезаписывать весь сайдбар и не тратить на это время, переписываются только стили
+        for x in self.ui.scrollArea.findChildren(QPushButton):
+            x.setStyleSheet('')
+            if x.property('bid') != self.bid:
+                x.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}')
+            else:
+                x.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align:left;border-radius: 10px;background:#322F6E}')
 
         self.ui.setWindowTitle(f"Багтрекер - {self.bug['title']}")
 
@@ -90,7 +101,6 @@ class BugPage(QtCore.QObject):
         self.ui.deadline.setText(datetime.datetime.utcfromtimestamp(self.bug['deadline']/1000).strftime('%d.%m.%Y') if str(self.bug['deadline']).isdigit() else 'Нет')
 
         if self.bug['closed']:
-            # TODO: Добавить в бд ключ closedDate
             self.ui.closed.setText(datetime.datetime.utcfromtimestamp(self.bug['closedDate']/1000).strftime('%d.%m.%Y %H:%M'))
             # Зачеркивание текста
             self.ui.title.setStyleSheet('color:white;font-weight:bold;font-size:20px;text-decoration:line-through;')
@@ -123,6 +133,8 @@ class BugPage(QtCore.QObject):
                 self.ui.assign.setVisible(False)
             else:
                 self.ui.assign.setVisible(True)
+
+        self.clearLayout(self.ui.messages.layout())
 
     def closeBug(self, project):
         for bug in project['bugs']:
@@ -173,11 +185,11 @@ class BugPage(QtCore.QObject):
     def loadMessageHistory(self):
         self.clearLayout(self.ui.messages.layout())
 
-        bug = self.bug
-        if bug['messages']:
+        if self.bug['messages']:
             layout = QVBoxLayout()
             layout.setAlignment(Qt.AlignTop)
-            for message in bug['messages']:
+            for message in self.bug['messages']:
+
                 author = f"<b>{getUserInfo('uid', message['author'])['login']}</b>" if message['author'] == self.uid else f"{getUserInfo('uid', message['author'])['login']}"
                 item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {author}: {' '.join(message['text'].split())}")
                 item.setStyleSheet('color: #fff;')
@@ -186,18 +198,22 @@ class BugPage(QtCore.QObject):
             widget = QWidget()
             widget.setLayout(layout)
             self.ui.messages.setWidget(widget)
+        # Если переключиться на баг, где нет сообщений, остаются фантомные сообщения с другого бага
+        elif len(self.bug['messages']) == 0:
+            self.clearLayout(self.ui.messages.layout())
 
     def sendMessage(self, project):
-        bugs = project['bugs']
-        for bug in bugs:
-            if bug['bid'] == self.bid:
-                bug['messages'].append({
-                    "author": self.uid,
-                    "date": round((time.time()+10800)*1000),
-                    "text": self.ui.message.toPlainText()
-                })
+        if self.ui.message.toPlainText() not in ['Отказался от бага', 'Хочет выполнить задачу', 'Закрепил баг за собой']:
+            bugs = project['bugs']
+            for bug in bugs:
+                if bug['bid'] == self.bid:
+                    bug['messages'].append({
+                        "author": self.uid,
+                        "date": round((time.time()+10800)*1000),
+                        "text": self.ui.message.toPlainText()
+                    })
+            projects.update_one({"title": project['title']}, {'$set': {'bugs': bugs}})
 
-        projects.update_one({"title": project['title']}, {'$set': {'bugs': bugs}})
         self.ui.message.setPlainText('')
         self.loadMessageHistory()
 
@@ -256,13 +272,18 @@ class BugPage(QtCore.QObject):
             else:
                 bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align:left;border-radius: 10px;background:#322F6E}')
             bugInList.setProperty('bid', bug['bid'])
-            # FIXME: Пофиксить функцию ниже
-            bugInList.clicked.connect(self.loadBugInfo(project['bugs'], bugInList.property('bid')))
+            bugInList.clicked.connect(self.partial)
             layout.addWidget(bugInList)
+
 
         widget = QWidget()
         widget.setLayout(layout)
         self.ui.scrollArea.setWidget(widget)
+
+    def partial(self):
+        sender = self.sender()
+        self.loadBugInfo(self.project['bugs'], sender.property('bid'))
+
 
     def createNewProject(self):
         for x in self.ui.findChildren(QPushButton):
@@ -367,3 +388,6 @@ class BugPage(QtCore.QObject):
         self.ui_create_card.tags.clear()
         self.ui_create_card.criticality.clear()
         self.ui_create_card.assignee.clear()
+
+    def reloadProjectInfo(self):
+        self.goToMainPage()
