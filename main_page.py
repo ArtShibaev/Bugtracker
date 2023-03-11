@@ -9,6 +9,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from pymongo import MongoClient
+from itertools import groupby
 import datetime
 
 import os
@@ -84,7 +85,7 @@ class MainPage(QtCore.QObject):
     def fillingTeamList(self, project):
         self.clearLayout(self.ui.team.layout())
 
-        crown = QPixmap('./images/crown.png')
+        crown_ic = QPixmap('./images/crown.png')
 
         main_layout = QVBoxLayout()
         main_layout.setAlignment(Qt.AlignTop)
@@ -96,9 +97,10 @@ class MainPage(QtCore.QObject):
             pixmap.loadFromData(requests.get(getFullUserInfo('login', self.user_login)['image']).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
-            crown = QPushButton(QtGui.QIcon(crown), textwrap.shorten('', 10))
+            crown = QPushButton(QtGui.QIcon(crown_ic), textwrap.shorten('', 10))
             member.setIconSize(QSize(30, 30))
             member.setStyleSheet(Config.membersStyleSheet)
+            member.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
             layout.addWidget(member)
             layout.addWidget(crown)
             main_layout.addLayout(layout)
@@ -109,9 +111,10 @@ class MainPage(QtCore.QObject):
             pixmap.loadFromData(requests.get(admin['image']).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
-            crown = QPushButton(QtGui.QIcon(crown), textwrap.shorten('', 10))
+            crown = QPushButton(QtGui.QIcon(crown_ic), textwrap.shorten('', 10))
             member.setIconSize(QSize(30, 30))
             member.setStyleSheet(Config.membersStyleSheet)
+            member.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
             layout.addWidget(member)
             layout.addWidget(crown)
             main_layout.addLayout(layout)
@@ -123,7 +126,9 @@ class MainPage(QtCore.QObject):
                 member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
                 member.setIconSize(QSize(30, 30))
                 member.setStyleSheet(Config.membersStyleSheet)
+                member.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
                 main_layout.addWidget(member)
+
 
         widget = QWidget()
         widget.setLayout(main_layout)
@@ -181,6 +186,63 @@ class MainPage(QtCore.QObject):
                     else: print('Участник уже в команде')
             else: print('Пользователь не найден')
         else: print('Введите логин пользователя')
+
+    def fillingDeadlineFrames(self, project):
+        self.ui.bug_list_1.clear()
+        self.ui.deadline1.setText('Нет информации')
+        self.ui.complete1.setText('Нет информации')
+        self.ui.developers1.setText('Нет информации')
+
+        self.ui.bug_list_2.clear()
+        self.ui.deadline2.setText('Нет информации')
+        self.ui.complete2.setText('Нет информации')
+        self.ui.developers2.setText('Нет информации')
+
+        deadlines = []
+        for bug in project['bugs']:
+            if not bug['closed']:
+                deadlines.append(bug['deadline'])
+        deadlines = [el for el, _ in groupby(deadlines)]
+        deadlines.sort()
+        min_deadline = deadlines[0]
+        developers = []
+        statistic = 0
+        for min_dl_bug in project['bugs']:
+            if min_dl_bug['deadline'] == min_deadline:
+                self.ui.bug_list_1.addItem(min_dl_bug['title'])
+                self.ui.deadline1.setText(datetime.datetime.utcfromtimestamp(min_dl_bug['deadline']/1000).strftime('%d.%m.%Y'))
+                if min_dl_bug['closed']: statistic += 1
+                if min_dl_bug['assignee'] != 'Нет':
+                    developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
+        final_list = [el for el, _ in groupby(developers)]
+        self.ui.complete1.setText(f'{statistic}/{self.ui.bug_list_1.count()}')
+        self.ui.developers1.setText(', '.join(map(str, final_list)))
+        self.ui.progress1.setMaximum(self.ui.bug_list_1.count())
+        self.ui.progress1.setValue(statistic)
+
+        deadlines = []
+        for bug in project['bugs']:
+            if not bug['closed']:
+                deadlines.append(bug['deadline'])
+        deadlines = [el for el, _ in groupby(deadlines)]
+        deadlines.sort()
+        min_deadline = deadlines[1]
+        developers = []
+        statistic = 0
+        for min_dl_bug in project['bugs']:
+            if min_dl_bug['deadline'] == min_deadline:
+                self.ui.bug_list_2.addItem(min_dl_bug['title'])
+                self.ui.deadline2.setText(
+                    datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
+                if min_dl_bug['closed']: statistic += 1
+                if min_dl_bug['assignee'] != 'Нет':
+                    developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
+        final_list = [el for el, _ in groupby(developers)]
+        self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
+        self.ui.developers2.setText(', '.join(map(str, final_list)))
+        self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
+        self.ui.progress2.setValue(statistic)
+
 
     def fillingProjectList(self, uid):
         if projects.find_one({'owner': uid}):
@@ -353,6 +415,7 @@ class MainPage(QtCore.QObject):
         self.certainProject = project
         self.loadBugs(project)
         self.fillingTeamList(self.certainProject)
+        self.fillingDeadlineFrames(self.certainProject)
 
     def newProject(self):
         if self.ui_create_project.newproject_name.text() != '':
