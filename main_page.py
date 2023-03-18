@@ -19,6 +19,7 @@ from bug_card import BugCard
 from bug_page import BugPage
 from image_loader import Images
 from config import Config
+from round_progress_bar import CPBar
 
 load_dotenv('.env')
 
@@ -422,6 +423,19 @@ class MainPage(QtCore.QObject):
         self.loadBugs(project)
         self.fillingTeamList(self.certainProject)
         self.fillingDeadlineFrames(self.certainProject)
+        self.drawCircularProgressBar(self.certainProject)
+
+    def drawCircularProgressBar(self, project):
+        statistic_c, statistic_o = 0, 0
+        for bug in project['bugs']:
+            if bug['closed']:
+                statistic_c += 1
+            else:
+                statistic_o += 1
+        self.ui.open_l.setText(str(statistic_o))
+        self.ui.close_l.setText(str(statistic_c))
+
+        CPBar(self.ui.round_progress, statistic_c, statistic_c + statistic_o)
 
     def newProject(self):
         if self.ui_create_project.newproject_name.text() != '':
@@ -442,4 +456,6 @@ class MainPage(QtCore.QObject):
             self.closeCreateNewProject()
         else:
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
+
+
 
