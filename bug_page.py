@@ -11,6 +11,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel
 from pymongo import MongoClient
 
+import config
 from image_loader import Images
 
 loader = QUiLoader()
@@ -88,6 +89,13 @@ class BugPage(QtCore.QObject):
                 x.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align:left;border-radius: 10px;background:#322F6E}')
 
         self.ui.setWindowTitle(f"Багтрекер - {self.bug['title']}")
+
+        if self.bug['criticality'] == 'high':
+            self.ui.criticality.setStyleSheet(config.Config.CriticalBug)
+        elif self.bug['criticality'] == 'medium':
+            self.ui.criticality.setStyleSheet(config.Config.MediumBug)
+        elif self.bug['criticality'] == 'low':
+            self.ui.criticality.setStyleSheet(config.Config.NonCriticalBug)
 
         self.ui.title.setText(self.bug['title'])
         self.ui.description.setText(self.bug['description'])
