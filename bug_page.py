@@ -8,7 +8,7 @@ from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QPixmap, QColor
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel
+from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel, QCompleter
 from pymongo import MongoClient
 
 import config
@@ -64,6 +64,15 @@ class BugPage(QtCore.QObject):
 
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
+
+        completionList = {}
+        for x in self.project['bugs']:
+            completionList[x['title']] = x['bid']
+
+        completer = QCompleter([x['title'] for x in self.project['bugs']])
+        completer.activated.connect(lambda x: self.loadBugInfo(project['bugs'], completionList[x]))
+
+        self.ui.search.setCompleter(completer)
 
         # Здесь нужна лямбда-функция, чтобы предотвратить выполнение closeBug, когда компилятор прогоняет весь код при первом рендеринге
         self.ui.close_bug.clicked.connect(lambda x: self.closeBug(project))
