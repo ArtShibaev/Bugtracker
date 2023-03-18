@@ -113,6 +113,7 @@ class BugPage(QtCore.QObject):
             # Зачеркивание текста
             self.ui.title.setStyleSheet('color:white;font-weight:bold;font-size:20px;text-decoration:line-through;')
         else:
+            self.ui.title.setStyleSheet('color:white;font-weight:bold;font-size:20px;')
             # TODO: Сделать скрытие всей строки "Завершен"
             self.ui.closed.setText('')
 

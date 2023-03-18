@@ -197,7 +197,7 @@ border-radius: 5px;</string>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="search">
            <property name="minimumSize">
             <size>
              <width>450</width>
