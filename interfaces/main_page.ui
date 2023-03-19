@@ -850,6 +850,8 @@ font-size: 21px;</string>
                  <string notr="true">QProgressBar {
     text-align: center;
 	background-color: #3C3056;
+	color: white;
+	font-weight: bold;
 }
 QProgressBar::chunk {
     background-color: #B43DF7;
@@ -1123,6 +1125,8 @@ font-size: 21px;</string>
                  <string notr="true">QProgressBar {
     text-align: center;
 	background-color: #3C3056;
+	color: white;
+	font-weight: bold;
 }
 QProgressBar::chunk {
     background-color: #B43DF7;
@@ -1369,8 +1373,8 @@ font-size: 14px;</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>245</width>
-                     <height>248</height>
+                     <width>234</width>
+                     <height>234</height>
                     </rect>
                    </property>
                   </widget>
