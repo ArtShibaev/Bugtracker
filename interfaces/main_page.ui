@@ -831,7 +831,7 @@ background-color: #171632;</string>
 font-size: 21px;</string>
                 </property>
                 <property name="text">
-                 <string>Прогресс:</string>
+                 <string>Выполнено:</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -1106,7 +1106,7 @@ font-size: 15px;</string>
 font-size: 21px;</string>
                 </property>
                 <property name="text">
-                 <string>Прогресс:</string>
+                 <string>Выполнено:</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
