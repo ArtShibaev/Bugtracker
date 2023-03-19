@@ -1248,34 +1248,21 @@ border-radius: 10px;</string>
                 <item row="0" column="0">
                  <layout class="QVBoxLayout" name="verticalLayout">
                   <item>
-                   <widget class="QProgressBar" name="round_progress">
-                    <property name="minimumSize">
-                     <size>
-                      <width>243</width>
-                      <height>241</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>243</width>
-                      <height>241</height>
-                     </size>
-                    </property>
-                    <property name="value">
-                     <number>0</number>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                    <property name="format">
-                     <string/>
-                    </property>
-                   </widget>
+                   <layout class="QVBoxLayout" name="verticalLayout_6"/>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout">
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetFixedSize</enum>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label">
+                      <property name="maximumSize">
+                       <size>
+                        <width>118</width>
+                        <height>25</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">color: white;
 font-size: 14px;</string>
@@ -1290,6 +1277,12 @@ font-size: 14px;</string>
                     </item>
                     <item>
                      <widget class="QLabel" name="open_l">
+                      <property name="maximumSize">
+                       <size>
+                        <width>117</width>
+                        <height>25</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">color: white;
 font-size: 14px;</string>
@@ -1306,8 +1299,17 @@ font-size: 14px;</string>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_2">
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetFixedSize</enum>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_2">
+                      <property name="maximumSize">
+                       <size>
+                        <width>118</width>
+                        <height>25</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">color: white;
 font-size: 14px;</string>
@@ -1322,6 +1324,12 @@ font-size: 14px;</string>
                     </item>
                     <item>
                      <widget class="QLabel" name="close_l">
+                      <property name="maximumSize">
+                       <size>
+                        <width>117</width>
+                        <height>25</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">color: white;
 font-size: 14px;</string>

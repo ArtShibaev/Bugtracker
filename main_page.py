@@ -3,11 +3,12 @@ import textwrap
 import time
 import requests
 
-from PySide6 import QtCore, QtGui
-from PySide6.QtCore import *
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import *
-from PySide6.QtGui import *
+from PySide2 import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtUiTools import QUiLoader
+from PySide2.QtWidgets import *
+from PySide2.QtGui import *
+from PySide2extn.RoundProgressBar import roundProgressBar
 from pymongo import MongoClient
 from itertools import groupby
 import datetime
@@ -19,7 +20,7 @@ from bug_card import BugCard
 from bug_page import BugPage
 from image_loader import Images
 from config import Config
-from round_progress_bar import CPBar
+from round_progress_bar import MyWidget
 
 load_dotenv('.env')
 
@@ -435,7 +436,20 @@ class MainPage(QtCore.QObject):
         self.ui.open_l.setText(str(statistic_o))
         self.ui.close_l.setText(str(statistic_c))
 
-        CPBar(self.ui.round_progress, statistic_c, statistic_c + statistic_o)
+        while ((child := self.ui.verticalLayout_6.takeAt(0)) != None):
+            child.widget().deleteLater()
+        rpb = roundProgressBar()
+        rpb.rpb_setLineColor((171, 39, 234))
+        rpb.rpb_setPathColor((255, 255, 255))
+        rpb.rpb_setTextColor((255, 255, 255))
+        if statistic_c + statistic_o != 0:
+            rpb.rpb_setRange(0, statistic_c + statistic_o)
+            rpb.rpb_setValue(statistic_c)
+            self.ui.verticalLayout_6.addWidget(rpb)
+        else:
+            rpb.rpb_setRange(0, 1)
+            rpb.rpb_setValue(1)
+            self.ui.verticalLayout_6.addWidget(rpb)
 
     def newProject(self):
         if self.ui_create_project.newproject_name.text() != '':

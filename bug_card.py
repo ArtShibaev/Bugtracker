@@ -2,8 +2,8 @@ import os
 import random
 import re
 
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QWidget, QLabel
+from PySide2.QtUiTools import QUiLoader
+from PySide2.QtWidgets import QWidget, QLabel
 from pymongo import MongoClient
 
 loader = QUiLoader()
