@@ -831,7 +831,7 @@ background-color: #171632;</string>
 font-size: 21px;</string>
                 </property>
                 <property name="text">
-                 <string>Выполнено:</string>
+                 <string>Прогресс:</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -850,8 +850,6 @@ font-size: 21px;</string>
                  <string notr="true">QProgressBar {
     text-align: center;
 	background-color: #3C3056;
-	color: white;
-	font-weight: bold;
 }
 QProgressBar::chunk {
     background-color: #B43DF7;
@@ -1106,7 +1104,7 @@ font-size: 15px;</string>
 font-size: 21px;</string>
                 </property>
                 <property name="text">
-                 <string>Выполнено:</string>
+                 <string>Прогресс:</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -1125,8 +1123,6 @@ font-size: 21px;</string>
                  <string notr="true">QProgressBar {
     text-align: center;
 	background-color: #3C3056;
-	color: white;
-	font-weight: bold;
 }
 QProgressBar::chunk {
     background-color: #B43DF7;
@@ -1259,7 +1255,7 @@ border-radius: 10px;</string>
                      <widget class="QLabel" name="label">
                       <property name="maximumSize">
                        <size>
-                        <width>118</width>
+                        <width>99999</width>
                         <height>25</height>
                        </size>
                       </property>
@@ -1271,27 +1267,7 @@ font-size: 14px;</string>
                        <string>Открыто:</string>
                       </property>
                       <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="open_l">
-                      <property name="maximumSize">
-                       <size>
-                        <width>117</width>
-                        <height>25</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>TextLabel</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -1306,7 +1282,7 @@ font-size: 14px;</string>
                      <widget class="QLabel" name="label_2">
                       <property name="maximumSize">
                        <size>
-                        <width>118</width>
+                        <width>99999</width>
                         <height>25</height>
                        </size>
                       </property>
@@ -1318,24 +1294,7 @@ font-size: 14px;</string>
                        <string>Закрыто:</string>
                       </property>
                       <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="close_l">
-                      <property name="maximumSize">
-                       <size>
-                        <width>117</width>
-                        <height>25</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>TextLabel</string>
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -1381,8 +1340,8 @@ font-size: 14px;</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>234</width>
-                     <height>234</height>
+                     <width>245</width>
+                     <height>248</height>
                     </rect>
                    </property>
                   </widget>

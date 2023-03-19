@@ -433,8 +433,8 @@ class MainPage(QtCore.QObject):
                 statistic_c += 1
             else:
                 statistic_o += 1
-        self.ui.open_l.setText(str(statistic_o))
-        self.ui.close_l.setText(str(statistic_c))
+        self.ui.label.setText(f'Открыто: {statistic_c + statistic_o}')
+        self.ui.label_2.setText(f'Закрыто: {statistic_c}')
 
         while ((child := self.ui.verticalLayout_6.takeAt(0)) != None):
             child.widget().deleteLater()
