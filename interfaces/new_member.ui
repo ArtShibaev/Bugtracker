@@ -36,7 +36,7 @@
       <number>0</number>
      </property>
      <property name="verticalSpacing">
-      <number>10</number>
+      <number>20</number>
      </property>
      <item row="0" column="0">
       <widget class="QLineEdit" name="user_login">
@@ -45,7 +45,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>150</width>
          <height>40</height>
         </size>
        </property>
