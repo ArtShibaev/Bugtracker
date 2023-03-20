@@ -22,6 +22,7 @@ users = db['users']
 projects = db['projects']
 teams = db['teams']
 
+
 def getUserInfo(type, value):
     if type == 'login':
         user = users.find_one({'login': value})
@@ -29,9 +30,11 @@ def getUserInfo(type, value):
         user = users.find_one({'uid': value})
     return user
 
+
 def getUserTeam(uid):
     team = teams.find_one({'admin': uid})
     return team
+
 
 class BugPage(QtCore.QObject):
     def __init__(self, uid, login, project, bid):
@@ -57,7 +60,6 @@ class BugPage(QtCore.QObject):
             self.ui.projects_list.setCurrentIndex(project_index)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
-
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
@@ -88,7 +90,6 @@ class BugPage(QtCore.QObject):
         self.bid = bug['bid']
         self.loadMessageHistory()
 
-
         # Чтобы не перезаписывать весь сайдбар и не тратить на это время, переписываются только стили
         for x in self.ui.scrollArea.findChildren(QPushButton):
             x.setStyleSheet('')
@@ -112,13 +113,13 @@ class BugPage(QtCore.QObject):
         self.ui.supposed_result.setText(self.bug['supposed_result'])
         self.ui.reproduction.setText(self.bug['steps'])
         self.ui.tags.setText(', '.join([x for x in self.bug['tags']]))
-        self.ui.creationDate.setText(datetime.datetime.utcfromtimestamp(self.bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'))
+        self.ui.creationDate.setText(datetime.datetime.utcfromtimestamp(self.bug['creationDate'] / 1000).strftime('%d.%m.%Y %H:%M'))
         self.ui.author.setText(getUserInfo('uid', self.bug['author'])['login'])
         self.ui.assignee.setText(getUserInfo('uid', self.bug['assignee'])['login'] if str(self.bug['assignee']).isdigit() else 'Нет')
-        self.ui.deadline.setText(datetime.datetime.utcfromtimestamp(self.bug['deadline']/1000).strftime('%d.%m.%Y') if str(self.bug['deadline']).isdigit() else 'Нет')
+        self.ui.deadline.setText(datetime.datetime.utcfromtimestamp(self.bug['deadline'] / 1000).strftime('%d.%m.%Y') if str(self.bug['deadline']).isdigit() else 'Нет')
 
         if self.bug['closed']:
-            self.ui.closed.setText(datetime.datetime.utcfromtimestamp(self.bug['closedDate']/1000).strftime('%d.%m.%Y %H:%M'))
+            self.ui.closed.setText(datetime.datetime.utcfromtimestamp(self.bug['closedDate'] / 1000).strftime('%d.%m.%Y %H:%M'))
             # Зачеркивание текста
             self.ui.title.setStyleSheet('color:white;font-weight:bold;font-size:20px;text-decoration:line-through;')
         else:
@@ -162,11 +163,12 @@ class BugPage(QtCore.QObject):
                 bug['closedDate'] = round(time.time() + 10800) * 1000
                 bug['messages'].append({
                     "author": self.uid,
-                    "date": round((time.time()+10800)*1000),
+                    "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Закрыл баг</i>"
                 })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
+        self.loadBugs(project)
         self.loadMessageHistory()
 
     def selfAssign(self, project):
@@ -175,7 +177,7 @@ class BugPage(QtCore.QObject):
                 bug['assignee'] = self.uid
                 bug['messages'].append({
                     "author": self.uid,
-                    "date": round((time.time()+10800)*1000),
+                    "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Закрепил баг за собой</i>"
                 })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
@@ -183,22 +185,19 @@ class BugPage(QtCore.QObject):
         self.loadBugs(project)
         self.loadMessageHistory()
 
-
-
     def denyBug(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
                 bug['assignee'] = 'Нет'
                 bug['messages'].append({
                     "author": self.uid,
-                    "date": round((time.time()+10800)*1000),
+                    "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Отказался от бага</i>"
                 })
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
         self.loadMessageHistory()
-
 
     def loadMessageHistory(self):
         self.clearLayout(self.ui.messages.layout())
@@ -207,9 +206,8 @@ class BugPage(QtCore.QObject):
             layout = QVBoxLayout()
             layout.setAlignment(Qt.AlignTop)
             for message in self.bug['messages']:
-
                 author = f"<b>{getUserInfo('uid', message['author'])['login']}</b>" if message['author'] == self.uid else f"{getUserInfo('uid', message['author'])['login']}"
-                item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date']/1000).strftime('%d.%m.%Y %H:%M')} {author}: {' '.join(message['text'].split())}")
+                item = QLabel(f"{datetime.datetime.utcfromtimestamp(message['date'] / 1000).strftime('%d.%m.%Y %H:%M')} {author}: {' '.join(message['text'].split())}")
                 item.setStyleSheet('color: #fff;')
                 layout.addWidget(item)
 
@@ -227,15 +225,13 @@ class BugPage(QtCore.QObject):
                 if bug['bid'] == self.bid:
                     bug['messages'].append({
                         "author": self.uid,
-                        "date": round((time.time()+10800)*1000),
+                        "date": round((time.time() + 10800) * 1000),
                         "text": self.ui.message.toPlainText()
                     })
             projects.update_one({"title": project['title']}, {'$set': {'bugs': bugs}})
 
         self.ui.message.setPlainText('')
         self.loadMessageHistory()
-
-
 
     def show(self):
         self.ui.show()
@@ -256,13 +252,11 @@ class BugPage(QtCore.QObject):
                 elif child.layout() is not None:
                     self.clearLayout(child.layout())
 
-
     def fillProjectsList(self, uid):
 
         if projects.find_one({'owner': uid}):
             for project in projects.find({'owner': uid}):
                 self.ui.projects_list.addItem(project["title"])
-
 
         for team in list(teams.find({})):
             if uid == team['admin'] or uid in team['members']:
@@ -276,23 +270,23 @@ class BugPage(QtCore.QObject):
         layout.setAlignment(Qt.AlignTop)
 
         for bug in project['bugs']:
-            icon = QPixmap('./images/bugInList.png')
-            # Исходное изображение черное. Создается маска для всего черного цвета на картинке
-            mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
-            # Маска закрашивается нужным цветом
-            icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo('login', self.login)['uid'] else '#7D79A5')))
-            icon.setMask(mask)
+            if not bug['closed']:
+                icon = QPixmap('./images/bugInList.png')
+                # Исходное изображение черное. Создается маска для всего черного цвета на картинке
+                mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
+                # Маска закрашивается нужным цветом
+                icon.fill((QColor('#501AEC' if bug['assignee'] == getUserInfo('login', self.login)['uid'] else '#7D79A5')))
+                icon.setMask(mask)
 
-            bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
-            bugInList.setIconSize(QSize(20, 20))
-            if bug['bid'] != self.bid:
-                bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}')
-            else:
-                bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align:left;border-radius: 10px;background:#322F6E}')
-            bugInList.setProperty('bid', bug['bid'])
-            bugInList.clicked.connect(self.partial)
-            layout.addWidget(bugInList)
-
+                bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
+                bugInList.setIconSize(QSize(20, 20))
+                if bug['bid'] != self.bid:
+                    bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}')
+                else:
+                    bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align:left;border-radius: 10px;background:#322F6E}')
+                bugInList.setProperty('bid', bug['bid'])
+                bugInList.clicked.connect(self.partial)
+                layout.addWidget(bugInList)
 
         widget = QWidget()
         widget.setLayout(layout)
@@ -301,7 +295,6 @@ class BugPage(QtCore.QObject):
     def partial(self):
         sender = self.sender()
         self.loadBugInfo(self.project['bugs'], sender.property('bid'))
-
 
     def createNewProject(self):
         for x in self.ui.findChildren(QPushButton):
@@ -348,7 +341,6 @@ class BugPage(QtCore.QObject):
         else:
             certainTeam = getUserTeam(self.certainProject['owner'])
 
-
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
     def recordBugData(self):
@@ -367,19 +359,19 @@ class BugPage(QtCore.QObject):
         else:
             assignee = getUserInfo(self.ui_create_card.assignee.currentText())['uid']
 
-        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple()))*1000
+        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple())) * 1000
 
         # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
         tags = [self.ui_create_card.tags.currentText()]
 
         project = self.certainProject
         project['bugs'].append({
-            "bid": "b_"+str(random.randrange(111111, 999999, 5)),
+            "bid": "b_" + str(random.randrange(111111, 999999, 5)),
             "title": self.ui_create_card.title.text(),
             "description": self.ui_create_card.description.toPlainText(),
             "actual_result": self.ui_create_card.actual_result.toPlainText(),
             "supposed_result": self.ui_create_card.supposed_result.toPlainText(),
-            "creationDate": round(time.time()*1000),
+            "creationDate": round(time.time() * 1000),
             "author": getUserInfo(self.user_login)['uid'],
             "assignee": assignee,
             "deadline": deadline,
