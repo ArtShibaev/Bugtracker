@@ -159,7 +159,7 @@ class BugPage(QtCore.QObject):
             if bug['bid'] == self.bid:
                 bug['closed'] = True
                 # 10800 - 3 часа в секундах, чтобы от UTC перейти к московскому времени
-                bug['closedDate'] = round(time.time()*1000)+10800
+                bug['closedDate'] = round(time.time() + 10800) * 1000
                 bug['messages'].append({
                     "author": self.uid,
                     "date": round((time.time()+10800)*1000),
