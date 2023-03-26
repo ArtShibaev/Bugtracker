@@ -366,7 +366,19 @@ class MainPage(QtCore.QObject):
         self.clearLayout(self.ui.bug_cards.layout())
         self.clearLayout(self.ui.scrollArea.layout())
 
-        for bug in project['bugs'][-1:-4:-1]:
+        completionList = {}
+        for x in project['bugs']:
+            completionList[x['title']] = x['bid']
+
+        completer = QCompleter([x['title'] for x in project['bugs']])
+        completer.activated.connect(lambda x: self.goToBug(completionList[x]))
+
+        self.ui.search.setCompleter(completer)
+
+        # Чтобы в карточках не вылезали закрытые баги, я фильтрую
+        opened_bugs = list(filter(lambda x: not x['closed'], project['bugs']))
+
+        for bug in opened_bugs[-1:-4:-1]:
             bugCard = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
             self.ui.bug_cards.addWidget(bugCard)
         self.ui.bug_cards.setAlignment(Qt.AlignLeft)
