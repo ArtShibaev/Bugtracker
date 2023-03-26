@@ -259,7 +259,6 @@ class MainPage(QtCore.QObject):
         if projects.find_one({'owner': uid}):
             for project in projects.find({'owner': uid}):
                 if project["title"] not in project_l:
-                    print('Личный', project['title'])
                     self.ui.projects_list.addItem(project["title"])
                     project_l.append(project["title"])
 
@@ -268,9 +267,7 @@ class MainPage(QtCore.QObject):
 
         for team in list(teams.find({})):
             if uid == team['admin'] or uid in team['members']:
-                print('Юзер замечен в', team)
                 for project in list(projects.find({'owner': team['tid']})):
-                    print(project['title'])
                     if project["title"] not in project_l:
                         self.ui.projects_list.addItem(project["title"])
                         project_l.append(project["title"])
