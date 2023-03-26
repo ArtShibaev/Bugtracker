@@ -64,13 +64,13 @@ class MainPage(QtCore.QObject):
 
         self.user_login = login
 
-        self.reloadProjectInfo()
-
         self.certainProject = projects.find_one({'owner': uid})
-        if self.certainProject == None:
+
+        if self.certainProject is None:
             for team in list(teams.find({})):
-                if uid == team['admin']:
+                if uid == team['admin'] or uid in team['members']:
                     self.certainProject = projects.find_one({'owner': team['tid']})
+        self.reloadProjectInfo()
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
@@ -365,8 +365,6 @@ class MainPage(QtCore.QObject):
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
 
-        widgets = []
-
         for bug in project['bugs']:
             if not bug['closed']:
                 icon = QPixmap('./images/bugInList.png')
@@ -426,10 +424,7 @@ class MainPage(QtCore.QObject):
 
     def reloadProjectInfo(self):
         self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
-        project = projects.find_one({'title': self.ui.projects_list.currentText()})
-        self.certainProject = project
-        self.certainProject = project
-        self.loadBugs(project)
+        self.loadBugs(self.certainProject)
         self.fillingTeamList(self.certainProject)
         self.fillingDeadlineFrames(self.certainProject)
         self.reloadStatistic(self.certainProject)
