@@ -56,6 +56,7 @@ project_l = []
 class MainPage(QtCore.QObject):
     def __init__(self, uid, login):
         super().__init__()
+        self.count = 0
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.ui_create_project = loader.load('./interfaces/create_new_project_form.ui', None)
         self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
@@ -377,7 +378,8 @@ class MainPage(QtCore.QObject):
             bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
             bugInList.setIconSize(QSize(20, 20))
             bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
-            bugInList.clicked.connect(lambda x: self.goToBug(getFullUserInfo('login', self.user_login)['uid'], self.user_login, project, bug['bid']))
+            bugInList.setProperty('bid', bug['bid'])
+            bugInList.clicked.connect(self.partial)
             layout.addWidget(bugInList)
 
 
@@ -385,7 +387,14 @@ class MainPage(QtCore.QObject):
         widget.setLayout(layout)
         self.ui.scrollArea.setWidget(widget)
 
-    def goToBug(self, uid, login, project, bid):
+    def partial(self):
+        sender = self.sender()
+        self.goToBug(sender.property('bid'))
+
+    def goToBug(self, bid):
+        uid = getUserInfo(self.user_login)['uid']
+        login = self.user_login
+        project = self.certainProject
         self.ui.hide()
         self.ui = BugPage(uid, login, project, bid)
         self.ui.show()
@@ -418,6 +427,7 @@ class MainPage(QtCore.QObject):
         self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
         project = projects.find_one({'title': self.ui.projects_list.currentText()})
         self.certainProject = project
+        self.certainProject = project
         self.loadBugs(project)
         self.fillingTeamList(self.certainProject)
         self.fillingDeadlineFrames(self.certainProject)
@@ -440,6 +450,7 @@ class MainPage(QtCore.QObject):
         else:
             self.ui.progress3.setMaximum(1)
             self.ui.progress3.setValue(0)
+
 
 
     def newProject(self):
