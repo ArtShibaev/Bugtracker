@@ -72,11 +72,15 @@ class MainPage(QtCore.QObject):
                     self.certainProject = projects.find_one({'owner': team['tid']})
         self.reloadProjectInfo()
 
+        self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
+
+
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
         self.ui.new_member.clicked.connect(self.sendJoinRequest)
 
         self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
+
 
         Images.load_image(self, 'main_page')
 
@@ -255,13 +259,18 @@ class MainPage(QtCore.QObject):
         if projects.find_one({'owner': uid}):
             for project in projects.find({'owner': uid}):
                 if project["title"] not in project_l:
+                    print('Личный', project['title'])
                     self.ui.projects_list.addItem(project["title"])
                     project_l.append(project["title"])
 
+        # Это возможно вызовет баг :/
+        project_l.clear()
 
         for team in list(teams.find({})):
             if uid == team['admin'] or uid in team['members']:
+                print('Юзер замечен в', team)
                 for project in list(projects.find({'owner': team['tid']})):
+                    print(project['title'])
                     if project["title"] not in project_l:
                         self.ui.projects_list.addItem(project["title"])
                         project_l.append(project["title"])
@@ -423,7 +432,6 @@ class MainPage(QtCore.QObject):
         self.ui_create_project.close()
 
     def reloadProjectInfo(self):
-        self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
         self.loadBugs(self.certainProject)
         self.fillingTeamList(self.certainProject)
         self.fillingDeadlineFrames(self.certainProject)
