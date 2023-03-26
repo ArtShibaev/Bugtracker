@@ -368,19 +368,20 @@ class MainPage(QtCore.QObject):
         widgets = []
 
         for bug in project['bugs']:
-            icon = QPixmap('./images/bugInList.png')
-            # Исходное изображение черное. Создается маска для всего черного цвета на картинке
-            mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
-            # Маска закрашивается нужным цветом
-            icon.fill((QColor('#501AEC' if bug['assignee'] == getFullUserInfo('login', self.user_login)['uid'] else '#7D79A5')))
-            icon.setMask(mask)
+            if not bug['closed']:
+                icon = QPixmap('./images/bugInList.png')
+                # Исходное изображение черное. Создается маска для всего черного цвета на картинке
+                mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
+                # Маска закрашивается нужным цветом
+                icon.fill((QColor('#501AEC' if bug['assignee'] == getFullUserInfo('login', self.user_login)['uid'] else '#7D79A5')))
+                icon.setMask(mask)
 
-            bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
-            bugInList.setIconSize(QSize(20, 20))
-            bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
-            bugInList.setProperty('bid', bug['bid'])
-            bugInList.clicked.connect(self.partial)
-            layout.addWidget(bugInList)
+                bugInList = QPushButton(QtGui.QIcon(icon), textwrap.shorten(bug['title'], 18, placeholder='...'))
+                bugInList.setIconSize(QSize(20, 20))
+                bugInList.setStyleSheet('QPushButton{color:#7D79A5;font-size:15px;padding:7px;border:none;text-align: left;}QPushButton:hover{background:#322F6E;border-radius: 10px;}QPushButton:after{content:\'texttext\'}')
+                bugInList.setProperty('bid', bug['bid'])
+                bugInList.clicked.connect(self.partial)
+                layout.addWidget(bugInList)
 
 
         widget = QWidget()
@@ -392,7 +393,7 @@ class MainPage(QtCore.QObject):
         self.goToBug(sender.property('bid'))
 
     def goToBug(self, bid):
-        uid = getUserInfo(self.user_login)['uid']
+        uid = getFullUserInfo('login', self.user_login)['uid']
         login = self.user_login
         project = self.certainProject
         self.ui.hide()
