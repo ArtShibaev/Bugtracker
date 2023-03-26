@@ -1,5 +1,5 @@
-from PySide2 import QtCore, QtGui
-from PySide2.QtUiTools import QUiLoader
+from PySide6 import QtCore, QtGui
+from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
 
 import hashlib

@@ -1,6 +1,6 @@
-from PySide2 import QtCore, QtGui
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QPixmap, QColor
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap, QColor
 
 
 class Images(QtCore.QObject):
