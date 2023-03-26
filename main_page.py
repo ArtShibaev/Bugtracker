@@ -432,9 +432,9 @@ class MainPage(QtCore.QObject):
             else:
                 statistic_o += 1
 
-        self.ui.all_p.setText(f'Всего багов: {statistic_c + statistic_o}')
-        self.ui.open_p.setText(f'Багов открыто: {statistic_o}')
-        self.ui.close_p.setText(f'Багов закрыто: {statistic_c}')
+        self.ui.all_p.setText(str(statistic_c + statistic_o))
+        self.ui.open_p.setText(str(statistic_o))
+        self.ui.close_p.setText(str(statistic_c))
         if statistic_c + statistic_o > 0:
             self.ui.progress3.setMaximum(statistic_c + statistic_o)
             self.ui.progress3.setValue(statistic_c)
