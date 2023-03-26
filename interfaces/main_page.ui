@@ -1248,90 +1248,111 @@ border-radius: 10px;</string>
                 <item row="0" column="0">
                  <layout class="QVBoxLayout" name="verticalLayout">
                   <item>
-                   <widget class="QProgressBar" name="round_progress">
-                    <property name="minimumSize">
-                     <size>
-                      <width>243</width>
-                      <height>241</height>
-                     </size>
+                   <widget class="QLabel" name="all_p">
+                    <property name="styleSheet">
+                     <string notr="true">color: white;
+font-size: 21px;</string>
                     </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>243</width>
-                      <height>241</height>
-                     </size>
-                    </property>
-                    <property name="value">
-                     <number>0</number>
+                    <property name="text">
+                     <string>Всего багов: 0</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
                     </property>
-                    <property name="format">
-                     <string/>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="open_p">
+                    <property name="styleSheet">
+                     <string notr="true">color: white;
+font-size: 21px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Багов открыто: 0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout">
-                    <item>
-                     <widget class="QLabel" name="label">
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>Открыто:</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="open_l">
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>TextLabel</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                   <widget class="QLabel" name="close_p">
+                    <property name="styleSheet">
+                     <string notr="true">color: white;
+font-size: 21px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Багов закрыто: 0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_2">
-                    <item>
-                     <widget class="QLabel" name="label_2">
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>Закрыто:</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="close_l">
-                      <property name="styleSheet">
-                       <string notr="true">color: white;
-font-size: 14px;</string>
-                      </property>
-                      <property name="text">
-                       <string>TextLabel</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                   <spacer name="verticalSpacer_9">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Preferred</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_4">
+                    <property name="styleSheet">
+                     <string notr="true">color: white;
+font-size: 21px;</string>
+                    </property>
+                    <property name="text">
+                     <string>Выполнено:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QProgressBar" name="progress3">
+                    <property name="styleSheet">
+                     <string notr="true">QProgressBar {
+    text-align: center;
+	background-color: #3C3056;
+	color: white;
+	font-weight: bold;
+}
+QProgressBar::chunk {
+    background-color: #B43DF7;
+	border-radius: 6px;
+}</string>
+                    </property>
+                    <property name="value">
+                     <number>24</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_8">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
@@ -1373,8 +1394,8 @@ font-size: 14px;</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>234</width>
-                     <height>234</height>
+                     <width>245</width>
+                     <height>248</height>
                     </rect>
                    </property>
                   </widget>
