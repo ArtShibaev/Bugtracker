@@ -19,6 +19,7 @@ from bug_card import BugCard
 from bug_page import BugPage
 from image_loader import Images
 from config import Config
+import notifier
 
 load_dotenv('.env')
 
@@ -171,8 +172,9 @@ class MainPage(QtCore.QObject):
                             self.closeSendJoinRequest()
                             self.ui_new_member.user_login.clear()
                             self.ui_new_member.user_login.setPlaceholderText('Логин пользователя')
-                        else: print('Участник уже в команде')
-                    else: print('Вы не обладаете правами администратора')
+                        else: notifier.sendError('Ошибка добавления пользователя', 'Участник уже в команде')
+
+                    else: notifier.sendError(message='Вы не обладаете правами администратора')
                 else:
                     if user['uid'] != getFullUserInfo('login', self.user_login)['uid']:
                         teams.insert_one({
@@ -188,9 +190,9 @@ class MainPage(QtCore.QObject):
                         self.closeSendJoinRequest()
                         self.ui_new_member.user_login.clear()
                         self.ui_new_member.user_login.setPlaceholderText('Логин пользователя')
-                    else: print('Участник уже в команде')
-            else: print('Пользователь не найден')
-        else: print('Введите логин пользователя')
+                    else: notifier.sendError('Ошибка добавления пользователя', 'Участник уже в команде')
+            else: notifier.sendError('Ошибка добавления пользователя', 'Пользователь не найден')
+        else: notifier.sendError(message='Введите логин пользователя')
 
     def fillingDeadlineFrames(self, project):
         self.ui.bug_list_1.clear()
