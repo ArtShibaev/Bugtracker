@@ -2,7 +2,8 @@ import os
 import sys
 from PySide6 import QtWidgets
 from login_form import LoginForm
-
+import mailer
+mailer.sendMail('motoblock2005@yandex.ru', 'Привет', 'Как дела?')
 
 os.environ['PYSIDE_DESIGNER_PLUGINS'] = '.'
 
