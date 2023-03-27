@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1326</width>
+    <height>750</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1326</width>
+    <height>750</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1326</width>
+    <height>750</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>18</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(23, 22, 50);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>-60</x>
+      <y>0</y>
+      <width>1491</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(27, 30, 61);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="geometry">
+      <rect>
+       <x>1290</x>
+       <y>20</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: #373C66;
+border-radius: 15px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-10</y>
+      <width>201</width>
+      <height>1061</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(30, 32, 66);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="Settings_lable">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white; 
+font-weight: bold;
+font-size: 18pt;
+background-color: none;
+border: none;</string>
+     </property>
+     <property name="text">
+      <string>Настройки</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>162</width>
+       <height>169</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="All_settings_buttons">
+      <item alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="Notification_button">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-weight: bold;
+font-size: 14pt;
+background-color: none;
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>Уведомления</string>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="Account_button">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-weight: bold;
+font-size: 14pt;
+background-color: none;
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>Аккаунт</string>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="Exit_button">
+        <property name="styleSheet">
+         <string notr="true">color: rgba(238, 46, 46, 100);
+font-weight: bold;
+font-size: 14pt;
+background-color: none;
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>Выйти</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QFrame" name="Navigation_buttons">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>670</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(115, 93, 251, 30);
+border-radius: 7px;</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="Mainpage_button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: none;
+border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../rec.qrc">
+          <normaloff>:/icons/images/adidas_button.png</normaloff>:/icons/images/adidas_button.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Setting_button">
+        <property name="styleSheet">
+         <string notr="true">background-color: none;
+border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../rec.qrc">
+          <normaloff>:/icons/images/gear.png</normaloff>:/icons/images/gear.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="Frame_account">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>120</y>
+      <width>1031</width>
+      <height>561</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(55, 60, 102);
+border-radius: 7px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="Label_account">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>1</y>
+       <width>127</width>
+       <height>43</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white; 
+font-weight: bold;
+font-size: 24pt;
+background-color: none;
+border: none;</string>
+     </property>
+     <property name="text">
+      <string>Аккаунт</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>76</y>
+       <width>204</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="Mail_label">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Почта</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Newpassord_label">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Новый пароль</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Password2_label">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Повтор пароля</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="Save_mail">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>87</y>
+       <width>122</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 178, 255);</string>
+     </property>
+     <property name="text">
+      <string>Сохранить изменения</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Save_password">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>190</y>
+       <width>122</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 178, 255);</string>
+     </property>
+     <property name="text">
+      <string>Сохранить изменения</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Password_c">
+     <property name="geometry">
+      <rect>
+       <x>379</x>
+       <y>329</y>
+       <width>251</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(52, 177, 50);
+background-color: rgba(52, 177, 50, 70);
+font-size: 12pt;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Save_link">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>500</y>
+       <width>122</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 178, 255);</string>
+     </property>
+     <property name="text">
+      <string>Сохранить изменения</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Image_link">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>490</y>
+       <width>351</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+background-color: rgb(27, 30, 61);
+border: 2px solid #000000;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+}
+
+QLineEdit::focus{ 
+	border-color: #947E45; 
+}</string>
+     </property>
+     <property name="placeholderText">
+      <string>Ссылка на картинку</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Input_password">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>125</y>
+       <width>291</width>
+       <height>42</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+background-color: rgb(27, 30, 61);
+border: 2px solid #000000;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+}
+
+QLineEdit::focus{ 
+	border-color: #947E45; 
+}</string>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="cursorPosition">
+      <number>0</number>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Input_password2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>173</y>
+       <width>291</width>
+       <height>42</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+background-color: rgb(27, 30, 61);
+border: 2px solid #000000;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+}
+
+QLineEdit::focus{ 
+	border-color: #947E45; 
+}</string>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="cursorPosition">
+      <number>0</number>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Input_mail">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>77</y>
+       <width>291</width>
+       <height>42</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+background-color: rgb(27, 30, 61);
+border: 2px solid #000000;
+color: white;
+border-radius: 15px;
+padding: 5px 10px;
+outline: none;
+}
+
+QLineEdit::focus{ 
+	border-color: #947E45; 
+}</string>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="cursorPosition">
+      <number>0</number>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Avatarka">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>250</y>
+       <width>201</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(8, 62, 255);
+border-radius: 100px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Mail_s">
+     <property name="geometry">
+      <rect>
+       <x>378</x>
+       <y>270</y>
+       <width>401</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(52, 177, 50);
+background-color: rgba(52, 177, 50, 70);
+font-size: 12pt;</string>
+     </property>
+     <property name="text">
+      <string>Письмо с подтверждением отпралено на почту</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Mail_notebutton">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>280</y>
+       <width>21</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Pass_notebutton">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>340</y>
+       <width>21</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>480</y>
+      <width>351</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(55, 60, 102);
+border-radius: 7px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>241</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white; 
+font-weight: bold;
+font-size: 24pt;
+background-color: none;
+border: none;</string>
+     </property>
+     <property name="text">
+      <string>Уведомления</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>60</y>
+       <width>128</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_15">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 8pt;
+background-color: none;
+border: none;
+</string>
+        </property>
+        <property name="text">
+         <string>На почту</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_16">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 8pt;
+background-color: none;
+border: none;
+</string>
+        </property>
+        <property name="text">
+         <string>В приложении</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>340</width>
+       <height>122</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_17">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Новые баги</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_18">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Новые комментарии</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_19">
+        <property name="styleSheet">
+         <string notr="true">color: white; 
+font-size: 20pt;
+background-color: none;
+border: none;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Изменение статуса в баге</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>631</x>
+       <y>81</y>
+       <width>99</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QCheckBox" name="checkBox_7">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_8">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_10">
+     <property name="geometry">
+      <rect>
+       <x>631</x>
+       <y>116</y>
+       <width>99</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QCheckBox" name="checkBox_9">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_10">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_11">
+     <property name="geometry">
+      <rect>
+       <x>631</x>
+       <y>151</y>
+       <width>99</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QCheckBox" name="checkBox_11">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_12">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1326</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../rec.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>Notification_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_account</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Notification_button</sender>
+   <signal>clicked()</signal>
+   <receiver>frame_4</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>139</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1183</x>
+     <y>637</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Account_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_account</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Account_button</sender>
+   <signal>clicked()</signal>
+   <receiver>frame_4</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1270</x>
+     <y>702</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Save_password</sender>
+   <signal>clicked()</signal>
+   <receiver>Password_c</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>906</x>
+     <y>340</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Mail_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Mail_s</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>990</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>936</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Mail_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Mail_notebutton</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>991</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>990</x>
+     <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Save_mail</sender>
+   <signal>clicked()</signal>
+   <receiver>Mail_notebutton</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>979</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>998</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Save_password</sender>
+   <signal>clicked()</signal>
+   <receiver>Pass_notebutton</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>952</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>856</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Pass_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Pass_notebutton</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>844</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>852</x>
+     <y>482</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Pass_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Password_c</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>855</x>
+     <y>493</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Mail_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Input_mail</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1009</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>813</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Pass_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Input_password</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>860</x>
+     <y>498</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Pass_notebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>Input_password2</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>845</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>730</x>
+     <y>348</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
