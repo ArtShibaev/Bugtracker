@@ -240,7 +240,7 @@ class BugPage(QtCore.QObject):
         from main_page import MainPage
 
         self.ui.hide()
-        self.ui = MainPage(self.uid, self.login)
+        self.ui = MainPage(self.uid, self.login, referrer_project=self.project)
         self.ui.show()
 
     def clearLayout(self, layout):
@@ -379,7 +379,9 @@ class BugPage(QtCore.QObject):
             "tags": tags,
             "closed": False,
             # Фон и цвет текста карточки
-            "styles": styles
+            "styles": styles,
+            "steps": self.ui_create_card.reproduction.toPlainText(),
+            "messages": []
 
         })
 

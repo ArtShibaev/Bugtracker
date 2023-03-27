@@ -55,7 +55,7 @@ backgrounds = [
 project_l = []
 
 class MainPage(QtCore.QObject):
-    def __init__(self, uid, login):
+    def __init__(self, uid, login, **args):
         super().__init__()
         self.count = 0
         self.ui = loader.load('./interfaces/main_page.ui', None)
@@ -65,28 +65,47 @@ class MainPage(QtCore.QObject):
 
         self.user_login = login
 
-        self.certainProject = projects.find_one({'owner': uid})
 
-        if self.certainProject is None:
-            for team in list(teams.find({})):
-                if uid == team['admin'] or uid in team['members']:
-                    self.certainProject = projects.find_one({'owner': team['tid']})
-        self.reloadProjectInfo()
 
         self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
+
+        # Получаю значения оцпионального аргумента - проекта, с которого был переход на главную
+        referrer_project = args.get('referrer_project')
+        if referrer_project:
+            project_index = self.ui.projects_list.findText(args.get('referrer_project')['title'], QtCore.Qt.MatchFixedString)
+            self.ui.projects_list.setCurrentIndex(project_index)
+            self.certainProject = referrer_project
+        else:
+            self.certainProject = projects.find_one({'owner': uid})
+
+            if self.certainProject is None:
+                for team in list(teams.find({})):
+                    if uid == team['admin'] or uid in team['members']:
+                        self.certainProject = projects.find_one({'owner': team['tid']})
+            self.ui.projects_list.setCurrentIndex(self.ui.projects_list.count()-1)
+
+        self.reloadProjectInfo()
+
+
+
+
 
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
         self.ui.new_member.clicked.connect(self.sendJoinRequest)
 
-        self.ui.projects_list.currentIndexChanged.connect(self.reloadProjectInfo)
+        self.ui.projects_list.currentIndexChanged.connect(self.changeProject)
 
 
         Images.load_image(self, 'main_page')
 
     def show(self):
         self.ui.show()
+
+    def changeProject(self):
+        self.certainProject = projects.find_one({'title': self.ui.projects_list.currentText()})
+        self.reloadProjectInfo()
 
     def fillingTeamList(self, project):
         self.clearLayout(self.ui.team.layout())
@@ -234,7 +253,7 @@ class MainPage(QtCore.QObject):
         for bug in project['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
-        if len(deadlines) < 1: self.ui.deadline_frame2.hide()
+        if len(deadlines) <= 1: self.ui.deadline_frame2.hide()
         else:
             deadlines = [el for el, _ in groupby(deadlines)]
             deadlines.sort()
@@ -339,7 +358,9 @@ class MainPage(QtCore.QObject):
             "tags": tags,
             "closed": False,
             # Фон и цвет текста карточки
-            "styles": styles
+            "styles": styles,
+            "messages": [],
+            "steps": self.ui_create_card.reproduction.toPlainText(),
 
         })
 
