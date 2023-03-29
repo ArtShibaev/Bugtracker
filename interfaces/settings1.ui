@@ -28,7 +28,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Багтрекер - Настройки</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(23, 22, 50);</string>
@@ -100,6 +100,7 @@ border-radius: 15px;</string>
      <property name="font">
       <font>
        <pointsize>18</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -146,6 +147,7 @@ border: none;</string>
         <property name="font">
          <font>
           <pointsize>14</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -204,7 +206,7 @@ border: none;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../rec.qrc">
+         <iconset>
           <normaloff>:/icons/images/adidas_button.png</normaloff>:/icons/images/adidas_button.png</iconset>
         </property>
        </widget>
@@ -219,7 +221,7 @@ border: none;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../rec.qrc">
+         <iconset>
           <normaloff>:/icons/images/gear.png</normaloff>:/icons/images/gear.png</iconset>
         </property>
        </widget>
@@ -325,7 +327,7 @@ font-weight: bold;</string>
       <rect>
        <x>620</x>
        <y>87</y>
-       <width>122</width>
+       <width>145</width>
        <height>16</height>
       </rect>
      </property>
@@ -341,7 +343,7 @@ font-weight: bold;</string>
       <rect>
        <x>620</x>
        <y>190</y>
-       <width>122</width>
+       <width>145</width>
        <height>16</height>
       </rect>
      </property>
@@ -375,7 +377,7 @@ font-size: 12pt;</string>
       <rect>
        <x>420</x>
        <y>500</y>
-       <width>122</width>
+       <width>145</width>
        <height>16</height>
       </rect>
      </property>
@@ -575,7 +577,7 @@ font-size: 12pt;</string>
      <property name="geometry">
       <rect>
        <x>750</x>
-       <y>280</y>
+       <y>278</y>
        <width>21</width>
        <height>24</height>
       </rect>
@@ -588,7 +590,7 @@ font-size: 12pt;</string>
      <property name="geometry">
       <rect>
        <x>600</x>
-       <y>340</y>
+       <y>337</y>
        <width>21</width>
        <height>24</height>
       </rect>
