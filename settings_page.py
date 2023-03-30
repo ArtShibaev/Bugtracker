@@ -14,11 +14,6 @@ import os
 
 from dotenv import load_dotenv
 
-from bug_card import BugCard
-from bug_page import BugPage
-from image_loader import Images
-from login_form import LoginForm
-from welcome_page_form import WelcomePageForm
 
 load_dotenv('.env')
 
@@ -42,24 +37,25 @@ def Mail_valid(new_mail):
     else:
         return 'Некорректно указана почта'
 
-# URL = 'https://sun1-95.userapi.com/impg/s4kMQPB4UdNSjUMzPccptezxIUkVhrOFTBl3aw/LwQit3F2dFM.jpg?size=604x453&quality=95&sign=6f956d8f7eecad11aa2a9febb27d4476&type=album'
+
 URL =' https://steamuserimages-a.akamaihd.net/ugc/1842548410823874095/EF62A9435943C812CEF0E2F347CC110B7AB0074D/?imw=512&amp;imh=512&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'
 
 
 class SettingPage(QtCore.QObject):
-    def __init__(self):
+    def __init__(self, uid, login):
         super().__init__()
         self.ui = loader.load('./interfaces/settings_page.ui', None)
 
-        # self.user_login = login
-        self.login = 'Artem'
+        self.user_login = login
+        self.uid = uid
+
         self.pixmap = QPixmap()
         self.Set_url_image(URL)
 
         self.ui.show()
         self.ui.Save_mail.clicked.connect(self.mail_changed)
         self.ui.Save_password.clicked.connect(self.password_c)
-        # self.ui.settings.clicked.connect(self.GoToMainPage)
+        self.ui.home.clicked.connect(self.GoToMainPage)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
 
@@ -86,7 +82,8 @@ class SettingPage(QtCore.QObject):
         # self.ui.pushButton.setIcon(QtGui.QIcon(self.pixmap))
         # self.ui.pushButton.setIconSize(QSize(201, 201))
 
-    # def GoToMainPage(self, login, uid):
-    #     self.ui.hide()
-    #     self.ui = MainPage(self.ui.login.text())
-    #     self.ui.show()
+    def GoToMainPage(self):
+        from main_page import MainPage
+        self.ui.hide()
+        self.ui = MainPage(self.uid, self.user_login)
+        self.ui.show()

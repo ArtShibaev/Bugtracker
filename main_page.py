@@ -51,8 +51,10 @@ class MainPage(QtCore.QObject):
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
+        self.ui.settings.clicked.connect(self.goToSettingsPage)
 
         self.user_login = login
+        self.uid = uid
 
         self.fillingProjectList(uid)
         self.certainProject = projects.find_one({'owner': uid})
@@ -264,3 +266,9 @@ class MainPage(QtCore.QObject):
         else:
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
 
+
+    def goToSettingsPage(self):
+        from settings_page import SettingPage
+        self.ui.hide()
+        self.ui = SettingPage(self.uid, self.user_login)
+        self.ui.show()
