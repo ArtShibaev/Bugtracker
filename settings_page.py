@@ -1,16 +1,40 @@
-import os
-import sys
-from PySide6 import QtWidgets
-from PySide6 import QtCore
-from PySide6.QtUiTools import QUiLoader
-from dotenv import load_dotenv
 import re
+import requests
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QApplication, QWidget, QLabel
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Qt, QSize
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtGui import *
+from pymongo import MongoClient
+
+
+
+import os
+
+from dotenv import load_dotenv
+
+from bug_card import BugCard
+from bug_page import BugPage
+from image_loader import Images
+from login_form import LoginForm
+from welcome_page_form import WelcomePageForm
 
 load_dotenv('.env')
 
+MONGO_URL="mongodb+srv://ra1nbow1:ra1nbow1@rbs.ftmj9.mongodb.net/rbs"
+
 loader = QUiLoader()
+mongo_url = os.environ.get('MONGO_URL')
+client = MongoClient(mongo_url)
+db = client['bugtracker']
+users = db['users']
+projects = db['projects']
+teams = db['teams']
 
 mail_pattern = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+
+
 
 def Mail_valid(new_mail):
     if re.fullmatch(mail_pattern, new_mail):
@@ -18,18 +42,26 @@ def Mail_valid(new_mail):
     else:
         return 'Некорректно указана почта'
 
+# URL = 'https://sun1-95.userapi.com/impg/s4kMQPB4UdNSjUMzPccptezxIUkVhrOFTBl3aw/LwQit3F2dFM.jpg?size=604x453&quality=95&sign=6f956d8f7eecad11aa2a9febb27d4476&type=album'
+URL =' https://steamuserimages-a.akamaihd.net/ugc/1842548410823874095/EF62A9435943C812CEF0E2F347CC110B7AB0074D/?imw=512&amp;imh=512&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'
+
 
 class SettingPage(QtCore.QObject):
     def __init__(self):
         super().__init__()
-        self.ui = loader.load('./interfaces/settings1.ui', None)
+        self.ui = loader.load('./interfaces/settings_page.ui', None)
+
+        # self.user_login = login
+        self.login = 'Artem'
+        self.pixmap = QPixmap()
+        self.Set_url_image(URL)
+
         self.ui.show()
         self.ui.Save_mail.clicked.connect(self.mail_changed)
         self.ui.Save_password.clicked.connect(self.password_c)
+        # self.ui.settings.clicked.connect(self.GoToMainPage)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
-        self.ui.Mail_notebutton.hide()
-        self.ui.Pass_notebutton.hide()
 
     def mail_changed(self):
         new_mail = self.ui.Input_mail.text()
@@ -42,12 +74,19 @@ class SettingPage(QtCore.QObject):
         password2 = self.ui.Input_password2.text()
         if password1 != password2:
             message = "Пароли не совпадают!"
-        if len(password1) <1 or len(password2) < 1:
+        if len(password1) < 1 or len(password2) < 1:
             message = "Введите пароль"
         self.ui.Password_c.show()
         self.ui.Password_c.setText(message)
 
+    def Set_url_image(self, imageURL):
+        request = requests.get(imageURL)
+        self.pixmap.loadFromData(request.content)
+        # self.ui.Avatarka.setPixmap(QtGui.QPixmap(self.pixmap))
+        # self.ui.pushButton.setIcon(QtGui.QIcon(self.pixmap))
+        # self.ui.pushButton.setIconSize(QSize(201, 201))
 
-
-
-
+    # def GoToMainPage(self, login, uid):
+    #     self.ui.hide()
+    #     self.ui = MainPage(self.ui.login.text())
+    #     self.ui.show()

@@ -579,7 +579,7 @@ background-color: rgba(52,177,20,0.26);
 font-size: 15px;</string>
                </property>
                <property name="text">
-                <string>Письмо с подтверждением отправлено на адрес ...</string>
+                <string>Письмо с подтверждением отправлено на адрес </string>
                </property>
               </widget>
              </item>
