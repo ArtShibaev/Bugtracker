@@ -87,3 +87,9 @@ class SettingPage(QtCore.QObject):
         self.ui.hide()
         self.ui = MainPage(self.uid, self.user_login)
         self.ui.show()
+
+    def logout(self):
+        from login_form import LoginForm
+        self.ui.hide()
+        self.ui = LoginForm()
+        self.ui.show()
