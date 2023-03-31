@@ -13,6 +13,7 @@ from pymongo import MongoClient
 import os
 
 from dotenv import load_dotenv
+from image_loader import Images
 
 
 load_dotenv('.env')
