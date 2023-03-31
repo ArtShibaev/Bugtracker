@@ -1,4 +1,6 @@
 import re
+import time
+
 import requests
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QWidget, QLabel
@@ -30,7 +32,12 @@ teams = db['teams']
 
 mail_pattern = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
-
+def getFullUserInfo(type, value):
+    if type == "login":
+        user = users.find_one({"login": value})
+    elif type == "uid": user = users.find_one({"uid": value})
+    else: user = None
+    return user
 
 def Mail_valid(new_mail):
     if re.fullmatch(mail_pattern, new_mail):
@@ -47,9 +54,8 @@ class SettingPage(QtCore.QObject):
         super().__init__()
         self.ui = loader.load('./interfaces/settings_page.ui', None)
 
-        self.user_login = login
+        self.login = login
         self.uid = uid
-
         self.pixmap = QPixmap()
         self.Set_url_image(URL)
 
@@ -59,6 +65,20 @@ class SettingPage(QtCore.QObject):
         self.ui.home.clicked.connect(self.GoToMainPage)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
+
+        self.ui.logout.clicked.connect(self.logout)
+
+        Images.load_image(self, 'settings_page')
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(requests.get(getFullUserInfo('login', self.login)['image']).content)
+        self.ui.Avatarka.setIcon(QtGui.QIcon(pixmap))
+        self.ui.Avatarka.setIconSize(QSize(300, 300))
+
+
+
+    def show(self):
+        self.ui.show()
 
     def mail_changed(self):
         new_mail = self.ui.Input_mail.text()
@@ -73,20 +93,20 @@ class SettingPage(QtCore.QObject):
             message = "Пароли не совпадают!"
         if len(password1) < 1 or len(password2) < 1:
             message = "Введите пароль"
-        self.ui.Password_c.show()
         self.ui.Password_c.setText(message)
+        self.ui.Password_c.show()
 
     def Set_url_image(self, imageURL):
-        request = requests.get(imageURL)
-        self.pixmap.loadFromData(request.content)
-        # self.ui.Avatarka.setPixmap(QtGui.QPixmap(self.pixmap))
-        # self.ui.pushButton.setIcon(QtGui.QIcon(self.pixmap))
-        # self.ui.pushButton.setIconSize(QSize(201, 201))
+            request = requests.get(imageURL)
+            self.pixmap.loadFromData(request.content)
+            # self.ui.Avatarka.setPixmap(QtGui.QPixmap(self.pixmap))
+            # self.ui.pushButton.setIcon(QtGui.QIcon(self.pixmap))
+            # self.ui.pushButton.setIconSize(QSize(201, 201))
 
     def GoToMainPage(self):
         from main_page import MainPage
         self.ui.hide()
-        self.ui = MainPage(self.uid, self.user_login)
+        self.ui = MainPage(self.uid, self.login)
         self.ui.show()
 
     def logout(self):
