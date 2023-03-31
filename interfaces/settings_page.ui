@@ -129,12 +129,18 @@ padding-left: 1px;</string>
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>15</number>
+             </property>
              <item>
               <widget class="QPushButton" name="pushButton_4">
                <property name="font">
                 <font>
                  <pointsize>-1</pointsize>
                 </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
@@ -144,7 +150,7 @@ padding-left: 1px;</string>
 	padding-left: 10px;
 	border:none;
 	text-align: left;
-	background-color: transparent
+	background-color: transparent;
 }
 QPushButton:hover{
 	background:#322F6E;
@@ -162,6 +168,9 @@ QPushButton:hover{
                 <font>
                  <pointsize>-1</pointsize>
                 </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
@@ -184,7 +193,10 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="logout">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
 	color:#EE2E2E;
@@ -422,58 +434,6 @@ padding: 5px;</string>
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="rightMargin">
-          <number>20</number>
-         </property>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="users_photo_2">
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>ArrowCursor</cursorShape>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: #373C66;
-border-radius: 15px;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
       </layout>
      </widget>
     </item>
@@ -542,11 +502,11 @@ border-radius: 10px;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background: #FFFFFF;
+              <string notr="true">background: transparent;
 border-radius: 160px;</string>
              </property>
              <property name="text">
-              <string>Аватарка</string>
+              <string/>
              </property>
             </widget>
            </item>
