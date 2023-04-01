@@ -51,6 +51,8 @@ class SettingPageNot(QtCore.QObject):
         self.ui.home.clicked.connect(self.goToMainPage)
         self.ui.Account_settings.clicked.connect(self.goToAccountSettings)
 
+        Images.load_image(self, 'settings_notifications_page')
+
     def show(self):
         self.ui.show()
 

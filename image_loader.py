@@ -32,7 +32,7 @@ class Images(QtCore.QObject):
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
             self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
 
-        elif file == 'settings_page':
+        elif file == 'settings_page' or file == 'settings_notifications_page':
             settings = QPixmap('./images/gear.png')
             mask = settings.createMaskFromColor(QColor('#80828A'), Qt.MaskOutColor)
             settings.fill((QColor('#fff')))
