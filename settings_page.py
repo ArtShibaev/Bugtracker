@@ -1,4 +1,5 @@
 import hashlib
+import random
 import re
 import requests
 import os
@@ -12,6 +13,7 @@ from pymongo import MongoClient
 
 from dotenv import load_dotenv
 from image_loader import Images
+from mailer import sendMail
 
 load_dotenv('.env')
 
@@ -35,12 +37,6 @@ def getFullUserInfo(type, value):
         user = None
     return user
 
-
-def mailValidation(new_mail):
-    if re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), new_mail):
-        return 'Письмо с подтверждением отправлено на почту'
-    else:
-        return 'Некорректно указана почта'
 
 
 class SettingPage(QtCore.QObject):
@@ -72,8 +68,18 @@ class SettingPage(QtCore.QObject):
 
     def mail_changed(self):
         new_mail = self.ui.Input_mail.text()
+
+        if re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', new_mail):
+            sendMail(new_mail, 'Подтверждение почтового адреса', f'Ваш проверочный код: {random.randrange(111111, 999999, 6)}')
+            self.ui.Mail_s.setStyleSheet('QPushButton{color: #34B132;background-color: rgba(52,177,20,0.26);font-size: 15px;height: 45px;width: 350px;}QPushButton:hover{background-color: rgba(52, 140, 20, 0.26);border-radius: 10px;}')
+            message = 'Письмо с подтверждением отправлено на почту'
+            self.ui.Input_mail.setText('')
+        else:
+            self.ui.Mail_s.setStyleSheet('QPushButton{color:rgba(255,0,0,0.75);background-color:rgba(255, 0, 0, 0.2);font-size:15px;height:45px;width:350px;}QPushButton:hover{background-color:rgba(255,0,0,0.1);border-radius:10px;}')
+            message = 'Некорректно указана почта'
+
         self.ui.Mail_s.show()
-        self.ui.Mail_s.setText(mailValidation(new_mail))
+        self.ui.Mail_s.setText(message)
 
     def password_c(self):
         password1 = self.ui.Input_password.text()
