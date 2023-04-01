@@ -133,7 +133,7 @@ padding-left: 1px;</string>
               <number>15</number>
              </property>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="Account_settings">
                <property name="font">
                 <font>
                  <pointsize>-1</pointsize>
