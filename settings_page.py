@@ -26,6 +26,8 @@ db = client['bugtracker']
 users = db['users']
 projects = db['projects']
 teams = db['teams']
+# image = db['image']
+
 
 
 def getFullUserInfo(type, value):
@@ -56,7 +58,7 @@ class SettingPage(QtCore.QObject):
         self.ui.verification_code.hide()
         self.ui.submit_verification_code.hide()
         self.ui.submit_verification_code.clicked.connect(self.submitVerificationCode)
-
+        self.ui.UrlChange.clicked.connect(self.url_change)
         self.ui.logout.clicked.connect(self.logout)
 
         Images.load_image(self, 'settings_page')
@@ -143,3 +145,7 @@ class SettingPage(QtCore.QObject):
         self.ui.hide()
         self.ui = SettingPageNot(self.uid, self.login)
         self.ui.show()
+
+    def url_change(self):
+        link = self.ui.Image_link.text()
+        users.update_one({'uid': self.uid}, {'$set': {'image': link}})

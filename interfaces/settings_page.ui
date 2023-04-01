@@ -508,7 +508,7 @@ outline: none;</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QPushButton" name="UrlChange">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
