@@ -10,17 +10,16 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import *
 from pymongo import MongoClient
 
-
+# хуй
 
 import os
 
 from dotenv import load_dotenv
 from image_loader import Images
 
-
 load_dotenv('.env')
 
-MONGO_URL="mongodb+srv://ra1nbow1:ra1nbow1@rbs.ftmj9.mongodb.net/rbs"
+MONGO_URL = "mongodb+srv://ra1nbow1:ra1nbow1@rbs.ftmj9.mongodb.net/rbs"
 
 loader = QUiLoader()
 mongo_url = os.environ.get('MONGO_URL')
@@ -32,21 +31,22 @@ teams = db['teams']
 
 mail_pattern = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
+
 def getFullUserInfo(type, value):
     if type == "login":
         user = users.find_one({"login": value})
-    elif type == "uid": user = users.find_one({"uid": value})
-    else: user = None
+    elif type == "uid":
+        user = users.find_one({"uid": value})
+    else:
+        user = None
     return user
+
 
 def Mail_valid(new_mail):
     if re.fullmatch(mail_pattern, new_mail):
         return 'Письмо с подтверждением отправлено на почту'
     else:
         return 'Некорректно указана почта'
-
-
-URL =' https://steamuserimages-a.akamaihd.net/ugc/1842548410823874095/EF62A9435943C812CEF0E2F347CC110B7AB0074D/?imw=512&amp;imh=512&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'
 
 
 class SettingPage(QtCore.QObject):
@@ -57,12 +57,10 @@ class SettingPage(QtCore.QObject):
         self.login = login
         self.uid = uid
         self.pixmap = QPixmap()
-        self.Set_url_image(URL)
-
-        self.ui.show()
         self.ui.Save_mail.clicked.connect(self.mail_changed)
         self.ui.Save_password.clicked.connect(self.password_c)
-        self.ui.home.clicked.connect(self.GoToMainPage)
+        self.ui.home.clicked.connect(self.goToMainPage)
+        self.ui.Not_button.clicked.connect(self.goToNotSettings)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
 
@@ -74,8 +72,6 @@ class SettingPage(QtCore.QObject):
         pixmap.loadFromData(requests.get(getFullUserInfo('login', self.login)['image']).content)
         self.ui.Avatarka.setIcon(QtGui.QIcon(pixmap))
         self.ui.Avatarka.setIconSize(QSize(300, 300))
-
-
 
     def show(self):
         self.ui.show()
@@ -96,14 +92,7 @@ class SettingPage(QtCore.QObject):
         self.ui.Password_c.setText(message)
         self.ui.Password_c.show()
 
-    def Set_url_image(self, imageURL):
-            request = requests.get(imageURL)
-            self.pixmap.loadFromData(request.content)
-            # self.ui.Avatarka.setPixmap(QtGui.QPixmap(self.pixmap))
-            # self.ui.pushButton.setIcon(QtGui.QIcon(self.pixmap))
-            # self.ui.pushButton.setIconSize(QSize(201, 201))
-
-    def GoToMainPage(self):
+    def goToMainPage(self):
         from main_page import MainPage
         self.ui.hide()
         self.ui = MainPage(self.uid, self.login)
@@ -113,4 +102,10 @@ class SettingPage(QtCore.QObject):
         from login_form import LoginForm
         self.ui.hide()
         self.ui = LoginForm()
+        self.ui.show()
+
+    def goToNotSettings(self):
+        from settings_page_not import SettingPageNot
+        self.ui.hide()
+        self.ui = SettingPageNot(self.uid, self.login)
         self.ui.show()
