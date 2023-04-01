@@ -509,6 +509,9 @@ outline: none;</string>
              </item>
              <item>
               <widget class="QPushButton" name="pushButton_7">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: transparent;
 color: #00B2FF;</string>
@@ -608,6 +611,9 @@ outline: none;</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: transparent;
 color: #00B2FF;</string>
@@ -642,6 +648,9 @@ outline: none;</string>
                  <width>167</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: transparent;
@@ -811,8 +820,8 @@ QPushButton:hover{
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>939</x>
-     <y>334</y>
+     <x>956</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
      <x>900</x>
@@ -827,8 +836,8 @@ QPushButton:hover{
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>779</x>
-     <y>403</y>
+     <x>806</x>
+     <y>457</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
