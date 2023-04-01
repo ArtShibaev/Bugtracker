@@ -1,18 +1,13 @@
 import re
-import time
-
 import requests
+import os
+
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QWidget, QLabel
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import *
 from pymongo import MongoClient
-
-# хуй
-
-import os
 
 from dotenv import load_dotenv
 from image_loader import Images
@@ -29,9 +24,6 @@ users = db['users']
 projects = db['projects']
 teams = db['teams']
 
-mail_pattern = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-
-
 def getFullUserInfo(type, value):
     if type == "login":
         user = users.find_one({"login": value})
@@ -42,8 +34,8 @@ def getFullUserInfo(type, value):
     return user
 
 
-def Mail_valid(new_mail):
-    if re.fullmatch(mail_pattern, new_mail):
+def mailValidation(new_mail):
+    if re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), new_mail):
         return 'Письмо с подтверждением отправлено на почту'
     else:
         return 'Некорректно указана почта'
@@ -60,7 +52,7 @@ class SettingPage(QtCore.QObject):
         self.ui.Save_mail.clicked.connect(self.mail_changed)
         self.ui.Save_password.clicked.connect(self.password_c)
         self.ui.home.clicked.connect(self.goToMainPage)
-        self.ui.Not_button.clicked.connect(self.goToNotSettings)
+        self.ui.Not_button.clicked.connect(self.goToNotificationsSettings)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
 
@@ -79,16 +71,21 @@ class SettingPage(QtCore.QObject):
     def mail_changed(self):
         new_mail = self.ui.Input_mail.text()
         self.ui.Mail_s.show()
-        self.ui.Mail_s.setText(Mail_valid(new_mail))
+        self.ui.Mail_s.setText(mailValidation(new_mail))
 
     def password_c(self):
-        message = 'Пароль успешно изменен!'
         password1 = self.ui.Input_password.text()
         password2 = self.ui.Input_password2.text()
         if password1 != password2:
             message = "Пароли не совпадают!"
-        if len(password1) < 1 or len(password2) < 1:
+        elif len(password1) < 1 or len(password2) < 1:
             message = "Введите пароль"
+        else:
+            message = 'Пароль успешно изменен!'
+            self.ui.Input_password.setText('')
+            self.ui.Input_password2.setText('')
+
+
         self.ui.Password_c.setText(message)
         self.ui.Password_c.show()
 
@@ -104,7 +101,7 @@ class SettingPage(QtCore.QObject):
         self.ui = LoginForm()
         self.ui.show()
 
-    def goToNotSettings(self):
+    def goToNotificationsSettings(self):
         from settings_page_not import SettingPageNot
         self.ui.hide()
         self.ui = SettingPageNot(self.uid, self.login)
