@@ -1,3 +1,4 @@
+import hashlib
 import re
 import requests
 import os
@@ -23,6 +24,7 @@ db = client['bugtracker']
 users = db['users']
 projects = db['projects']
 teams = db['teams']
+
 
 def getFullUserInfo(type, value):
     if type == "login":
@@ -85,6 +87,9 @@ class SettingPage(QtCore.QObject):
             message = "Пароли не совпадают!"
         else:
             message = 'Пароль успешно изменен!'
+
+            users.update_one({'uid': self.uid}, {'$set': {'password': hashlib.sha256(password1.encode('utf-8')).hexdigest()}})
+
             self.ui.Password_c.setStyleSheet('QPushButton{color: #34B132;background-color: rgba(52,177,20,0.26);font-size: 15px;height: 45px;width: 200px;}QPushButton:hover{background-color: rgba(52, 140, 20, 0.26);border-radius: 10px;}')
             self.ui.Input_password.setText('')
             self.ui.Input_password2.setText('')
