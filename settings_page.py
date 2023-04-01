@@ -76,15 +76,18 @@ class SettingPage(QtCore.QObject):
     def password_c(self):
         password1 = self.ui.Input_password.text()
         password2 = self.ui.Input_password2.text()
-        if password1 != password2:
+
+        if re.fullmatch(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', password1) is None:
+            message = 'Пароль не удовлетворяет требованиям'
+            self.ui.Password_c.setStyleSheet('QPushButton{color:rgba(255,0,0,0.75);background-color:rgba(255, 0, 0, 0.2);font-size:15px;height:45px;width:300px;}QPushButton:hover{background-color:rgba(255,0,0,0.1);border-radius:10px;}')
+        elif (password1 != password2) or (not password2):
+            self.ui.Password_c.setStyleSheet('QPushButton{color:rgba(255,0,0,0.75);background-color:rgba(255, 0, 0, 0.2);font-size:15px;height:45px;width:300px;}QPushButton:hover{background-color:rgba(255,0,0,0.1);border-radius:10px;}')
             message = "Пароли не совпадают!"
-        elif len(password1) < 1 or len(password2) < 1:
-            message = "Введите пароль"
         else:
             message = 'Пароль успешно изменен!'
+            self.ui.Password_c.setStyleSheet('QPushButton{color: #34B132;background-color: rgba(52,177,20,0.26);font-size: 15px;height: 45px;width: 200px;}QPushButton:hover{background-color: rgba(52, 140, 20, 0.26);border-radius: 10px;}')
             self.ui.Input_password.setText('')
             self.ui.Input_password2.setText('')
-
 
         self.ui.Password_c.setText(message)
         self.ui.Password_c.show()
