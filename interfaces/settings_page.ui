@@ -163,7 +163,7 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="Not_button">
                <property name="font">
                 <font>
                  <pointsize>-1</pointsize>
@@ -493,119 +493,35 @@ border-radius: 10px;</string>
          </property>
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="3" column="0">
-            <widget class="QPushButton" name="Avatarka">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>322</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: transparent;
-border-radius: 160px;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1" colspan="2">
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <property name="spacing">
-              <number>20</number>
-             </property>
-             <property name="leftMargin">
-              <number>15</number>
-             </property>
-             <property name="topMargin">
-              <number>30</number>
-             </property>
+           <item row="4" column="0" colspan="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QLabel" name="Mail_s">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>45</height>
-                </size>
-               </property>
+              <widget class="QLineEdit" name="Image_link">
                <property name="styleSheet">
-                <string notr="true">color: #34B132;
-background-color: rgba(52,177,20,0.26);
-font-size: 15px;</string>
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
                </property>
-               <property name="text">
-                <string>Письмо с подтверждением отправлено на адрес </string>
+               <property name="placeholderText">
+                <string>Ссылка на картинку</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="Password_c">
-               <property name="maximumSize">
-                <size>
-                 <width>185</width>
-                 <height>45</height>
-                </size>
-               </property>
+              <widget class="QPushButton" name="pushButton_7">
                <property name="styleSheet">
-                <string notr="true">color: #34B132;
-background-color: rgba(52,177,20,0.26);
-font-size: 15px;</string>
+                <string notr="true">background-color: transparent;
+color: #00B2FF;</string>
                </property>
                <property name="text">
-                <string>Пароль успешно изменён</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Preferred</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string/>
+                <string>Сохранить изменения</string>
                </property>
               </widget>
              </item>
             </layout>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_4">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>41</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>-1</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color:#FFFFFF;
-font-size:27px;</string>
-             </property>
-             <property name="text">
-              <string>Аккаунт</string>
-             </property>
-            </widget>
            </item>
            <item row="2" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout">
@@ -741,35 +657,22 @@ color: #00B2FF;</string>
              </item>
             </layout>
            </item>
-           <item row="4" column="0" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLineEdit" name="Image_link">
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-               <property name="placeholderText">
-                <string>Ссылка на картинку</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_7">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color: #00B2FF;</string>
-               </property>
-               <property name="text">
-                <string>Сохранить изменения</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="Avatarka">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>322</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background: transparent;
+border-radius: 160px;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0" colspan="2">
             <spacer name="verticalSpacer_5">
@@ -787,6 +690,105 @@ color: #00B2FF;</string>
              </property>
             </spacer>
            </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_4">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>41</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>-1</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:#FFFFFF;
+font-size:27px;</string>
+             </property>
+             <property name="text">
+              <string>Аккаунт</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1" colspan="2">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="spacing">
+              <number>20</number>
+             </property>
+             <property name="leftMargin">
+              <number>15</number>
+             </property>
+             <property name="topMargin">
+              <number>30</number>
+             </property>
+             <item alignment="Qt::AlignLeft">
+              <widget class="QPushButton" name="Mail_s">
+               <property name="styleSheet">
+                <string notr="true">QPushButton{color: #34B132;
+background-color: rgba(52,177,20,0.26);
+font-size: 15px;
+height: 45px;
+width: 350px;
+}
+
+QPushButton:hover{
+	background-color: rgba(52, 140, 20, 0.26);
+	border-radius: 10px;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Письмо с подтверждением отправлено на почту</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignLeft">
+              <widget class="QPushButton" name="Password_c">
+               <property name="styleSheet">
+                <string notr="true">QPushButton{color: #34B132;
+background-color: rgba(52,177,20,0.26);
+font-size: 15px;
+height: 45px;
+width: 200px;
+}
+
+QPushButton:hover{
+	background-color: rgba(52, 140, 20, 0.26);
+	border-radius: 10px;
+}</string>
+               </property>
+               <property name="text">
+                <string>Пароль успешно изменен</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Preferred</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </item>
         </layout>
@@ -798,5 +800,38 @@ color: #00B2FF;</string>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>Mail_s</sender>
+   <signal>clicked()</signal>
+   <receiver>Mail_s</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>939</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>900</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Password_c</sender>
+   <signal>clicked()</signal>
+   <receiver>Password_c</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
