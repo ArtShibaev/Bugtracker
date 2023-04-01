@@ -180,9 +180,6 @@ QPushButton:hover{
 	padding-left: 10px;
 	border:none;
 	text-align: left;
-	background-color: transparent
-}
-QPushButton:hover{
 	background:#322F6E;
 	border-radius: 10px;
 }</string>
