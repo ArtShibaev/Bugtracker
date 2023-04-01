@@ -508,32 +508,9 @@ border-radius: 10px;</string>
            </item>
            <item row="2" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout">
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Изменение статуса в баге</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="checkBox_4">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="checkBox_5">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
+             <property name="verticalSpacing">
+              <number>20</number>
+             </property>
              <item row="3" column="1" alignment="Qt::AlignHCenter">
               <widget class="QCheckBox" name="checkBox_2">
                <property name="text">
@@ -548,10 +525,15 @@ font-size:22px;</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="2" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="checkBox_6">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
                <property name="text">
-                <string/>
+                <string>Изменение статуса в баге</string>
                </property>
               </widget>
              </item>
@@ -570,6 +552,18 @@ font-size:22px;</string>
                </property>
                <property name="text">
                 <string>Новые баги</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+              <widget class="QLabel" name="label_6">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:18px;</string>
+               </property>
+               <property name="text">
+                <string>На почту</string>
                </property>
               </widget>
              </item>
@@ -592,30 +586,6 @@ font-size:22px;</string>
                </property>
                <property name="text">
                 <string>Новые комментарии</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-              <widget class="QLabel" name="label_6">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:18px;</string>
-               </property>
-               <property name="text">
-                <string>На почту</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_7">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:18px;</string>
-               </property>
-               <property name="text">
-                <string>В приложении</string>
                </property>
               </widget>
              </item>
