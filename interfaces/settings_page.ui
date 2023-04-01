@@ -28,7 +28,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Багтрекер - Настройки аккаунта</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(23, 22, 50);</string>
@@ -525,85 +525,7 @@ color: #00B2FF;</string>
            </item>
            <item row="2" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="maximumSize">
-                <size>
-                 <width>168</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Почта</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Повтор пароля</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Новый пароль</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="Input_mail">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="Input_password">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
+             <item row="3" column="2">
               <widget class="QPushButton" name="Save_password">
                <property name="maximumSize">
                 <size>
@@ -623,8 +545,26 @@ color: #00B2FF;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <widget class="QLineEdit" name="Input_password2">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="Input_password">
                <property name="maximumSize">
                 <size>
                  <width>300</width>
@@ -658,6 +598,107 @@ color: #00B2FF;</string>
                </property>
                <property name="text">
                 <string>Сохранить изменения</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="maximumSize">
+                <size>
+                 <width>168</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Почта</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Повтор пароля</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Новый пароль</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="Input_mail">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="verification_code">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Проверочный код</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="submit_verification_code">
+               <property name="maximumSize">
+                <size>
+                 <width>167</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color: #00B2FF;</string>
+               </property>
+               <property name="text">
+                <string>Подтвердить</string>
                </property>
               </widget>
              </item>

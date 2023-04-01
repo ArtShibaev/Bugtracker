@@ -28,7 +28,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Багтрекер - Настройки уведомлений</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(23, 22, 50);</string>

@@ -53,6 +53,9 @@ class SettingPage(QtCore.QObject):
         self.ui.Not_button.clicked.connect(self.goToNotificationsSettings)
         self.ui.Mail_s.hide()
         self.ui.Password_c.hide()
+        self.ui.verification_code.hide()
+        self.ui.submit_verification_code.hide()
+        self.ui.submit_verification_code.clicked.connect(self.submitVerificationCode)
 
         self.ui.logout.clicked.connect(self.logout)
 
@@ -67,19 +70,39 @@ class SettingPage(QtCore.QObject):
         self.ui.show()
 
     def mail_changed(self):
-        new_mail = self.ui.Input_mail.text()
+        self.new_mail = self.ui.Input_mail.text()
 
-        if re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', new_mail):
-            sendMail(new_mail, 'Подтверждение почтового адреса', f'Ваш проверочный код: {random.randrange(111111, 999999, 6)}')
+        if re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', self.new_mail) and self.new_mail != getFullUserInfo('uid', self.uid)['email']:
+            self.code = str(random.randrange(111111, 999999, 6))
+            sendMail(self.new_mail, 'Подтверждение почтового адреса', f'Ваш проверочный код: {self.code}')
             self.ui.Mail_s.setStyleSheet('QPushButton{color: #34B132;background-color: rgba(52,177,20,0.26);font-size: 15px;height: 45px;width: 350px;}QPushButton:hover{background-color: rgba(52, 140, 20, 0.26);border-radius: 10px;}')
             message = 'Письмо с подтверждением отправлено на почту'
             self.ui.Input_mail.setText('')
+            self.ui.verification_code.show()
+            self.ui.submit_verification_code.show()
         else:
             self.ui.Mail_s.setStyleSheet('QPushButton{color:rgba(255,0,0,0.75);background-color:rgba(255, 0, 0, 0.2);font-size:15px;height:45px;width:350px;}QPushButton:hover{background-color:rgba(255,0,0,0.1);border-radius:10px;}')
             message = 'Некорректно указана почта'
 
         self.ui.Mail_s.show()
         self.ui.Mail_s.setText(message)
+
+    def submitVerificationCode(self):
+        if self.ui.verification_code.text() == self.code:
+            self.ui.Mail_s.setText('Почта изменена')
+            self.ui.Mail_s.setStyleSheet('QPushButton{color: #34B132;background-color: rgba(52,177,20,0.26);font-size:15px;height:45px;width:200px;}QPushButton:hover{background-color: rgba(52, 140, 20, 0.26);border-radius: 10px;}')
+            self.ui.Mail_s.show()
+            users.update_one({'uid': self.uid}, {'$set': {'email': self.new_mail}})
+
+            self.code = None
+            self.new_mail = None
+            self.ui.verification_code.setText('')
+            self.ui.verification_code.hide()
+            self.ui.submit_verification_code.hide()
+        else:
+            self.ui.Mail_s.setText('Неверный код')
+            self.ui.Mail_s.setStyleSheet('QPushButton{color:rgba(255,0,0,0.75);background-color:rgba(255, 0, 0, 0.2);font-size:15px;height:45px;width:200px;}QPushButton:hover{background-color:rgba(255,0,0,0.1);border-radius:10px;}')
+            self.ui.Mail_s.show()
 
     def password_c(self):
         password1 = self.ui.Input_password.text()
