@@ -205,7 +205,7 @@ QPushButton:hover{
 	background-color: transparent
 }
 QPushButton:hover{
-	background:#322F6E;
+	background: rgba(255, 0, 0, 0.2);
 	border-radius: 10px;
 }</string>
                </property>
