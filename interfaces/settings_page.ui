@@ -722,6 +722,9 @@ font-size:27px;</string>
              </property>
              <item alignment="Qt::AlignLeft">
               <widget class="QPushButton" name="Mail_s">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{color: #34B132;
 background-color: rgba(52,177,20,0.26);
@@ -743,6 +746,9 @@ QPushButton:hover{
              </item>
              <item alignment="Qt::AlignLeft">
               <widget class="QPushButton" name="Password_c">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{color: #34B132;
 background-color: rgba(52,177,20,0.26);
