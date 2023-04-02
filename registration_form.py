@@ -77,7 +77,11 @@ class RegistrationForm(QtCore.QObject):
                 "registrationDate": round(time.time()*1000),
                 "uid": random.randrange(111111, 999999, 6),
                 "image": 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
-                "notifications": ["false", "false", "false"],
+                "notifications": {
+                    "new_bugs": False,
+                    "new_comments": False,
+                    "status_changes": False
+                },
             })
             # После регистрации у юзера точно не будет никаких проектов, поэтому он всегда будет переходить на пустую страницу
             self.goToWelcomePage()
