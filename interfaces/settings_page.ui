@@ -842,6 +842,27 @@ QPushButton:hover{
              </item>
             </layout>
            </item>
+           <item row="4" column="2">
+            <widget class="QPushButton" name="Url_exeption">
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+color: rgba(255,0,0,0.75);
+background-color: rgba(255, 0, 0, 0.2);
+font-size: 15px;
+height: 45px;
+width: 200px;
+}
+
+QPushButton:hover{
+	background-color: rgba(255,0,0,0.1);
+	border-radius: 10px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Некорректная ссылка!</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -861,8 +882,8 @@ QPushButton:hover{
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>956</x>
-     <y>392</y>
+     <x>952</x>
+     <y>398</y>
     </hint>
     <hint type="destinationlabel">
      <x>900</x>
@@ -877,12 +898,28 @@ QPushButton:hover{
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>806</x>
-     <y>457</y>
+     <x>802</x>
+     <y>463</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
      <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Url_exeption</sender>
+   <signal>clicked()</signal>
+   <receiver>Url_exeption</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>769</x>
+     <y>503</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>730</x>
+     <y>523</y>
     </hint>
    </hints>
   </connection>
