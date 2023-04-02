@@ -523,6 +523,8 @@ background: #1B1E3D;</string>
   <tabstop>title</tabstop>
   <tabstop>description</tabstop>
   <tabstop>reproduction</tabstop>
+  <tabstop>supposed_result</tabstop>
+  <tabstop>actual_result</tabstop>
   <tabstop>tags</tabstop>
   <tabstop>criticality</tabstop>
   <tabstop>assignee</tabstop>

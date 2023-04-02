@@ -194,7 +194,6 @@ class MainPage(QtCore.QObject):
             else:
                 team = getFullUserTeamInfo('tid', self.certainProject['owner'])
                 teams.update_one({"tid": team['tid']}, {'$set': {"admin": new_admin}})
-                print(team['members'])
                 team['members'][team['members'].index(new_admin)] = current_admin
                 teams.update_one({"tid": team['tid']}, {'$set': {"members": team['members']}})
                 self.ui_change_team.close()
@@ -244,9 +243,7 @@ class MainPage(QtCore.QObject):
         if self.ui_new_member.user_login.text() != '':
             if user is not None:
                 project = projects.find_one({'title': self.ui.projects_list.currentText()})
-                print(self.ui.projects_list.currentText())
                 owner = str(project['owner'])
-                print(owner)
                 if owner.startswith('t_'):
                     team = teams.find_one({'tid': owner})
                     if team is not None and team['admin'] == getFullUserInfo('login', self.user_login)['uid']:
@@ -269,7 +266,6 @@ class MainPage(QtCore.QObject):
                             "members": [],
                         })
                         team = getFullUserTeamInfo('tid', teamID)
-                        print(team)
                         team["members"].append(user['uid'])
                         teams.update_one({"tid": team['tid']}, {'$set': {"members": team['members']}})
                         projects.update_one({"title": self.certainProject['title']}, {'$set': {"owner": teamID}})
@@ -380,7 +376,7 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.addItem("Нет")
 
         self.ui_create_card.assignee.addItem(self.user_login)
-        if self.certainProject['owner'].startswith('t_'):
+        if str(self.certainProject['owner']).startswith('t_'):
             certainTeam = teams.find_one({'tid': self.certainProject['owner']})
             members = certainTeam['members']
 
@@ -408,7 +404,8 @@ class MainPage(QtCore.QObject):
         else:
             assignee = getFullUserInfo('login', self.ui_create_card.assignee.currentText())['uid']
 
-        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple()))*1000
+
+        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple())+10800)*1000
 
         # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
         tags = [self.ui_create_card.tags.currentText()]
@@ -433,7 +430,7 @@ class MainPage(QtCore.QObject):
 
         })
 
-        if project['owner'].startswith('t_'):
+        if str(project['owner']).startswith('t_'):
             team = teams.find_one({"tid": project['owner']})
             admin = getFullUserInfo('uid', team['admin'])
 

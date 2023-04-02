@@ -178,7 +178,7 @@ class BugPage(QtCore.QObject):
                     "text": "<i>Закрыл баг</i>"
                 })
 
-        if project['owner'].startswith('t_'):
+        if str(project['owner']).startswith('t_'):
             team = teams.find_one({"tid": project['owner']})
             admin = getUserInfo('uid', team['admin'])
 
@@ -209,7 +209,7 @@ class BugPage(QtCore.QObject):
                     "text": "<i>Закрепил баг за собой</i>"
                 })
 
-        if project['owner'].startswith('t_'):
+        if str(project['owner']).startswith('t_'):
             team = teams.find_one({"tid": project['owner']})
             admin = getUserInfo('uid', team['admin'])
 
@@ -240,7 +240,7 @@ class BugPage(QtCore.QObject):
                     "text": "<i>Отказался от бага</i>"
                 })
 
-        if project['owner'].startswith('t_'):
+        if str(project['owner']).startswith('t_'):
             team = teams.find_one({"tid": project['owner']})
             admin = getUserInfo('uid', team['admin'])
 
@@ -297,7 +297,7 @@ class BugPage(QtCore.QObject):
                     })
                     selected_bug = bug.copy()
 
-            if project['owner'].startswith('t_'):
+            if str(project['owner']).startswith('t_'):
                 team = teams.find_one({"tid": project['owner']})
                 admin = getUserInfo('uid', team['admin'])
 
@@ -421,7 +421,7 @@ class BugPage(QtCore.QObject):
         self.ui_create_card.assignee.addItem("Нет")
 
         self.ui_create_card.assignee.addItem(self.login)
-        if self.project['owner'].startswith('t_'):
+        if str(self.project['owner']).startswith('t_'):
             certainTeam = teams.find_one({'tid': self.project['owner']})
             members = certainTeam['members']
 
@@ -480,7 +480,7 @@ class BugPage(QtCore.QObject):
 
         # Отправка писем о новых багах всем участникам проекта
         # Рассылка запустится только если это командный проект. Зачем уведомления в индивидуальном проекте, если там один человек
-        if project['owner'].startswith('t_'):
+        if str(project['owner']).startswith('t_'):
             team = teams.find_one({"tid": project['owner']})
             admin = getUserInfo('uid', team['admin'])
 
