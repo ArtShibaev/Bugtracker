@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import *
 from pymongo import MongoClient
+from urllib import request
 
 from dotenv import load_dotenv
 from image_loader import Images
@@ -57,6 +58,7 @@ class SettingPage(QtCore.QObject):
         self.ui.Password_c.hide()
         self.ui.verification_code.hide()
         self.ui.submit_verification_code.hide()
+        self.ui.Url_exeption.hide()
         self.ui.submit_verification_code.clicked.connect(self.submitVerificationCode)
         self.ui.UrlChange.clicked.connect(self.url_change)
         self.ui.logout.clicked.connect(self.logout)
@@ -64,9 +66,15 @@ class SettingPage(QtCore.QObject):
         Images.load_image(self, 'settings_page')
 
         pixmap = QPixmap()
-        pixmap.loadFromData(requests.get(getFullUserInfo('login', self.login)['image']).content)
+        try:
+            pixmap.loadFromData(requests.get(getFullUserInfo('login', self.login)['image']).content)
+        except requests.exceptions.MissingSchema:
+            url = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+            pixmap.loadFromData(request.urlopen(url).read())
+            self.ui.Url_exeption.show()
         self.ui.Avatarka.setIcon(QtGui.QIcon(pixmap))
         self.ui.Avatarka.setIconSize(QSize(300, 300))
+
 
     def show(self):
         self.ui.show()
@@ -149,3 +157,4 @@ class SettingPage(QtCore.QObject):
     def url_change(self):
         link = self.ui.Image_link.text()
         users.update_one({'uid': self.uid}, {'$set': {'image': link}})
+        self.ui.Url_exeption.hide()
