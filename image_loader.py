@@ -24,7 +24,6 @@ class Images(QtCore.QObject):
             self.ui.new_project.setIcon(QtGui.QIcon('./images/plus.png'))
             self.ui.home.setIcon(QtGui.QIcon(home))
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
-            self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
 
             self.ui.change.setIcon(QtGui.QIcon('./images/gear.png'))
         elif file == 'bug_page':
@@ -33,7 +32,6 @@ class Images(QtCore.QObject):
             self.ui.send.setIconSize(QSize(120, 120))
             self.ui.home.setIcon(QtGui.QIcon('./images/main_page.png'))
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
-            self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
 
         elif file == 'settings_page' or file == 'settings_notifications_page':
             settings = QPixmap('./images/gear.png')
