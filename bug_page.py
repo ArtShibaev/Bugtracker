@@ -168,6 +168,7 @@ class BugPage(QtCore.QObject):
     def closeBug(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
+                selected_bug = bug.copy()
                 bug['closed'] = True
                 # 10800 - 3 часа в секундах, чтобы от UTC перейти к московскому времени
                 bug['closedDate'] = round(time.time() + 10800) * 1000
@@ -176,6 +177,22 @@ class BugPage(QtCore.QObject):
                     "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Закрыл баг</i>"
                 })
+
+        if project['owner'].startswith('t_'):
+            team = teams.find_one({"tid": project['owner']})
+            admin = getUserInfo('uid', team['admin'])
+
+            author = getUserInfo("uid", self.uid)
+            subject = f'Изменение статуса бага'
+            content = f'{author["login"]} закрыл баг <b>{selected_bug["title"]}</b> в проекте {project["title"]}' \
+                      f'<img src="{author["image"]} width="50" height="50"/>'
+
+            # Уведомление о закрытии приходит только админу. Другим, мне кажется, это не нужно
+            if admin['notifications']['new_bugs']:
+                mailer.sendMail(admin['email'],
+                                subject,
+                                f'{content}')
+
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
@@ -184,12 +201,29 @@ class BugPage(QtCore.QObject):
     def selfAssign(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
+                selected_bug = bug.copy()
                 bug['assignee'] = self.uid
                 bug['messages'].append({
                     "author": self.uid,
                     "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Закрепил баг за собой</i>"
                 })
+
+        if project['owner'].startswith('t_'):
+            team = teams.find_one({"tid": project['owner']})
+            admin = getUserInfo('uid', team['admin'])
+
+            author = getUserInfo("uid", self.uid)
+            subject = f'Изменение статуса бага'
+            content = f'{author["login"]} закрепил за собой баг <b>{selected_bug["title"]}</b> в проекте {project["title"]}' \
+                      f'<img src="{author["image"]} width="50" height="50"/>'
+
+            # Уведомление приходит только админу
+            if admin['notifications']['new_bugs']:
+                mailer.sendMail(admin['email'],
+                                subject,
+                                f'{content}')
+
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
@@ -198,12 +232,35 @@ class BugPage(QtCore.QObject):
     def denyBug(self, project):
         for bug in project['bugs']:
             if bug['bid'] == self.bid:
+                selected_bug = bug
                 bug['assignee'] = 'Нет'
                 bug['messages'].append({
                     "author": self.uid,
                     "date": round((time.time() + 10800) * 1000),
                     "text": "<i>Отказался от бага</i>"
                 })
+
+        if project['owner'].startswith('t_'):
+            team = teams.find_one({"tid": project['owner']})
+            admin = getUserInfo('uid', team['admin'])
+
+            author = getUserInfo("uid", self.uid)
+            subject = f'Изменение статуса бага'
+            content = f'{author["login"]} отказался от бага <b>{selected_bug["title"]}</b>' \
+                      f'<img src="{author["image"]} width="50" height="50"/>'
+
+            if admin['notifications']['new_bugs']:
+                mailer.sendMail(admin['email'],
+                                subject,
+                                f'{content}')
+
+            for x in team['members']:
+                user = getUserInfo('uid', x)
+                if user['notifications']['new_bugs']:
+                    mailer.sendMail(user['email'],
+                                    subject,
+                                    f'{content}')
+
         projects.update_one({'title': project['title']}, {'$set': {'bugs': project['bugs']}})
         self.loadBugInfo(project['bugs'], self.bid)
         self.loadBugs(project)
