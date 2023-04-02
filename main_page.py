@@ -53,6 +53,7 @@ backgrounds = [
 ]
 
 project_l = []
+member_data = []
 
 class MainPage(QtCore.QObject):
     def __init__(self, uid, login, **args):
@@ -62,10 +63,9 @@ class MainPage(QtCore.QObject):
         self.ui_create_project = loader.load('./interfaces/create_new_project_form.ui', None)
         self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
         self.ui_new_member = loader.load('./interfaces/new_member.ui', None)
+        self.ui_change_team = loader.load('./interfaces/change_team.ui', None)
 
         self.user_login = login
-
-
 
         self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
 
@@ -84,16 +84,12 @@ class MainPage(QtCore.QObject):
                         self.certainProject = projects.find_one({'owner': team['tid']})
             self.ui.projects_list.setCurrentIndex(self.ui.projects_list.count()-1)
 
-        self.reloadProjectInfo()
-
-
-
-
-
+        self.changeProject()
 
         self.ui.new_project.clicked.connect(self.createNewProject)
         self.ui.create_card.clicked.connect(self.createNewBugCard)
         self.ui.new_member.clicked.connect(self.sendJoinRequest)
+        self.ui.change.clicked.connect(self.showMenu)
 
         self.ui.projects_list.currentIndexChanged.connect(self.changeProject)
 
@@ -105,12 +101,28 @@ class MainPage(QtCore.QObject):
 
     def changeProject(self):
         self.certainProject = projects.find_one({'title': self.ui.projects_list.currentText()})
+        if str(self.certainProject['owner']).startswith('t_'):
+            if getFullUserTeamInfo('tid', self.certainProject['owner'])['admin'] != getFullUserInfo('login', self.user_login)['uid']:
+                self.ui.new_member.hide()
+                self.ui.change.hide()
+            else:
+                self.ui.new_member.show()
+                self.ui.change.show()
+        else:
+            self.ui.new_member.show()
+            self.ui.change.show()
         self.reloadProjectInfo()
 
-    def fillingTeamList(self, project):
+    def fillingTeamList(self):
         self.clearLayout(self.ui.team.layout())
+        member_data.clear()
 
         crown_ic = QPixmap('./images/crown.png')
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(requests.get(getFullUserInfo('login', self.user_login)['image']).content)
+        self.ui.users_photo.setIcon(QtGui.QIcon(pixmap))
+        self.ui.users_photo.setIconSize(QSize(40, 40))
 
         main_layout = QVBoxLayout()
         main_layout.setAlignment(Qt.AlignTop)
@@ -118,8 +130,9 @@ class MainPage(QtCore.QObject):
         layout.setAlignment(Qt.AlignLeft)
         pixmap = QPixmap()
 
-        if project['owner'] == getFullUserInfo('login', self.user_login)['uid']:
+        if self.certainProject['owner'] == getFullUserInfo('login', self.user_login)['uid']:
             pixmap.loadFromData(requests.get(getFullUserInfo('login', self.user_login)['image']).content)
+            member_data.append(self.user_login)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(self.user_login, 18, placeholder='...'))
             crown = QPushButton(QtGui.QIcon(crown_ic), textwrap.shorten('', 10))
@@ -136,6 +149,7 @@ class MainPage(QtCore.QObject):
             pixmap.loadFromData(requests.get(admin['image']).content)
 
             member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(admin['login'], 18, placeholder='...'))
+            member_data.append(admin['login'])
             crown = QPushButton(QtGui.QIcon(crown_ic), textwrap.shorten('', 10))
             member.setIconSize(QSize(30, 30))
             member.setStyleSheet(Config.membersStyleSheet)
@@ -149,18 +163,62 @@ class MainPage(QtCore.QObject):
                 pixmap.loadFromData(requests.get(user['image']).content)
 
                 member = QPushButton(QtGui.QIcon(pixmap), textwrap.shorten(user['login'], 18, placeholder='...'))
+                member_data.append(user['login'])
                 member.setIconSize(QSize(30, 30))
                 member.setStyleSheet(Config.membersStyleSheet)
                 member.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
                 main_layout.addWidget(member)
 
-
         widget = QWidget()
         widget.setLayout(main_layout)
         self.ui.team.setWidget(widget)
 
-    #def showMenu(self):
+    def showMenu(self):
+        self.ui_change_team.show()
+        self.ui_change_team.new_admin.clicked.connect(self.newAdmin)
+        self.ui_change_team.exclude.clicked.connect(self.deleteUserFromTeam)
 
+    def newAdmin(self):
+        if self.ui_change_team.user_login.text() in member_data:
+            current_admin = getFullUserInfo('login', self.user_login)['uid']
+            new_admin = getFullUserInfo('login', self.ui_change_team.user_login.text())['uid']
+            if current_admin == new_admin:
+                self.ui_change_team.user_login.clear()
+                self.ui_change_team.user_login.setPlaceholderText('Данный пользователь уже администратор')
+            else:
+                team = getFullUserTeamInfo('tid', self.certainProject['owner'])
+                teams.update_one({"tid": team['tid']}, {'$set': {"admin": new_admin}})
+                print(team['members'])
+                team['members'][team['members'].index(new_admin)] = current_admin
+                teams.update_one({"tid": team['tid']}, {'$set': {"members": team['members']}})
+                self.ui_change_team.close()
+                self.changeProject()
+        else:
+            self.ui_change_team.user_login.clear()
+            self.ui_change_team.user_login.setPlaceholderText('Пользователь не найден')
+
+    def deleteUserFromTeam(self):
+        if self.ui_change_team.user_login.text() in member_data:
+            duser = getFullUserInfo('login', self.ui_change_team.user_login.text())['uid']
+            if getFullUserInfo('login', self.user_login)['uid'] == duser:
+                self.ui_change_team.user_login.clear()
+                self.ui_change_team.user_login.setPlaceholderText('Администратор не может покинуть команду')
+            else:
+                team = getFullUserTeamInfo('tid', self.certainProject['owner'])
+                team['members'].pop(team['members'].index(duser))
+                teams.update_one({"tid": team['tid']}, {'$set': {'members': team['members']}})
+                for i in range(len(self.certainProject['bugs'])):
+                    if self.certainProject['bugs'][i]['assignee'] == duser:
+                        self.certainProject['bugs'][i]['assignee'] = 'Нет'
+                projects.update_one({"title": self.certainProject['title']}, {'$set': {'bugs': self.certainProject['bugs']}})
+                if len(team['members']) == 0:
+                    projects.update_one({"title": self.certainProject['title']}, {'$set': {'owner': getFullUserInfo('login', self.user_login)['uid']}})
+                    teams.delete_one({"tid": team['tid']})
+                self.ui_change_team.close()
+                self.changeProject()
+        else:
+            self.ui_change_team.user_login.clear()
+            self.ui_change_team.user_login.setPlaceholderText('Пользователь не найден')
 
     def sendJoinRequest(self):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
@@ -180,14 +238,16 @@ class MainPage(QtCore.QObject):
         if self.ui_new_member.user_login.text() != '':
             if user is not None:
                 project = projects.find_one({'title': self.ui.projects_list.currentText()})
+                print(self.ui.projects_list.currentText())
                 owner = str(project['owner'])
+                print(owner)
                 if owner.startswith('t_'):
                     team = teams.find_one({'tid': owner})
                     if team is not None and team['admin'] == getFullUserInfo('login', self.user_login)['uid']:
                         if user['uid'] not in team['members']:
                             team['members'].append(user['uid'])
                             teams.update_one({'tid': team['tid']}, {'$set': {"members": team['members']}})
-                            self.fillingTeamList(self.certainProject)
+                            self.changeProject()
                             self.closeSendJoinRequest()
                             self.ui_new_member.user_login.clear()
                             self.ui_new_member.user_login.setPlaceholderText('Логин пользователя')
@@ -196,16 +256,18 @@ class MainPage(QtCore.QObject):
                     else: notifier.sendError(message='Вы не обладаете правами администратора')
                 else:
                     if user['uid'] != getFullUserInfo('login', self.user_login)['uid']:
+                        teamID = 't_' + str(random.randrange(111111, 999999, 5))
                         teams.insert_one({
-                            "tid": 't_' + str(random.randrange(111111, 999999, 5)),
+                            "tid": teamID,
                             "admin": getFullUserInfo('login', self.user_login)['uid'],
                             "members": [],
                         })
-                        team = getFullUserTeamInfo('admin', self.certainProject['owner'])
+                        team = getFullUserTeamInfo('tid', teamID)
+                        print(team)
                         team["members"].append(user['uid'])
                         teams.update_one({"tid": team['tid']}, {'$set': {"members": team['members']}})
-                        projects.update_one({"title": self.certainProject['title']}, {'$set': {"owner": getFullUserTeamInfo('admin', getFullUserInfo('login', self.user_login)['uid'])['tid']}})
-                        self.fillingTeamList(self.certainProject)
+                        projects.update_one({"title": self.certainProject['title']}, {'$set': {"owner": teamID}})
+                        self.changeProject()
                         self.closeSendJoinRequest()
                         self.ui_new_member.user_login.clear()
                         self.ui_new_member.user_login.setPlaceholderText('Логин пользователя')
@@ -213,7 +275,7 @@ class MainPage(QtCore.QObject):
             else: notifier.sendError('Ошибка добавления пользователя', 'Пользователь не найден')
         else: notifier.sendError(message='Введите логин пользователя')
 
-    def fillingDeadlineFrames(self, project):
+    def fillingDeadlineFrames(self):
         self.ui.bug_list_1.clear()
         self.ui.deadline1.setText('Нет информации')
         self.ui.complete1.setText('Нет информации')
@@ -225,7 +287,7 @@ class MainPage(QtCore.QObject):
         self.ui.developers2.setText('Нет информации')
 
         deadlines = []
-        for bug in project['bugs']:
+        for bug in self.certainProject['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
         if len(deadlines) == 0: self.ui.deadline_frame1.hide()
@@ -236,7 +298,7 @@ class MainPage(QtCore.QObject):
             self.ui.deadline_frame2.show()
             developers = []
             statistic = 0
-            for min_dl_bug in project['bugs']:
+            for min_dl_bug in self.certainProject['bugs']:
                 if min_dl_bug['deadline'] == min_deadline:
                     self.ui.bug_list_1.addItem(min_dl_bug['title'])
                     self.ui.deadline1.setText(datetime.datetime.utcfromtimestamp(min_dl_bug['deadline']/1000).strftime('%d.%m.%Y'))
@@ -250,30 +312,32 @@ class MainPage(QtCore.QObject):
             self.ui.progress1.setValue(statistic)
 
         deadlines = []
-        for bug in project['bugs']:
+        for bug in self.certainProject['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
         if len(deadlines) <= 1: self.ui.deadline_frame2.hide()
         else:
             deadlines = [el for el, _ in groupby(deadlines)]
             deadlines.sort()
-            min_deadline = deadlines[1]
-            self.ui.deadline_frame1.show()
-            developers = []
-            statistic = 0
-            for min_dl_bug in project['bugs']:
-                if min_dl_bug['deadline'] == min_deadline:
-                    self.ui.bug_list_2.addItem(min_dl_bug['title'])
-                    self.ui.deadline2.setText(
-                        datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
-                    if min_dl_bug['closed']: statistic += 1
-                    if min_dl_bug['assignee'] != 'Нет':
-                        developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
-            final_list = [el for el, _ in groupby(developers)]
-            self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
-            self.ui.developers2.setText(', '.join(map(str, final_list)))
-            self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
-            self.ui.progress2.setValue(statistic)
+            deadlines.pop(0)
+            if len(deadlines) != 0:
+                min_deadline = deadlines[0]
+                self.ui.deadline_frame1.show()
+                developers = []
+                statistic = 0
+                for min_dl_bug in self.certainProject['bugs']:
+                    if min_dl_bug['deadline'] == min_deadline:
+                        self.ui.bug_list_2.addItem(min_dl_bug['title'])
+                        self.ui.deadline2.setText(
+                            datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
+                        if min_dl_bug['closed']: statistic += 1
+                        if min_dl_bug['assignee'] != 'Нет':
+                            developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
+                final_list = [el for el, _ in groupby(developers)]
+                self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
+                self.ui.developers2.setText(', '.join(map(str, final_list)))
+                self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
+                self.ui.progress2.setValue(statistic)
 
 
     def fillingProjectList(self, uid):
@@ -382,21 +446,21 @@ class MainPage(QtCore.QObject):
         self.ui_create_card.assignee.clear()
 
 
-    def loadBugs(self, project):
+    def loadBugs(self):
         self.clearLayout(self.ui.bug_cards.layout())
         self.clearLayout(self.ui.scrollArea.layout())
 
         completionList = {}
-        for x in project['bugs']:
+        for x in self.certainProject['bugs']:
             completionList[x['title']] = x['bid']
 
-        completer = QCompleter([x['title'] for x in project['bugs']])
+        completer = QCompleter([x['title'] for x in self.certainProject['bugs']])
         completer.activated.connect(lambda x: self.goToBug(completionList[x]))
 
         self.ui.search.setCompleter(completer)
 
         # Чтобы в карточках не вылезали закрытые баги, я фильтрую
-        opened_bugs = list(filter(lambda x: not x['closed'], project['bugs']))
+        opened_bugs = list(filter(lambda x: not x['closed'], self.certainProject['bugs']))
 
         for bug in opened_bugs[-1:-4:-1]:
             bugCard = BugCard(bug['title'], datetime.datetime.utcfromtimestamp(bug['creationDate']/1000).strftime('%d.%m.%Y %H:%M'), bug['author'], bug['assignee'], bug['tags'], bug['criticality'], bug['styles'])
@@ -406,7 +470,7 @@ class MainPage(QtCore.QObject):
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
 
-        for bug in project['bugs']:
+        for bug in self.certainProject['bugs']:
             if not bug['closed']:
                 icon = QPixmap('./images/bugInList.png')
                 # Исходное изображение черное. Создается маска для всего черного цвета на картинке
@@ -464,14 +528,14 @@ class MainPage(QtCore.QObject):
         self.ui_create_project.close()
 
     def reloadProjectInfo(self):
-        self.loadBugs(self.certainProject)
-        self.fillingTeamList(self.certainProject)
-        self.fillingDeadlineFrames(self.certainProject)
-        self.reloadStatistic(self.certainProject)
+        self.loadBugs()
+        self.fillingTeamList()
+        self.fillingDeadlineFrames()
+        self.reloadStatistic()
 
-    def reloadStatistic(self, project):
+    def reloadStatistic(self):
         statistic_c, statistic_o = 0, 0
-        for bug in project['bugs']:
+        for bug in self.certainProject['bugs']:
             if bug['closed']:
                 statistic_c += 1
             else:
@@ -486,8 +550,6 @@ class MainPage(QtCore.QObject):
         else:
             self.ui.progress3.setMaximum(1)
             self.ui.progress3.setValue(0)
-
-
 
     def newProject(self):
         if self.ui_create_project.newproject_name.text() != '':
@@ -506,6 +568,7 @@ class MainPage(QtCore.QObject):
                 ],
             })
             self.closeCreateNewProject()
+            self.reloadProjectInfo()
         else:
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
 

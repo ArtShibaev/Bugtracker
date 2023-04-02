@@ -3,6 +3,7 @@ import os
 import random
 import textwrap
 import time
+import requests
 
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt, QSize
@@ -83,6 +84,11 @@ class BugPage(QtCore.QObject):
 
         self.loadMessageHistory()
         self.ui.send.clicked.connect(lambda x: self.sendMessage(project))
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(requests.get(getUserInfo('login', login)['image']).content)
+        self.ui.users_photo.setIcon(QtGui.QIcon(pixmap))
+        self.ui.users_photo.setIconSize(QSize(40, 40))
 
     def loadBugInfo(self, bugs, bid):
         bug = list(filter(lambda x: x['bid'] == bid, bugs))[0]
