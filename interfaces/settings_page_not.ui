@@ -688,6 +688,18 @@ font-size:27px;</string>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>new_bugs</tabstop>
+  <tabstop>new_comments</tabstop>
+  <tabstop>status_changes</tabstop>
+  <tabstop>Save_checkbox</tabstop>
+  <tabstop>Account_settings</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>logout</tabstop>
+  <tabstop>settings</tabstop>
+  <tabstop>home</tabstop>
+  <tabstop>Avatarka</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

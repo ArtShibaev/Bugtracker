@@ -57,6 +57,7 @@ class BugPage(QtCore.QObject):
 
         Images.load_image(self, 'bug_page')
         self.ui.home.clicked.connect(self.goToMainPage)
+        self.ui.settings.clicked.connect(self.goToSettingsPage)
 
         self.fillProjectsList(uid)
         # В дропдауне отмечаем тот проект, со страницы которого был переход
@@ -522,3 +523,10 @@ class BugPage(QtCore.QObject):
 
     def reloadProjectInfo(self):
         self.goToMainPage()
+
+    def goToSettingsPage(self):
+        from settings_page import SettingPage
+
+        self.ui.hide()
+        self.ui = SettingPage(self.uid, self.login)
+        self.ui.show()

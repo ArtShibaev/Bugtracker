@@ -873,6 +873,26 @@ QPushButton:hover{
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>Input_mail</tabstop>
+  <tabstop>Save_mail</tabstop>
+  <tabstop>verification_code</tabstop>
+  <tabstop>submit_verification_code</tabstop>
+  <tabstop>Input_password</tabstop>
+  <tabstop>Input_password2</tabstop>
+  <tabstop>Save_password</tabstop>
+  <tabstop>Image_link</tabstop>
+  <tabstop>UrlChange</tabstop>
+  <tabstop>Not_button</tabstop>
+  <tabstop>logout</tabstop>
+  <tabstop>home</tabstop>
+  <tabstop>settings</tabstop>
+  <tabstop>Mail_s</tabstop>
+  <tabstop>Password_c</tabstop>
+  <tabstop>account_item</tabstop>
+  <tabstop>Avatarka</tabstop>
+  <tabstop>Url_exeption</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

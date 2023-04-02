@@ -363,6 +363,11 @@ class MainPage(QtCore.QObject):
         for x in self.ui.findChildren(QPushButton) + self.ui.findChildren(QComboBox):
             x.setEnabled(False)
         self.ui_create_card.show()
+
+        self.ui_create_card.assignee.clear()
+        self.ui_create_card.tags.clear()
+        self.ui_create_card.criticality.clear()
+
         self.ui_create_card.cancel_bug_card.clicked.connect(self.closeCreateNewBugCard)
 
         for tag in range(len(self.certainProject['tags'])):

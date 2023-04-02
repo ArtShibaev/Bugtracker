@@ -492,6 +492,13 @@ background: #1B1E3D;</string>
                <property name="timeSpec">
                 <enum>Qt::LocalTime</enum>
                </property>
+               <property name="date">
+                <date>
+                 <year>2023</year>
+                 <month>4</month>
+                 <day>2</day>
+                </date>
+               </property>
               </widget>
              </item>
             </layout>
