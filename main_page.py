@@ -443,17 +443,18 @@ class MainPage(QtCore.QObject):
             del created_bug['closed'], created_bug['styles']
             # Заджоинил все ключи и их значения через <br> - это HTML тег, который переносит на новую строку
             content = '<br>'.join([f"<b>{x}</b>: {created_bug[x]}" for x in created_bug])
+            subject = f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}'
 
             if admin['notifications']['new_bugs']:
                 mailer.sendMail(admin['email'],
-                                f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                subject,
                                 f'{content}')
 
             for x in team['members']:
                 user = getFullUserInfo('uid', x)
                 if user['notifications']['new_bugs']:
                     mailer.sendMail(user['email'],
-                                    f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                    subject,
                                     f'{content}')
 
         projects.update_one({'title': project['title']}, {'$set': {"bugs": project['bugs']}})
