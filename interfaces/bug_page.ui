@@ -156,8 +156,7 @@ padding: 5px;</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
-            <string notr="true">background: #373C66;
-border-radius: 15px;</string>
+            <string notr="true">border-radius: 15px;</string>
            </property>
            <property name="text">
             <string/>
@@ -1084,8 +1083,8 @@ font-weight: bold;</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>606</width>
-                  <height>270</height>
+                  <width>617</width>
+                  <height>269</height>
                  </rect>
                 </property>
                </widget>
