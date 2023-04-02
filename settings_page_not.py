@@ -29,6 +29,8 @@ teams = db['teams']
 
 
 
+
+
 def getFullUserInfo(type, value):
     if type == "login":
         user = users.find_one({"login": value})
@@ -43,16 +45,15 @@ class SettingPageNot(QtCore.QObject):
     def __init__(self, uid, login):
         super().__init__()
         self.ui = loader.load('./interfaces/settings_page_not.ui', None)
-
         self.login = login
         self.uid = uid
         self.ui.show()
         self.ui.logout.clicked.connect(self.logout)
+        self.ui.Save_checkbox.clicked.connect(self.Save_checkbox)
         self.ui.home.clicked.connect(self.goToMainPage)
         self.ui.Account_settings.clicked.connect(self.goToAccountSettings)
-
         Images.load_image(self, 'settings_notifications_page')
-
+        self.checkbox()
     def show(self):
         self.ui.show()
 
@@ -73,3 +74,30 @@ class SettingPageNot(QtCore.QObject):
         self.ui.hide()
         self.ui = SettingPage(self.uid, self.login)
         self.ui.show()
+
+    def checkbox(self):
+        check = users.find_one({"login": self.login})['notifications']
+        if check[0] == 'true':
+            self.ui.New_bug.setChecked(True)
+        if check[1] == 'true':
+            self.ui.New_comm.setChecked(True)
+        if check[2] == 'true':
+            self.ui.Status_change.setChecked(True)
+
+    def Save_checkbox(self):
+        check = users.find_one({"login": self.login})['notifications']
+        if self.ui.New_bug.isChecked():
+            check[0] = 'true'
+        else:
+            check[0] = 'false'
+        if self.ui.New_comm.isChecked():
+            check[1] = 'true'
+        else:
+            check[1] = 'false'
+        if self.ui.Status_change.isChecked():
+            check[2] = 'true'
+        else:
+            check[2] = 'false'
+
+        users.update_one({"login": self.login}, {'$set': {'notifications': check}})
+
