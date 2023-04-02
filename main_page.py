@@ -62,10 +62,15 @@ class MainPage(QtCore.QObject):
         self.ui = loader.load('./interfaces/main_page.ui', None)
         self.ui_create_project = loader.load('./interfaces/create_new_project_form.ui', None)
         self.ui_create_card = loader.load('./interfaces/new_bug_card.ui', None)
+
+        self.ui.new_project.clicked.connect(self.createNewProject)
+        self.ui.create_card.clicked.connect(self.createNewBugCard)
+        self.ui.settings.clicked.connect(self.goToSettingsPage)
         self.ui_new_member = loader.load('./interfaces/new_member.ui', None)
         self.ui_change_team = loader.load('./interfaces/change_team.ui', None)
 
         self.user_login = login
+        self.uid = uid
 
         self.fillingProjectList(getFullUserInfo('login', self.user_login)['uid'])
 
@@ -573,4 +578,8 @@ class MainPage(QtCore.QObject):
             self.ui_create_project.newproject_name.setPlaceholderText("Введите название проекта")
 
 
-
+    def goToSettingsPage(self):
+        from settings_page import SettingPage
+        self.ui.hide()
+        self.ui = SettingPage(self.uid, self.user_login)
+        self.ui.show()
