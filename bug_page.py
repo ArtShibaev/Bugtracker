@@ -1,8 +1,11 @@
 import datetime
 import os
+import pprint
 import random
 import textwrap
 import time
+
+import pytz
 import requests
 
 from PySide6 import QtCore, QtGui
@@ -235,6 +238,32 @@ class BugPage(QtCore.QObject):
                         "date": round((time.time() + 10800) * 1000),
                         "text": self.ui.message.toPlainText()
                     })
+                    selected_bug = bug.copy()
+
+            if project['owner'].startswith('t_'):
+                team = teams.find_one({"tid": project['owner']})
+                admin = getUserInfo('uid', team['admin'])
+
+                created_message = selected_bug['messages'][-1].copy()
+                author = getUserInfo("uid", self.uid)
+                subject = f'Новое сообщение от {author["login"]}'
+                content = f'<h2>Сообщение в "{bug["title"]}"</h2><br><br>' \
+                          f'{datetime.datetime.now(pytz.timezone("Europe/Moscow")).strftime("%d %B, %H:%M:%S")}: {author["login"]} - {created_message["text"]}' \
+                          f'<img src="{author["image"]} width="50" height="50"/>'
+
+                if admin['notifications']['new_bugs']:
+                    mailer.sendMail(admin['email'],
+                                    subject,
+                                    f'{content}')
+
+                for x in team['members']:
+                    user = getUserInfo('uid', x)
+                    if user['notifications']['new_bugs']:
+                        mailer.sendMail(user['email'],
+                                        subject,
+                                        f'{content}')
+
+
             projects.update_one({"title": project['title']}, {'$set': {'bugs': bugs}})
 
         self.ui.message.setPlainText('')
