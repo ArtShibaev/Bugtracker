@@ -3,8 +3,6 @@ from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
 from pymongo import MongoClient
 
-# хуй
-
 import os
 
 from dotenv import load_dotenv

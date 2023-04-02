@@ -15,6 +15,7 @@ import datetime
 import os
 from dotenv import load_dotenv
 
+import mailer
 from bug_card import BugCard
 from bug_page import BugPage
 from image_loader import Images
@@ -384,7 +385,7 @@ class MainPage(QtCore.QObject):
             members = certainTeam['members']
 
             for user_id in members:
-                self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
+                self.ui_create_card.assignee.addItem(getFullUserInfo('uid', user_id)['login'])
 
             if certainTeam['admin'] != getFullUserInfo('login', self.user_login)['uid']:
                 self.ui_create_card.assignee.setEnabled(False)
@@ -426,12 +427,34 @@ class MainPage(QtCore.QObject):
             "criticality": criticality,
             "tags": tags,
             "closed": False,
-            # Фон и цвет текста карточки
             "styles": styles,
             "messages": [],
             "steps": self.ui_create_card.reproduction.toPlainText(),
 
         })
+
+        if project['owner'].startswith('t_'):
+            team = teams.find_one({"tid": project['owner']})
+            admin = getFullUserInfo('uid', team['admin'])
+
+            # Скопировал словарь созданного сейчас бага
+            created_bug = project['bugs'][-1].copy()
+            # Удалил ненужные поля
+            del created_bug['closed'], created_bug['styles']
+            # Заджоинил все ключи и их значения через <br> - это HTML тег, который переносит на новую строку
+            content = '<br>'.join([f"<b>{x}</b>: {created_bug[x]}" for x in created_bug])
+
+            if admin['notifications']['new_bugs']:
+                mailer.sendMail(admin['email'],
+                                f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                f'{content}')
+
+            for x in team['members']:
+                user = getFullUserInfo('uid', x)
+                if user['notifications']['new_bugs']:
+                    mailer.sendMail(user['email'],
+                                    f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                    f'{content}')
 
         projects.update_one({'title': project['title']}, {'$set': {"bugs": project['bugs']}})
 

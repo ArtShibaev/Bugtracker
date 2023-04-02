@@ -13,6 +13,7 @@ from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLab
 from pymongo import MongoClient
 
 import config
+import mailer
 from image_loader import Images
 
 loader = QUiLoader()
@@ -323,8 +324,8 @@ class BugPage(QtCore.QObject):
         self.ui_create_card.show()
         self.ui_create_card.cancel_bug_card.clicked.connect(self.closeCreateNewBugCard)
 
-        for tag in range(len(self.certainProject['tags'])):
-            self.ui_create_card.tags.addItem(self.certainProject['tags'][tag]['name'])
+        for tag in range(len(self.project['tags'])):
+            self.ui_create_card.tags.addItem(self.project['tags'][tag]['name'])
         self.ui_create_card.tags.addItem('+ Создать новый')
 
         criticalityLevel = ["Низкая", "Средняя", "Высокая"]
@@ -333,19 +334,19 @@ class BugPage(QtCore.QObject):
 
         self.ui_create_card.assignee.addItem("Нет")
 
-        self.ui_create_card.assignee.addItem(self.user_login)
-        if self.certainProject['owner'].startswith('t_'):
-            certainTeam = teams.find_one({'tid': self.certainProject['owner']})
+        self.ui_create_card.assignee.addItem(self.login)
+        if self.project['owner'].startswith('t_'):
+            certainTeam = teams.find_one({'tid': self.project['owner']})
             members = certainTeam['members']
 
             for user_id in members:
                 self.ui_create_card.assignee.addItem(users.find_one({'uid': user_id})['login'])
 
-            if certainTeam['admin'] != getUserInfo(self.user_login)['uid']:
+            if certainTeam['admin'] != getUserInfo('login', self.login)['uid']:
                 self.ui_create_card.assignee.setEnabled(False)
 
         else:
-            certainTeam = getUserTeam(self.certainProject['owner'])
+            certainTeam = getUserTeam(self.project['owner'])
 
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
 
@@ -363,14 +364,14 @@ class BugPage(QtCore.QObject):
         if self.ui_create_card.assignee.currentText() == 'Нет':
             assignee = 'Нет'
         else:
-            assignee = getUserInfo(self.ui_create_card.assignee.currentText())['uid']
+            assignee = getUserInfo('login', self.ui_create_card.assignee.currentText())['uid']
 
         deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple())) * 1000
 
         # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
         tags = [self.ui_create_card.tags.currentText()]
 
-        project = self.certainProject
+        project = self.project
         project['bugs'].append({
             "bid": "b_" + str(random.randrange(111111, 999999, 5)),
             "title": self.ui_create_card.title.text(),
@@ -378,7 +379,7 @@ class BugPage(QtCore.QObject):
             "actual_result": self.ui_create_card.actual_result.toPlainText(),
             "supposed_result": self.ui_create_card.supposed_result.toPlainText(),
             "creationDate": round(time.time() * 1000),
-            "author": getUserInfo(self.user_login)['uid'],
+            "author": getUserInfo('login', self.login)['uid'],
             "assignee": assignee,
             "deadline": deadline,
             "criticality": criticality,
@@ -390,6 +391,31 @@ class BugPage(QtCore.QObject):
             "messages": []
 
         })
+
+        # Отправка писем о новых багах всем участникам проекта
+        # Рассылка запустится только если это командный проект. Зачем уведомления в индивидуальном проекте, если там один человек
+        if project['owner'].startswith('t_'):
+            team = teams.find_one({"tid": project['owner']})
+            admin = getUserInfo('uid', team['admin'])
+
+            # Скопировал словарь созданного сейчас бага
+            created_bug = project['bugs'][-1].copy()
+            # Удалил ненужные поля
+            del created_bug['closed'], created_bug['styles']
+            # Заджоинил все ключи и их значения через <br> - это HTML тег, который переносит на новую строку
+            content = '<br>'.join([f"<b>{x}</b>: {created_bug[x]}" for x in created_bug])
+
+            if admin['notifications']['new_bugs']:
+                mailer.sendMail(admin['email'],
+                                f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                f'{content}')
+
+            for x in team['members']:
+                user = getUserInfo('uid', x)
+                if user['notifications']['new_bugs']:
+                    mailer.sendMail(user['email'],
+                                    f'{project["title"]}: новый баг - {self.ui_create_card.title.text()}',
+                                    f'{content}')
 
         projects.update_one({'title': project['title']}, {'$set': {"bugs": project['bugs']}})
 

@@ -14,7 +14,7 @@ def sendMail(to, subject, message):
     msg['To'] = to
     msg['Subject'] = subject
 
-    msg.attach(MIMEText(message, 'plain'))
+    msg.attach(MIMEText(message, 'html'))
 
     server = smtplib.SMTP('smtp.gmail.com: 587')
 
@@ -22,4 +22,4 @@ def sendMail(to, subject, message):
     server.login(msg['From'], password)
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
-    print("Отправлено %s:" % (msg['To']))
+    print("Отправлено %s" % (msg['To']))
