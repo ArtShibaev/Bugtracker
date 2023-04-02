@@ -1,5 +1,5 @@
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QPixmap, QColor
 
 
@@ -26,8 +26,11 @@ class Images(QtCore.QObject):
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
             self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))
 
+            self.ui.change.setIcon(QtGui.QIcon('./images/gear.png'))
         elif file == 'bug_page':
-            # добавить иконку отправки сообщения
+            self.ui.new_project.setIcon(QtGui.QIcon('./images/plus.png'))
+            self.ui.send.setIcon(QtGui.QIcon('./images/send_message.png'))
+            self.ui.send.setIconSize(QSize(120, 120))
             self.ui.home.setIcon(QtGui.QIcon('./images/main_page.png'))
             self.ui.settings.setIcon(QtGui.QIcon('./images/gear.png'))
             self.ui.users_photo.setIcon(QtGui.QIcon('./images/user_icon.png'))

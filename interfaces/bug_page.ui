@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Багтрекер - главная старница</string>
+   <string>Багтрекер - Баг</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #171632;
@@ -156,8 +156,7 @@ padding: 5px;</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
-            <string notr="true">background: #373C66;
-border-radius: 15px;</string>
+            <string notr="true">border-radius: 15px;</string>
            </property>
            <property name="text">
             <string/>
@@ -197,7 +196,7 @@ border-radius: 5px;</string>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="search">
            <property name="minimumSize">
             <size>
              <width>450</width>
@@ -310,7 +309,7 @@ margin: 0;</string>
         <number>12</number>
        </property>
        <property name="spacing">
-        <number>-1</number>
+        <number>6</number>
        </property>
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -539,11 +538,17 @@ border-radius: 10px;</string>
     </item>
     <item row="1" column="1">
      <layout class="QGridLayout" name="gridLayout" rowstretch="1,2">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
       <property name="topMargin">
        <number>15</number>
       </property>
       <property name="rightMargin">
-       <number>15</number>
+       <number>10</number>
+      </property>
+      <property name="spacing">
+       <number>10</number>
       </property>
       <item row="1" column="0">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -573,6 +578,7 @@ border-radius: 10px;</string>
              <string notr="true">width: 100px;
 color: white;
 border-radius: 15px;
+height: 50px;
 font-size: 14px;
 background-color: qlineargradient(spread:pad, x1:0.413793, y1:0, x2:0.817734, y2:1, stop:0 rgba(221, 48, 48, 255), stop:1 rgba(237, 122, 17, 255));
 font-weight: bold;</string>
@@ -583,7 +589,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QPushButton" name="close">
+           <widget class="QPushButton" name="close_bug">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -597,6 +603,7 @@ font-weight: bold;</string>
              <string notr="true">width: 100px;
 color: white;
 border-radius: 15px;
+height: 50px;
 font-size: 14px;
 background-color: qlineargradient(spread:pad, x1:0.413793, y1:0, x2:0.817734, y2:1, stop:0 rgba(44, 197, 111, 255), stop:1 rgba(190, 220, 124, 255));
 font-weight: bold;</string>
@@ -987,7 +994,7 @@ font-size: 14px;</string>
              <item row="10" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_32">
                <item>
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="closed_label">
                  <property name="styleSheet">
                   <string notr="true">color: white;
 font-size: 14px;</string>
@@ -1065,6 +1072,9 @@ font-weight: bold;</string>
              </item>
              <item row="1" column="0">
               <widget class="QScrollArea" name="messages">
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
@@ -1073,8 +1083,8 @@ font-weight: bold;</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>605</width>
-                  <height>270</height>
+                  <width>617</width>
+                  <height>269</height>
                  </rect>
                 </property>
                </widget>
@@ -1097,7 +1107,8 @@ font-weight: bold;</string>
                   <string notr="true">background-color: rgba(27, 30, 61, 50);
 padding: 7px;
 color: rgba(255, 255, 255, 43);
-border-radius: 4px;</string>
+border-radius: 4px;
+color: #fff;</string>
                  </property>
                  <property name="placeholderText">
                   <string>Сообщение</string>
