@@ -1,10 +1,6 @@
-import requests
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QWidget, QLabel, QCheckBox
+from PySide6.QtWidgets import QCheckBox
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtGui import *
 from pymongo import MongoClient
 
 # хуй
