@@ -305,7 +305,7 @@ class MainPage(QtCore.QObject):
             for min_dl_bug in self.certainProject['bugs']:
                 if min_dl_bug['deadline'] == min_deadline:
                     self.ui.bug_list_1.addItem(min_dl_bug['title'])
-                    self.ui.deadline1.setText(datetime.datetime.utcfromtimestamp(min_dl_bug['deadline']/1000).strftime('%d.%m.%Y'))
+                    self.ui.deadline1.setText(str(min_deadline))
                     if min_dl_bug['closed']: statistic += 1
                     if min_dl_bug['assignee'] != 'Нет':
                         developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
@@ -331,8 +331,7 @@ class MainPage(QtCore.QObject):
             for min_dl_bug in self.certainProject['bugs']:
                 if min_dl_bug['deadline'] == min_deadline:
                     self.ui.bug_list_2.addItem(min_dl_bug['title'])
-                    self.ui.deadline2.setText(
-                        datetime.datetime.utcfromtimestamp(min_dl_bug['deadline'] / 1000).strftime('%d.%m.%Y'))
+                    self.ui.deadline2.setText(str(min_deadline))
                     if min_dl_bug['closed']: statistic += 1
                     if min_dl_bug['assignee'] != 'Нет':
                         developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
@@ -412,7 +411,7 @@ class MainPage(QtCore.QObject):
             assignee = getFullUserInfo('login', self.ui_create_card.assignee.currentText())['uid']
 
 
-        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple())+10800)*1000
+        deadline = datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy.MM.dd'), '%Y.%m.%d').strftime("%d.%m.%Y")
 
         # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
         tags = [self.ui_create_card.tags.currentText()]
