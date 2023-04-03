@@ -127,7 +127,7 @@ class BugPage(QtCore.QObject):
         self.ui.creationDate.setText(datetime.datetime.utcfromtimestamp(self.bug['creationDate'] / 1000).strftime('%d.%m.%Y %H:%M'))
         self.ui.author.setText(getUserInfo('uid', self.bug['author'])['login'])
         self.ui.assignee.setText(getUserInfo('uid', self.bug['assignee'])['login'] if str(self.bug['assignee']).isdigit() else 'Нет')
-        self.ui.deadline.setText(datetime.datetime.utcfromtimestamp(self.bug['deadline'] / 1000).strftime('%d.%m.%Y') if str(self.bug['deadline']).isdigit() else 'Нет')
+        self.ui.deadline.setText(str(self.bug['deadline']))
 
         if self.bug['closed']:
             self.ui.closed.setText(datetime.datetime.utcfromtimestamp(self.bug['closedDate'] / 1000).strftime('%d.%m.%Y %H:%M'))
