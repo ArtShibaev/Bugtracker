@@ -640,11 +640,10 @@ border-radius: 160px;</string>
               <string notr="true">QPushButton{
 	color:#FFFFFF;
 	font-size:22px;
-	padding:7px;
-	padding-left: 10px;
-	border:none;
+	padding: 10px 10px;
 	text-align: left;
 	background-color: transparent;
+	border: 2px solid #ffffff;
 }
 QPushButton:hover{
 	background:#322F6E;
