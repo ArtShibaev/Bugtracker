@@ -453,7 +453,7 @@ class BugPage(QtCore.QObject):
         else:
             assignee = getUserInfo('login', self.ui_create_card.assignee.currentText())['uid']
 
-        deadline = int(time.mktime(datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy-MM-dd'), '%Y-%m-%d').timetuple())+10800) * 1000
+        deadline = datetime.datetime.strptime(self.ui_create_card.deadline.date().toString('yyyy.MM.dd'), '%Y.%m.%d').strftime("%d.%m.%Y")
 
         # Массив тегов должен заполняться всеми выбранными в дропдауне элементами
         tags = [self.ui_create_card.tags.currentText()]
