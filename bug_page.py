@@ -4,16 +4,19 @@ import pprint
 import random
 import textwrap
 import time
+import webbrowser
 
 import pytz
 import requests
 
 from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QPixmap, QColor
+from PySide6.QtGui import QPixmap, QColor, QCursor
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel, QCompleter
 from pymongo import MongoClient
+import pastebinpy as pbp
+
 
 import config
 import mailer
@@ -117,6 +120,15 @@ class BugPage(QtCore.QObject):
             self.ui.criticality.setStyleSheet(config.Config.MediumBug)
         elif self.bug['criticality'] == 'low':
             self.ui.criticality.setStyleSheet(config.Config.NonCriticalBug)
+
+        if self.bug['pastebin_link']:
+            self.ui.open_pastebin.setText('Открыть')
+            self.ui.open_pastebin.clicked.connect(lambda x: webbrowser.open(self.bug['pastebin_link']))
+            self.ui.open_pastebin.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        else:
+            self.ui.open_pastebin.setText('Ссылка не прикреплена')
+            self.ui.open_pastebin.setCursor(QCursor(QtCore.Qt.ArrowCursor))
+
 
         self.ui.title.setText(self.bug['title'])
         self.ui.description.setText(self.bug['description'])
@@ -475,7 +487,9 @@ class BugPage(QtCore.QObject):
             # Фон и цвет текста карточки
             "styles": styles,
             "steps": self.ui_create_card.reproduction.toPlainText(),
-            "messages": []
+            "messages": [],
+            "pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
+
 
         })
 

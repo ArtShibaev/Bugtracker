@@ -11,6 +11,7 @@ from PySide6.QtGui import *
 from pymongo import MongoClient
 from itertools import groupby
 import datetime
+import pastebinpy as pbp
 
 import os
 from dotenv import load_dotenv
@@ -433,7 +434,7 @@ class MainPage(QtCore.QObject):
             "styles": styles,
             "messages": [],
             "steps": self.ui_create_card.reproduction.toPlainText(),
-
+            "pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
         })
 
         if str(project['owner']).startswith('t_'):

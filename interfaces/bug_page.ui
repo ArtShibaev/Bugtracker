@@ -851,7 +851,7 @@ font-size: 14px;</string>
                </item>
               </layout>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_26">
                <item>
                 <widget class="QLabel" name="label_12">
@@ -886,7 +886,7 @@ font-size: 14px;</string>
                </item>
               </layout>
              </item>
-             <item row="7" column="0">
+             <item row="8" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
                 <widget class="QLabel" name="label_6">
@@ -921,7 +921,7 @@ font-size: 14px;</string>
                </item>
               </layout>
              </item>
-             <item row="8" column="0">
+             <item row="9" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_30">
                <item>
                 <widget class="QLabel" name="label_16">
@@ -956,7 +956,7 @@ font-size: 14px;</string>
                </item>
               </layout>
              </item>
-             <item row="9" column="0">
+             <item row="10" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_31">
                <item>
                 <widget class="QLabel" name="label_17">
@@ -991,7 +991,7 @@ font-size: 14px;</string>
                </item>
               </layout>
              </item>
-             <item row="10" column="0">
+             <item row="11" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_32">
                <item>
                 <widget class="QLabel" name="closed_label">
@@ -1021,6 +1021,35 @@ font-size: 14px;</string>
                  </property>
                  <property name="verticalScrollBarPolicy">
                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_27">
+               <item>
+                <widget class="QLabel" name="label_13">
+                 <property name="styleSheet">
+                  <string notr="true">color: white;
+font-size: 14px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Фрагмент кода</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="open_pastebin">
+                 <property name="cursor">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: #C3C4D1;
+text-align: right;</string>
+                 </property>
+                 <property name="text">
+                  <string>Открыть</string>
                  </property>
                 </widget>
                </item>
@@ -1083,8 +1112,8 @@ font-weight: bold;</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>617</width>
-                  <height>269</height>
+                  <width>606</width>
+                  <height>270</height>
                  </rect>
                 </property>
                </widget>
