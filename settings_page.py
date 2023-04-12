@@ -50,11 +50,12 @@ class SettingPage(QtCore.QObject):
         self.login = login
         self.uid = uid
         self.pixmap = QPixmap()
-        self.ui.Save_mail.clicked.connect(self.mail_changed)
-        self.ui.Save_password.clicked.connect(self.password_c)
+        self.ui.Save_mail.clicked.connect(self.Verefication)
+        self.ui.Save_password.clicked.connect(self.Verefication1)
         self.ui.home.clicked.connect(self.goToMainPage)
         self.ui.Not_button.clicked.connect(self.goToNotificationsSettings)
         self.ui.Mail_s.hide()
+        self.ui.Fail_ver.hide()
         self.ui.Password_c.hide()
         self.ui.verification_code.hide()
         self.ui.submit_verification_code.hide()
@@ -78,6 +79,22 @@ class SettingPage(QtCore.QObject):
 
     def show(self):
         self.ui.show()
+
+    def Verefication(self):
+        if users.find_one({'login': self.login})['password'] == hashlib.sha256(self.ui.Pass_ver.text().encode('utf-8')).hexdigest():
+            self.mail_changed()
+            self.ui.Fail_ver.hide()
+        else:
+            self.ui.Fail_ver.show()
+
+
+    def Verefication1(self):
+        if users.find_one({'login': self.login})['password'] == hashlib.sha256(self.ui.Pass_ver.text().encode('utf-8')).hexdigest():
+            self.password_c()
+            self.ui.Fail_ver.hide()
+        else:
+            self.ui.Fail_ver.show()
+
 
     def mail_changed(self):
         self.new_mail = self.ui.Input_mail.text()
