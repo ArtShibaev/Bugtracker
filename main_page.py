@@ -192,7 +192,6 @@ class MainPage(QtCore.QObject):
         widgets = []
 
         for bug in project['bugs']:
-            print(bug['bid'], bug['title'])
             icon = QPixmap('./images/bugInList.png')
             # Исходное изображение черное. Создается маска для всего черного цвета на картинке
             mask = icon.createMaskFromColor(QColor('black'), Qt.MaskOutColor)
