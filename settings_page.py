@@ -50,8 +50,8 @@ class SettingPage(QtCore.QObject):
         self.login = login
         self.uid = uid
         self.pixmap = QPixmap()
-        self.ui.Save_mail.clicked.connect(lambda: self.Verification(self.mail_changed))
-        self.ui.Save_password.clicked.connect(lambda: self.Verification(self.password_c))
+        self.ui.Save_mail.clicked.connect(lambda: self.verification(self.mail_changed))
+        self.ui.Save_password.clicked.connect(lambda: self.verification(self.password_c))
         self.ui.home.clicked.connect(self.goToMainPage)
         self.ui.Not_button.clicked.connect(self.goToNotificationsSettings)
         self.ui.Mail_s.hide()
@@ -80,9 +80,10 @@ class SettingPage(QtCore.QObject):
     def show(self):
         self.ui.show()
 
-    def Verification(self, field):
-        if users.find_one({'login': self.login})['password'] == hashlib.sha256(self.ui.Pass_ver.text().encode('utf-8')).hexdigest():
+    def verification(self, field):
+        if getFullUserInfo('login', self.login)['password'] == hashlib.sha256(self.ui.Pass_ver.text().encode('utf-8')).hexdigest():
             self.ui.Fail_ver.hide()
+            self.ui.Fail_ver.setText('')
             field()
         else:
             self.ui.Fail_ver.show()

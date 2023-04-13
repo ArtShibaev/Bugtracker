@@ -768,23 +768,6 @@ color: #00B2FF;</string>
              </item>
             </layout>
            </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="Avatarka">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>322</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: transparent;
-border-radius: 160px;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0" colspan="2">
             <spacer name="verticalSpacer_5">
              <property name="orientation">
@@ -904,6 +887,23 @@ QPushButton:hover{
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="Avatarka">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background: transparent;
+border-radius: 160px;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
