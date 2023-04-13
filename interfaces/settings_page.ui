@@ -490,6 +490,251 @@ border-radius: 10px;</string>
          </property>
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_7">
+           <item row="2" column="0" colspan="2">
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Повтор пароля</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QPushButton" name="Save_password">
+               <property name="maximumSize">
+                <size>
+                 <width>167</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color: #00B2FF;</string>
+               </property>
+               <property name="text">
+                <string>Сохранить изменения</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="submit_verification_code">
+               <property name="maximumSize">
+                <size>
+                 <width>167</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color: #00B2FF;</string>
+               </property>
+               <property name="text">
+                <string>Подтвердить</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="verification_code">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Проверочный код</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="Save_mail">
+               <property name="maximumSize">
+                <size>
+                 <width>167</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color: #00B2FF;</string>
+               </property>
+               <property name="text">
+                <string>Сохранить изменения</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="Input_password2">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Новый пароль</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="maximumSize">
+                <size>
+                 <width>168</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;
+color:#FFFFFF;
+font-size:22px;</string>
+               </property>
+               <property name="text">
+                <string>Почта</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="Input_mail">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="Input_password">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="Pass_ver">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white;
+background-color: #171632;
+border: 2px solid #373C66;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Текущий пароль</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_4">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>41</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>-1</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:#FFFFFF;
+font-size:27px;</string>
+             </property>
+             <property name="text">
+              <string>Аккаунт</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QPushButton" name="Url_exeption">
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+color: rgba(255,0,0,0.75);
+background-color: rgba(255, 0, 0, 0.2);
+font-size: 15px;
+height: 45px;
+width: 200px;
+}
+
+QPushButton:hover{
+	background-color: rgba(255,0,0,0.1);
+	border-radius: 10px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Некорректная ссылка!</string>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="0" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
@@ -523,204 +768,6 @@ color: #00B2FF;</string>
              </item>
             </layout>
            </item>
-           <item row="2" column="0" colspan="2">
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="3" column="2">
-              <widget class="QPushButton" name="Save_password">
-               <property name="maximumSize">
-                <size>
-                 <width>167</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color: #00B2FF;</string>
-               </property>
-               <property name="text">
-                <string>Сохранить изменения</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="Input_password2">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="Input_password">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="Save_mail">
-               <property name="maximumSize">
-                <size>
-                 <width>167</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color: #00B2FF;</string>
-               </property>
-               <property name="text">
-                <string>Сохранить изменения</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="maximumSize">
-                <size>
-                 <width>168</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Почта</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Повтор пароля</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color:#FFFFFF;
-font-size:22px;</string>
-               </property>
-               <property name="text">
-                <string>Новый пароль</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="Input_mail">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="verification_code">
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: white;
-background-color: #171632;
-border: 2px solid #373C66;
-border-radius: 10px;
-padding: 5px 10px;
-outline: none;</string>
-               </property>
-               <property name="placeholderText">
-                <string>Проверочный код</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QPushButton" name="submit_verification_code">
-               <property name="maximumSize">
-                <size>
-                 <width>167</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: transparent;
-color: #00B2FF;</string>
-               </property>
-               <property name="text">
-                <string>Подтвердить</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="Avatarka">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>322</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: transparent;
-border-radius: 160px;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0" colspan="2">
             <spacer name="verticalSpacer_5">
              <property name="orientation">
@@ -736,28 +783,6 @@ border-radius: 160px;</string>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_4">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>41</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>-1</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color:#FFFFFF;
-font-size:27px;</string>
-             </property>
-             <property name="text">
-              <string>Аккаунт</string>
-             </property>
-            </widget>
            </item>
            <item row="3" column="1" colspan="2">
             <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -817,6 +842,27 @@ QPushButton:hover{
                </property>
               </widget>
              </item>
+             <item alignment="Qt::AlignLeft">
+              <widget class="QPushButton" name="Fail_ver">
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+color: rgba(255,0,0,0.75);
+background-color: rgba(255, 0, 0, 0.2);
+font-size: 15px;
+height: 45px;
+width: 200px;
+}
+
+QPushButton:hover{
+	background-color: rgba(255,0,0,0.1);
+	border-radius: 10px;
+}</string>
+               </property>
+               <property name="text">
+                <string>Введите актуальный пароль!</string>
+               </property>
+              </widget>
+             </item>
              <item>
               <spacer name="verticalSpacer_4">
                <property name="orientation">
@@ -842,24 +888,20 @@ QPushButton:hover{
              </item>
             </layout>
            </item>
-           <item row="4" column="2">
-            <widget class="QPushButton" name="Url_exeption">
+           <item row="3" column="0">
+            <widget class="QPushButton" name="Avatarka">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>150</height>
+              </size>
+             </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton{
-color: rgba(255,0,0,0.75);
-background-color: rgba(255, 0, 0, 0.2);
-font-size: 15px;
-height: 45px;
-width: 200px;
-}
-
-QPushButton:hover{
-	background-color: rgba(255,0,0,0.1);
-	border-radius: 10px;
-}</string>
+              <string notr="true">background: transparent;
+border-radius: 160px;</string>
              </property>
              <property name="text">
-              <string>Некорректная ссылка!</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -906,8 +948,8 @@ QPushButton:hover{
      <y>398</y>
     </hint>
     <hint type="destinationlabel">
-     <x>900</x>
-     <y>359</y>
+     <x>952</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -922,8 +964,8 @@ QPushButton:hover{
      <y>463</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
-     <y>425</y>
+     <x>802</x>
+     <y>491</y>
     </hint>
    </hints>
   </connection>
@@ -934,12 +976,28 @@ QPushButton:hover{
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>769</x>
-     <y>503</y>
+     <x>1234</x>
+     <y>658</y>
     </hint>
     <hint type="destinationlabel">
-     <x>730</x>
-     <y>523</y>
+     <x>1234</x>
+     <y>658</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Fail_ver</sender>
+   <signal>clicked()</signal>
+   <receiver>Fail_ver</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>768</x>
+     <y>533</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>731</x>
+     <y>543</y>
     </hint>
    </hints>
   </connection>
