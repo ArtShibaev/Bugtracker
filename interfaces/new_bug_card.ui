@@ -383,6 +383,42 @@ background: #1B1E3D;</string>
             </layout>
            </item>
            <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_13">
+               <property name="styleSheet">
+                <string notr="true">font-size: 18pt;
+color: white;</string>
+               </property>
+               <property name="text">
+                <string>Фрагмент кода</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="code_fragment">
+               <property name="maximumSize">
+                <size>
+                 <width>253</width>
+                 <height>156</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: 2px solid #373C66;
+color: white;
+border-radius: 10px;
+padding: 5px 10px;
+outline: none;
+background: #1B1E3D;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_6">
@@ -492,6 +528,13 @@ background: #1B1E3D;</string>
                <property name="timeSpec">
                 <enum>Qt::LocalTime</enum>
                </property>
+               <property name="date">
+                <date>
+                 <year>2023</year>
+                 <month>4</month>
+                 <day>2</day>
+                </date>
+               </property>
               </widget>
              </item>
             </layout>
@@ -523,6 +566,8 @@ background: #1B1E3D;</string>
   <tabstop>title</tabstop>
   <tabstop>description</tabstop>
   <tabstop>reproduction</tabstop>
+  <tabstop>supposed_result</tabstop>
+  <tabstop>actual_result</tabstop>
   <tabstop>tags</tabstop>
   <tabstop>criticality</tabstop>
   <tabstop>assignee</tabstop>

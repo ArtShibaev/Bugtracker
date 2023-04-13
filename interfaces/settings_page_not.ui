@@ -519,14 +519,14 @@ border-radius: 10px;</string>
               <number>20</number>
              </property>
              <item row="3" column="1" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="Status_change">
+              <widget class="QCheckBox" name="status_changes">
                <property name="text">
                 <string/>
                </property>
               </widget>
              </item>
              <item row="2" column="1" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="New_comm">
+              <widget class="QCheckBox" name="new_comments">
                <property name="text">
                 <string/>
                </property>
@@ -575,7 +575,7 @@ font-size:18px;</string>
               </widget>
              </item>
              <item row="1" column="1" alignment="Qt::AlignHCenter">
-              <widget class="QCheckBox" name="New_bug">
+              <widget class="QCheckBox" name="new_bugs">
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
                </property>
@@ -687,6 +687,18 @@ font-size:27px;</string>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>new_bugs</tabstop>
+  <tabstop>new_comments</tabstop>
+  <tabstop>status_changes</tabstop>
+  <tabstop>Save_checkbox</tabstop>
+  <tabstop>Account_settings</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>logout</tabstop>
+  <tabstop>settings</tabstop>
+  <tabstop>home</tabstop>
+  <tabstop>Avatarka</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

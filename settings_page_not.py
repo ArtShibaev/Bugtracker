@@ -1,13 +1,7 @@
-import requests
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QApplication, QWidget, QLabel
+from PySide6.QtWidgets import QCheckBox
 from PySide6 import QtCore, QtGui
-from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtGui import *
 from pymongo import MongoClient
-
-# хуй
 
 import os
 
@@ -25,10 +19,6 @@ db = client['bugtracker']
 users = db['users']
 projects = db['projects']
 teams = db['teams']
-
-
-
-
 
 
 def getFullUserInfo(type, value):
@@ -54,6 +44,7 @@ class SettingPageNot(QtCore.QObject):
         self.ui.Account_settings.clicked.connect(self.goToAccountSettings)
         Images.load_image(self, 'settings_notifications_page')
         self.checkbox()
+
     def show(self):
         self.ui.show()
 
@@ -77,27 +68,12 @@ class SettingPageNot(QtCore.QObject):
 
     def checkbox(self):
         check = users.find_one({"login": self.login})['notifications']
-        if check[0] == 'true':
-            self.ui.New_bug.setChecked(True)
-        if check[1] == 'true':
-            self.ui.New_comm.setChecked(True)
-        if check[2] == 'true':
-            self.ui.Status_change.setChecked(True)
+        for element in check: self.ui.frame_5.findChild(QCheckBox, name=element).setChecked(check[element])
 
     def Save_checkbox(self):
         check = users.find_one({"login": self.login})['notifications']
-        if self.ui.New_bug.isChecked():
-            check[0] = 'true'
-        else:
-            check[0] = 'false'
-        if self.ui.New_comm.isChecked():
-            check[1] = 'true'
-        else:
-            check[1] = 'false'
-        if self.ui.Status_change.isChecked():
-            check[2] = 'true'
-        else:
-            check[2] = 'false'
+        check['new_bugs'] = self.ui.new_bugs.isChecked()
+        check['new_comments'] = self.ui.new_comments.isChecked()
+        check['status_changes'] = self.ui.status_changes.isChecked()
 
         users.update_one({"login": self.login}, {'$set': {'notifications': check}})
-
