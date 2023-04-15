@@ -15,7 +15,7 @@ from PySide6.QtGui import QPixmap, QColor, QCursor
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QVBoxLayout, QPushButton, QWidget, QComboBox, QLabel, QCompleter
 from pymongo import MongoClient
-import pastebinpy as pbp
+#import pastebinpy as pbp
 
 
 import config
@@ -488,7 +488,7 @@ class BugPage(QtCore.QObject):
             "styles": styles,
             "steps": self.ui_create_card.reproduction.toPlainText(),
             "messages": [],
-            "pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
+            #"pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
 
 
         })
