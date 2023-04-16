@@ -290,6 +290,7 @@ class MainPage(QtCore.QObject):
         self.ui.developers2.setText('Нет информации')
 
         deadlines = []
+        statistic_all, statistic_close = 0, 0
         for bug in self.certainProject['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
@@ -305,19 +306,21 @@ class MainPage(QtCore.QObject):
             statistic = 0
             for min_dl_bug in self.certainProject['bugs']:
                 if min_dl_bug['deadline'] == min_deadline:
+                    statistic_all += min_dl_bug['complexity']
                     self.ui.bug_list_1.addItem(min_dl_bug['title'])
                     self.ui.deadline1.setText(str(min_deadline))
-                    if min_dl_bug['closed']: statistic += 1
+                    if min_dl_bug['closed']: statistic += 1; statistic_close += min_dl_bug['complexity']
                     if min_dl_bug['assignee'] != 'Нет':
                         developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
             с_developers = list(set(developers))
             final_list = [el for el, _ in groupby(с_developers)]
             self.ui.complete1.setText(f'{statistic}/{self.ui.bug_list_1.count()}')
             self.ui.developers1.setText(', '.join(map(str, final_list)))
-            self.ui.progress1.setMaximum(self.ui.bug_list_1.count())
-            self.ui.progress1.setValue(statistic)
+            self.ui.progress1.setMaximum(statistic_all)
+            self.ui.progress1.setValue(statistic_close)
 
         deadlines = []
+        statistic_all, statistic_close = 0, 0
         for bug in self.certainProject['bugs']:
             if not bug['closed']:
                 deadlines.append(bug['deadline'])
@@ -331,17 +334,18 @@ class MainPage(QtCore.QObject):
             statistic = 0
             for min_dl_bug in self.certainProject['bugs']:
                 if min_dl_bug['deadline'] == min_deadline:
+                    statistic_all += min_dl_bug['complexity']
                     self.ui.bug_list_2.addItem(min_dl_bug['title'])
                     self.ui.deadline2.setText(str(min_deadline))
-                    if min_dl_bug['closed']: statistic += 1
+                    if min_dl_bug['closed']: statistic += 1; statistic_close += min_dl_bug['complexity']
                     if min_dl_bug['assignee'] != 'Нет':
                         developers.append(getFullUserInfo('uid', min_dl_bug['assignee'])['login'])
             с_developers = list(set(developers))
             final_list = [el for el, _ in groupby(с_developers)]
             self.ui.complete2.setText(f'{statistic}/{self.ui.bug_list_2.count()}')
             self.ui.developers2.setText(', '.join(map(str, final_list)))
-            self.ui.progress2.setMaximum(self.ui.bug_list_2.count())
-            self.ui.progress2.setValue(statistic)
+            self.ui.progress2.setMaximum(statistic_all)
+            self.ui.progress2.setValue(statistic_close)
 
 
     def fillingProjectList(self, uid):
@@ -393,7 +397,16 @@ class MainPage(QtCore.QObject):
             if certainTeam['admin'] != getFullUserInfo('login', self.user_login)['uid']:
                 self.ui_create_card.assignee.setEnabled(False)
 
+        self.ui_create_card.horizontalSlider.valueChanged.connect(self.valuechangeHr)
+        self.ui_create_card.spinBox.valueChanged.connect(self.valuechangeSp)
+
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
+
+    def valuechangeHr(self):
+        self.ui_create_card.spinBox.setValue(self.ui_create_card.horizontalSlider.value())
+
+    def valuechangeSp(self):
+        self.ui_create_card.horizontalSlider.setValue(self.ui_create_card.spinBox.value())
 
     def recordBugData(self):
 
@@ -434,6 +447,7 @@ class MainPage(QtCore.QObject):
             "styles": styles,
             "messages": [],
             "steps": self.ui_create_card.reproduction.toPlainText(),
+            "complexity": self.ui_create_card.horizontalSlider.value(),
             "pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
         })
 

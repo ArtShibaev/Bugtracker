@@ -120,7 +120,7 @@ class BugPage(QtCore.QObject):
             self.ui.criticality.setStyleSheet(config.Config.MediumBug)
         elif self.bug['criticality'] == 'low':
             self.ui.criticality.setStyleSheet(config.Config.NonCriticalBug)
-
+        """
         if self.bug['pastebin_link']:
             self.ui.open_pastebin.setText('Открыть')
             self.ui.open_pastebin.clicked.connect(lambda x: webbrowser.open(self.bug['pastebin_link']))
@@ -128,7 +128,7 @@ class BugPage(QtCore.QObject):
         else:
             self.ui.open_pastebin.setText('Ссылка не прикреплена')
             self.ui.open_pastebin.setCursor(QCursor(QtCore.Qt.ArrowCursor))
-
+        """
 
         self.ui.title.setText(self.bug['title'])
         self.ui.description.setText(self.bug['description'])
@@ -447,7 +447,16 @@ class BugPage(QtCore.QObject):
         else:
             certainTeam = getUserTeam(self.project['owner'])
 
+        self.ui_create_card.horizontalSlider.valueChanged.connect(self.valuechangeHr)
+        self.ui_create_card.spinBox.valueChanged.connect(self.valuechangeSp)
+
         self.ui_create_card.create_bug_card.clicked.connect(self.recordBugData)
+
+    def valuechangeHr(self):
+        self.ui_create_card.spinBox.setValue(self.ui_create_card.horizontalSlider.value())
+
+    def valuechangeSp(self):
+        self.ui_create_card.horizontalSlider.setValue(self.ui_create_card.spinBox.value())
 
     def recordBugData(self):
 
@@ -487,6 +496,7 @@ class BugPage(QtCore.QObject):
             # Фон и цвет текста карточки
             "styles": styles,
             "steps": self.ui_create_card.reproduction.toPlainText(),
+            "complexity": self.ui_create_card.horizontalSlider.value(),
             "messages": [],
             "pastebin_link": pbp.paste(os.environ.get('PASTEBIN_KEY'), self.ui_create_card.code_fragment.toPlainText(), self.ui_create_card.title.text(), privacy="1") if self.ui_create_card.code_fragment.toPlainText() else ""
 
