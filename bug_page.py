@@ -120,7 +120,6 @@ class BugPage(QtCore.QObject):
             self.ui.criticality.setStyleSheet(config.Config.MediumBug)
         elif self.bug['criticality'] == 'low':
             self.ui.criticality.setStyleSheet(config.Config.NonCriticalBug)
-        """
         if self.bug['pastebin_link']:
             self.ui.open_pastebin.setText('Открыть')
             self.ui.open_pastebin.clicked.connect(lambda x: webbrowser.open(self.bug['pastebin_link']))
@@ -128,7 +127,6 @@ class BugPage(QtCore.QObject):
         else:
             self.ui.open_pastebin.setText('Ссылка не прикреплена')
             self.ui.open_pastebin.setCursor(QCursor(QtCore.Qt.ArrowCursor))
-        """
 
         self.ui.title.setText(self.bug['title'])
         self.ui.description.setText(self.bug['description'])
