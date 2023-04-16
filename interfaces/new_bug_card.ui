@@ -530,7 +530,7 @@ color: white;</string>
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>100</number>
+              <number>10</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -557,7 +557,7 @@ background: #1B1E3D;</string>
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>100</number>
+              <number>10</number>
              </property>
             </widget>
            </item>
