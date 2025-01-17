@@ -10,7 +10,7 @@ from image_loader import Images
 
 load_dotenv('.env')
 
-MONGO_URL = "mongodb+srv://ra1nbow1:ra1nbow1@rbs.ftmj9.mongodb.net/rbs"
+MONGO_URL = "ССЫЛКА БД"
 
 loader = QUiLoader()
 mongo_url = os.environ.get('MONGO_URL')
